@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}AI-First Neural Gateway — Metricore.in{% endblock %}
+{% block title %}Sign In — Metricore.in{% endblock %}
 
 {% block content %}
 <div class="relative w-full min-h-[calc(100vh-8rem)] flex items-center justify-center p-4 sm:p-6 overflow-hidden bg-slate-950 select-none">
@@ -10,191 +10,93 @@
     <div class="absolute top-10 left-10 w-[450px] h-[450px] bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none"></div>
     <div class="absolute bottom-10 right-10 w-[450px] h-[450px] bg-pink-600/10 rounded-full blur-[140px] pointer-events-none"></div>
 
-    <!-- DYNAMIC FLOATING NETWORK CANVAS (Circles Around the Sign-In Card) -->
-    <canvas id="neural-network-canvas" class="absolute inset-0 w-full h-full pointer-events-auto z-0 opacity-85"></canvas>
+    <!-- DYNAMIC INTERACTIVE CIRCULAR NETWORK CANVAS (Covers & Circles the Area) -->
+    <canvas id="neural-network-canvas" class="absolute inset-0 w-full h-full pointer-events-auto z-0 opacity-90"></canvas>
 
-    <!-- FLOATING SATELLITE NODES (Circling Around the Sign In Gateway) -->
-    <div class="absolute inset-0 pointer-events-none z-10 overflow-hidden flex items-center justify-center">
-        <!-- Floating Node 1: Top Left -->
-        <div class="floating-satellite absolute hidden md:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/80 border border-cyan-500/40 backdrop-blur-md shadow-lg shadow-cyan-500/10 text-cyan-300 text-xs font-mono animate-float" style="transform: translate(-340px, -220px); animation-duration: 6s;">
-            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-            <span>✦ Neural_Synapse.01</span>
-        </div>
+    <!-- UN-ENCLOSED SIGN IN CONTAINER (Sits Organically Inside the Dynamic Network Circle) -->
+    <div id="node-signin" class="relative z-20 w-full max-w-sm p-4 sm:p-6">
 
-        <!-- Floating Node 2: Top Right -->
-        <div class="floating-satellite absolute hidden md:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/80 border border-purple-500/40 backdrop-blur-md shadow-lg shadow-purple-500/10 text-purple-300 text-xs font-mono animate-float" style="transform: translate(340px, -200px); animation-duration: 7s; animation-delay: 1s;">
-            <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-            <span>⚡ LLM_Matrix.Active</span>
-        </div>
-
-        <!-- Floating Node 3: Bottom Left -->
-        <div class="floating-satellite absolute hidden md:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/80 border border-pink-500/40 backdrop-blur-md shadow-lg shadow-pink-500/10 text-pink-300 text-xs font-mono animate-float" style="transform: translate(-330px, 210px); animation-duration: 8s; animation-delay: 2s;">
-            <span class="w-2 h-2 rounded-full bg-pink-400 animate-ping"></span>
-            <span>◆ Vector_Embedding</span>
-        </div>
-
-        <!-- Floating Node 4: Bottom Right -->
-        <div class="floating-satellite absolute hidden md:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/80 border border-emerald-500/40 backdrop-blur-md shadow-lg shadow-emerald-500/10 text-emerald-300 text-xs font-mono animate-float" style="transform: translate(330px, 230px); animation-duration: 6.5s; animation-delay: 1.5s;">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>◉ Agent_Cluster.OK</span>
-        </div>
-
-        <!-- Floating Node 5: Top Center Far -->
-        <div class="floating-satellite absolute hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-slate-900/80 border border-indigo-500/40 backdrop-blur-md shadow-lg shadow-indigo-500/10 text-indigo-300 text-xs font-mono animate-float" style="transform: translate(0px, -330px); animation-duration: 7.5s; animation-delay: 0.5s;">
-            <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-            <span>▲ Metricore_Core_Node</span>
-        </div>
-    </div>
-
-    <!-- MAIN SIGN IN GATEWAY NODE (Centered in the Circular Network) -->
-    <div id="node-signin" class="flow-node relative z-20 w-full max-w-md rounded-3xl border-2 {% if is_authenticated %}border-emerald-500/50 bg-slate-900/95{% else %}border-purple-500/50 bg-slate-900/95{% endif %} shadow-2xl backdrop-blur-2xl transition-all hover:shadow-purple-500/30 duration-300">
-
-        <!-- Top Drag Handle & Node Status Bar -->
-        <div class="drag-handle px-5 py-3.5 border-b border-slate-800/80 bg-slate-950/80 rounded-t-3xl flex items-center justify-between cursor-grab active:cursor-grabbing">
-            <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-purple-400 animate-ping"></span>
-                <span class="text-xs font-black uppercase tracking-wider text-white">AI Gateway Node</span>
+        {% if is_authenticated %}
+            <!-- Authenticated State -->
+            <div class="text-center py-6 space-y-4">
+                <div class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 mx-auto flex items-center justify-center shadow-lg shadow-emerald-500/20 backdrop-blur-md">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <div>
+                    <h3 class="text-xl font-black text-white drop-shadow-md">Signed In as Akbar</h3>
+                    <p class="text-xs text-slate-400 mt-1">AI Core ecosystem is unlocked.</p>
+                </div>
+                <div class="pt-2 flex flex-col gap-2.5">
+                    <a href="/" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xs font-bold uppercase tracking-wider shadow-xl shadow-purple-600/30 transition-all text-center block">
+                        Enter Dashboard →
+                    </a>
+                    <a href="/logout" class="w-full py-2.5 rounded-2xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 text-xs font-medium text-center block border border-slate-800 backdrop-blur-md">
+                        Sign Out
+                    </a>
+                </div>
             </div>
-            <div class="flex items-center gap-2">
-                <span class="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30 font-bold">
-                    {% if is_authenticated %}UNLOCKED{% else %}AI-FIRST GATE{% endif %}
-                </span>
-                <span class="text-[10px] text-slate-500 font-mono hidden sm:inline">(Draggable)</span>
-            </div>
-        </div>
-
-        <!-- Dynamic AI Node Visual Image Header (Referencing User's Circular & Neural Network Images) -->
-        <div class="relative h-48 w-full overflow-hidden bg-slate-950 border-b border-slate-800/80 group">
-            <!-- Background Neural Network Image with Breathing Animation -->
-            <img 
-                src="/static/images/network_circular.jpg" 
-                alt="AI Circular Network Node" 
-                class="w-full h-full object-cover object-center filter invert brightness-125 contrast-125 mix-blend-screen scale-110 group-hover:scale-115 transition-transform duration-700 animate-breathe"
-            >
-            <!-- Gradient Color Wash Overlay matching User's Gradient Reference -->
-            <div class="absolute inset-0 bg-gradient-to-r from-cyan-950/50 via-purple-950/50 to-pink-950/50 mix-blend-color"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
-
-            <!-- Pulsing Node Network Badges on Image -->
-            <div class="absolute top-3 left-4 right-4 flex items-center justify-between">
-                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-950/80 text-cyan-300 border border-cyan-500/40 backdrop-blur-md flex items-center gap-1.5 shadow-md">
-                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
-                    Orbital Network Core
-                </span>
-                <span class="text-[10px] font-mono px-2 py-1 rounded-full bg-slate-950/80 text-pink-300 border border-pink-500/40 backdrop-blur-md shadow-md">
-                    24 AI Nodes Linked
-                </span>
-            </div>
-
-            <!-- Header Title over Image -->
-            <div class="absolute bottom-3 left-5 right-5">
-                <div class="text-[10px] uppercase font-mono tracking-widest text-purple-300 font-bold">METRICORE PLATFORM</div>
-                <h2 class="text-xl font-black text-white drop-shadow-md">Sign In Gateway</h2>
-                <p class="text-xs text-slate-300/90 drop-shadow">Enter credentials to unlock the AI Core ecosystem</p>
-            </div>
-        </div>
-
-        <!-- Form Body Area -->
-        <div class="p-6 space-y-5">
-            {% if is_authenticated %}
-                <!-- Already Signed In State -->
-                <div class="text-center py-4 space-y-4">
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 mx-auto flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        {% else %}
+            <!-- Seamless Sign In Form directly inside the constellation ring -->
+            <form method="POST" action="/login" class="space-y-4">
+                {% if error %}
+                    <div class="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2 backdrop-blur-md">
+                        <svg class="w-4 h-4 text-rose-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>{{ error }}</span>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-black text-white">Signed In as Akbar (Admin)</h3>
-                        <p class="text-xs text-slate-400 mt-1">Full access unlocked across all 12 AI tool pipelines.</p>
-                    </div>
-                    <div class="pt-2 flex flex-col gap-2.5">
-                        <a href="/" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-purple-600/30 transition-all text-center block">
-                            Enter Homepage Dashboard →
-                        </a>
-                        <a href="/logout" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium text-center block border border-slate-700/60">
-                            Sign Out
-                        </a>
+                {% endif %}
+
+                <!-- Username Field -->
+                <div>
+                    <label for="username" class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5 drop-shadow">
+                        Admin Username
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            value="{{ entered_username or default_user }}" 
+                            required 
+                            autocomplete="username"
+                            placeholder="Username (Akbar)"
+                            class="w-full px-4 py-3 rounded-2xl bg-slate-950/80 border border-slate-800/90 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 backdrop-blur-xl transition-all font-medium shadow-lg"
+                        >
+                        <span class="absolute right-3.5 top-3.5 text-[9px] text-purple-400 font-mono font-bold">ADMIN</span>
                     </div>
                 </div>
-            {% else %}
-                <!-- Standard Sign-In Form with Proper Labels -->
-                <form method="POST" action="/login" class="space-y-4">
-                    {% if error %}
-                        <div class="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2">
-                            <svg class="w-4 h-4 text-rose-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            <span>{{ error }}</span>
-                        </div>
-                    {% endif %}
 
-                    <!-- Username Field -->
-                    <div>
-                        <label for="username" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
-                            Admin Username
-                        </label>
-                        <div class="relative">
-                            <input 
-                                type="text" 
-                                id="username" 
-                                name="username" 
-                                value="{{ entered_username or default_user }}" 
-                                required 
-                                autocomplete="username"
-                                placeholder="Enter username (Akbar)"
-                                class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-medium"
-                            >
-                            <span class="absolute right-3.5 top-3 text-[10px] text-purple-400 font-mono font-bold">ADMIN</span>
-                        </div>
-                    </div>
-
-                    <!-- Password Field -->
-                    <div>
-                        <label for="password" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
-                            Admin Password
-                        </label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            value="unlock"
-                            required 
-                            autocomplete="current-password"
-                            placeholder="Enter password (unlock)"
-                            class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700/80 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all font-medium"
-                        >
-                    </div>
-
-                    <!-- Credentials Helper Card -->
-                    <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 space-y-1">
-                        <div class="flex justify-between items-center text-slate-300 font-semibold">
-                            <span>Pre-configured Credentials:</span>
-                            <span class="text-emerald-400 font-mono text-[10px]">Pre-filled</span>
-                        </div>
-                        <div class="flex justify-between font-mono text-[10px] text-slate-400 pt-0.5">
-                            <span>User: <strong class="text-white">Akbar</strong></span>
-                            <span>Pass: <strong class="text-white">unlock</strong></span>
-                        </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button 
-                        type="submit" 
-                        class="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 hover:from-cyan-500 hover:via-purple-500 hover:to-pink-500 text-white text-xs font-bold uppercase tracking-wider shadow-xl shadow-purple-600/30 transition-all flex items-center justify-center gap-2 group hover:-translate-y-0.5"
+                <!-- Password Field -->
+                <div>
+                    <label for="password" class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5 drop-shadow">
+                        Admin Password
+                    </label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        value="unlock"
+                        required 
+                        autocomplete="current-password"
+                        placeholder="Password (unlock)"
+                        class="w-full px-4 py-3 rounded-2xl bg-slate-950/80 border border-slate-800/90 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 backdrop-blur-xl transition-all font-medium shadow-lg"
                     >
-                        <span>Sign In & Unlock AI Core</span>
-                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </button>
-                </form>
-            {% endif %}
-        </div>
+                </div>
 
-        <!-- Node Footer Port Detail -->
-        <div class="px-6 py-3 border-t border-slate-800/60 bg-slate-950/60 rounded-b-3xl flex items-center justify-between text-[11px] text-slate-500 font-mono">
-            <span>NODE: NEURAL-GATEWAY</span>
-            <span class="text-cyan-400 font-bold">STATUS: 24 NODES ACTIVE</span>
-        </div>
+                <!-- Submit Button -->
+                <button 
+                    type="submit" 
+                    class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 hover:from-cyan-500 hover:via-purple-500 hover:to-pink-500 text-white text-xs font-bold uppercase tracking-wider shadow-xl shadow-purple-600/30 transition-all flex items-center justify-center gap-2 group hover:-translate-y-0.5 active:translate-y-0"
+                >
+                    <span>Sign In & Unlock AI Core</span>
+                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+            </form>
+        {% endif %}
+
     </div>
 </div>
 
-<!-- DYNAMIC CIRCULAR NEURAL NETWORK PARTICLE CANVAS ENGINE (References User's Network Images) -->
+<!-- DYNAMIC CIRCULAR NEURAL NETWORK PARTICLE CANVAS (Inspired by User's Circular & Network Images) -->
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const canvas = document.getElementById("neural-network-canvas");
@@ -211,14 +113,14 @@
         });
 
         // Mouse tracking for dynamic interactive sway
-        const mouse = { x: width / 2, y: height / 2, radius: 180 };
+        const mouse = { x: width / 2, y: height / 2, radius: 220 };
         window.addEventListener("mousemove", (e) => {
             mouse.x = e.clientX;
             mouse.y = e.clientY;
         });
 
-        // Generate circular constellation nodes orbiting the center card (as in user's reference)
-        const nodeCount = 95;
+        // Generate circular constellation nodes orbiting cleanly around the center form
+        const nodeCount = 110;
         let nodes = [];
 
         function initNodes() {
@@ -227,13 +129,13 @@
             const centerY = height / 2;
 
             for (let i = 0; i < nodeCount; i++) {
-                // Circular ring distribution around center with random depth
-                const angle = (i / nodeCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
-                const ringRadius = 260 + Math.random() * 260; // Orbits around the sign in card
+                const angle = (i / nodeCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.35;
+                // Leave the center clear (radius 220 to 450) where the sign in inputs sit
+                const ringRadius = 220 + Math.random() * 260;
                 const x = centerX + Math.cos(angle) * ringRadius;
-                const y = centerY + Math.sin(angle) * (ringRadius * 0.85); // slight elliptical perspective
+                const y = centerY + Math.sin(angle) * (ringRadius * 0.88);
 
-                // Node colors matching user's rainbow gradient reference: Cyan, Indigo, Purple, Pink, Rose
+                // Gradient palette matching user's reference: Cyan, Indigo, Purple, Pink, Rose
                 const colorRatio = i / nodeCount;
                 let color;
                 if (colorRatio < 0.25) color = "rgba(56, 189, 248, "; // Cyan
@@ -267,18 +169,15 @@
                 x2: n2.x,
                 y2: n2.y,
                 progress: 0,
-                speed: 0.015 + Math.random() * 0.02,
-                color: n1.color
+                speed: 0.015 + Math.random() * 0.02
             });
         }
 
         // Animation Loop
-        let frame = 0;
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            frame++;
 
-            // Draw connecting lines between nearby nodes in the constellation
+            // Draw connecting lines between nearby nodes
             const maxDist = 95;
             for (let i = 0; i < nodes.length; i++) {
                 for (let j = i + 1; j < nodes.length; j++) {
@@ -295,8 +194,7 @@
                         ctx.lineTo(nodes[j].x, nodes[j].y);
                         ctx.stroke();
 
-                        // Occasionally spawn a pulse along the edge
-                        if (Math.random() < 0.0003 && pulses.length < 25) {
+                        if (Math.random() < 0.0004 && pulses.length < 25) {
                             createPulse(nodes[i], nodes[j]);
                         }
                     }
@@ -324,11 +222,10 @@
             for (let i = 0; i < nodes.length; i++) {
                 const n = nodes[i];
 
-                // Floating drift
                 n.x += n.vx;
                 n.y += n.vy;
 
-                // Restoring force to base position
+                // Restoring force to keep circular shape
                 n.x += (n.baseX - n.x) * 0.02;
                 n.y += (n.baseY - n.y) * 0.02;
 
@@ -347,13 +244,13 @@
                 const currentRadius = n.radius + Math.sin(n.pulsePhase) * 1.2;
                 const currentAlpha = 0.65 + Math.sin(n.pulsePhase) * 0.35;
 
-                // Outer Glow Circle
+                // Outer Glow
                 ctx.fillStyle = n.color + (currentAlpha * 0.25) + ")";
                 ctx.beginPath();
                 ctx.arc(n.x, n.y, currentRadius * 2.2, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Core Node Circle
+                // Core Node
                 ctx.fillStyle = n.color + currentAlpha + ")";
                 ctx.beginPath();
                 ctx.arc(n.x, n.y, currentRadius, 0, Math.PI * 2);
@@ -364,86 +261,6 @@
         }
 
         animate();
-
-        // Draggable Sign In Node Engine
-        const node = document.getElementById("node-signin");
-        if (!node) return;
-
-        const handle = node.querySelector(".drag-handle") || node;
-        let isDragging = false;
-        let startX, startY, origX, origY;
-
-        handle.addEventListener("mousedown", (e) => {
-            if (e.target.closest("input, button, a, form")) return;
-            e.preventDefault();
-
-            isDragging = true;
-            startX = e.clientX;
-            startY = e.clientY;
-
-            const rect = node.getBoundingClientRect();
-            node.style.position = "absolute";
-            node.style.left = `${rect.left}px`;
-            node.style.top = `${rect.top}px`;
-            node.style.margin = "0";
-
-            origX = rect.left;
-            origY = rect.top;
-            node.style.zIndex = 50;
-            document.body.style.cursor = "grabbing";
-        });
-
-        window.addEventListener("mousemove", (e) => {
-            if (!isDragging) return;
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-
-            node.style.left = `${Math.max(10, origX + dx)}px`;
-            node.style.top = `${Math.max(10, origY + dy)}px`;
-        });
-
-        window.addEventListener("mouseup", () => {
-            if (isDragging) {
-                isDragging = false;
-                node.style.zIndex = 20;
-                document.body.style.cursor = "default";
-            }
-        });
-
-        handle.addEventListener("touchstart", (e) => {
-            if (e.target.closest("input, button, a, form")) return;
-            const touch = e.touches[0];
-            isDragging = true;
-            startX = touch.clientX;
-            startY = touch.clientY;
-
-            const rect = node.getBoundingClientRect();
-            node.style.position = "absolute";
-            node.style.left = `${rect.left}px`;
-            node.style.top = `${rect.top}px`;
-            node.style.margin = "0";
-
-            origX = rect.left;
-            origY = rect.top;
-            node.style.zIndex = 50;
-        }, { passive: true });
-
-        window.addEventListener("touchmove", (e) => {
-            if (!isDragging) return;
-            const touch = e.touches[0];
-            const dx = touch.clientX - startX;
-            const dy = touch.clientY - startY;
-
-            node.style.left = `${Math.max(10, origX + dx)}px`;
-            node.style.top = `${Math.max(10, origY + dy)}px`;
-        }, { passive: true });
-
-        window.addEventListener("touchend", () => {
-            if (isDragging) {
-                isDragging = false;
-                node.style.zIndex = 20;
-            }
-        });
     });
 </script>
 {% endblock %}
