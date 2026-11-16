@@ -2,14 +2,21 @@ import json
 import os
 from pathlib import Path
 from typing import Optional, List
-from fastapi import FastAPI, Request, Query, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Request, Query, HTTPException, Form, Response
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from app.models import AITool
 
 BASE_DIR = Path(__file__).resolve().parent
+
+ADMIN_USERNAME = "Akbar"
+# ADMIN_PASSWORD removed
+AUTH_COOKIE_NAME = "metricore_auth"
+
+def is_authenticated(request: Request) -> bool:
+    return request.cookies.get(AUTH_COOKIE_NAME) == "authenticated"
 
 app = FastAPI(
     title="Metricore.in - AI Directory & Platform",
@@ -39,6 +46,83 @@ def get_categories(tools: List[AITool]) -> List[str]:
     return seen
 
 # Web Routes
+@app.get("/login", response_class=HTMLResponse)
+async def login_page(request: Request, error: Optional[str] = None):
+    all_tools = load_tools()
+    categories = get_categories(all_tools)
+    category_pairs = []
+    for cat in categories:
+        cat_tools = [t for t in all_tools if t.category == cat]
+        paid = next((t for t in cat_tools if t.pricing_type == "Paid"), None)
+        free = next((t for t in cat_tools if t.pricing_type == "Free"), None)
+        category_pairs.append({
+            "category": cat,
+            "paid": paid,
+            "free": free
+        })
+
+    return templates.TemplateResponse(
+        request=request,
+        name="login.html",
+        context={
+            "error": error,
+            "is_authenticated": is_authenticated(request),
+            "categories": categories,
+            "category_pairs": category_pairs,
+            "default_user": ADMIN_USERNAME,
+        },
+    )
+
+@app.post("/login", response_class=HTMLResponse)
+async def handle_login(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+):
+    if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+        response = RedirectResponse(url="/", status_code=303)
+        response.set_cookie(
+            key=AUTH_COOKIE_NAME,
+            value="authenticated",
+            max_age=60 * 60 * 24 * 7,  # 7 days
+            httponly=True,
+            samesite="lax",
+        )
+        return response
+
+    all_tools = load_tools()
+    categories = get_categories(all_tools)
+    category_pairs = []
+    for cat in categories:
+        cat_tools = [t for t in all_tools if t.category == cat]
+        paid = next((t for t in cat_tools if t.pricing_type == "Paid"), None)
+        free = next((t for t in cat_tools if t.pricing_type == "Free"), None)
+        category_pairs.append({
+            "category": cat,
+            "paid": paid,
+            "free": free
+        })
+
+    return templates.TemplateResponse(
+        request=request,
+        name="login.html",
+        context={
+            "error": "Invalid username or password. Please use 'Akbar' and 'unlock'.",
+            "is_authenticated": False,
+            "categories": categories,
+            "category_pairs": category_pairs,
+            "entered_username": username,
+            "default_user": ADMIN_USERNAME,
+        },
+        status_code=401,
+    )
+
+@app.get("/logout")
+async def logout():
+    response = RedirectResponse(url="/login", status_code=302)
+    response.delete_cookie(key=AUTH_COOKIE_NAME)
+    return response
+
 @app.get("/", response_class=HTMLResponse)
 async def home(
     request: Request,
@@ -46,6 +130,9 @@ async def home(
     pricing: Optional[str] = None,
     q: Optional[str] = None,
 ):
+    if not is_authenticated(request):
+        return RedirectResponse(url="/login", status_code=302)
+
     all_tools = load_tools()
     categories = get_categories(all_tools)
 
@@ -87,6 +174,8 @@ async def home(
             "active_pricing": pricing or "All",
             "search_query": q or "",
             "total_count": len(filtered),
+            "is_authenticated": True,
+            "username": ADMIN_USERNAME,
         },
     )
 
