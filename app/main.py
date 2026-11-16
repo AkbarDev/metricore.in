@@ -77,9 +77,9 @@ async def home(
         })
 
     return templates.TemplateResponse(
-        "index.html",
-        {
-            "request": request,
+        request=request,
+        name="index.html",
+        context={
             "tools": filtered,
             "categories": categories,
             "category_pairs": category_pairs,
@@ -104,9 +104,9 @@ async def tool_detail(request: Request, tool_id: str):
     related = [t for t in all_tools if t.category == tool.category and t.id != tool.id]
 
     return templates.TemplateResponse(
-        "tool_detail.html",
-        {
-            "request": request,
+        request=request,
+        name="tool_detail.html",
+        context={
             "tool": tool,
             "alternative": alternative,
             "related": related,
@@ -139,9 +139,9 @@ async def live_search(
         ]
 
     return templates.TemplateResponse(
-        "components/tool_grid.html",
-        {
-            "request": request,
+        request=request,
+        name="components/tool_grid.html",
+        context={
             "tools": filtered,
         },
     )
