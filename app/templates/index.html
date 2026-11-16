@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+
+    <!-- Hero Section -->
+    <div class="text-center max-w-3xl mx-auto space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+            Curated 2026 AI Stack • Paid vs Free Alternatives
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            Discover the Best <span class="bg-gradient-to-r from-purple-400 via-indigo-300 to-pink-400 bg-clip-text text-transparent">AI Tools</span> for Every Workflow
+        </h1>
+        <p class="text-sm sm:text-base text-slate-400 leading-relaxed">
+            Stop overpaying on subscriptions. Compare industry-standard paid AI tools against their best free alternatives, and test paid tools using their official free tier allowances.
+        </p>
+
+        <!-- Stats Bar -->
+        <div class="grid grid-cols-3 gap-3 pt-4 max-w-md mx-auto">
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                <div class="text-2xl font-bold text-white">12</div>
+                <div class="text-[11px] uppercase tracking-wider text-slate-400 font-medium">Topic Categories</div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                <div class="text-2xl font-bold text-purple-400">24</div>
+                <div class="text-[11px] uppercase tracking-wider text-slate-400 font-medium">Curated Tools</div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                <div class="text-2xl font-bold text-emerald-400">100%</div>
+                <div class="text-[11px] uppercase tracking-wider text-slate-400 font-medium">Free Tier Tested</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="space-y-4 max-w-4xl mx-auto">
+        <!-- Live Instant Search Bar (HTMX Enabled) -->
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+            <input 
+                type="text" 
+                name="q" 
+                value="{{ search_query }}"
+                placeholder="Search by tool name, category, free tier limit, or description (e.g. Midjourney, Voice, Video)..." 
+                class="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm shadow-xl transition-all"
+                hx-get="/api/search"
+                hx-trigger="keyup changed delay:250ms, search"
+                hx-target="#tools-grid"
+                hx-include="#category-select, #pricing-select"
+            >
+        </div>
+
+        <!-- Filter Pills Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
+            <!-- Category Pills -->
+            <div class="flex flex-wrap gap-1.5 items-center">
+                <a href="/" class="px-3 py-1.5 rounded-lg font-medium transition-all {% if active_category == 'All' %}bg-purple-600 text-white shadow-md shadow-purple-600/30{% else %}bg-slate-900 text-slate-400 hover:text-white border border-slate-800{% endif %}">
+                    All Categories
+                </a>
+                {% for cat in categories %}
+                    <a href="/?category={{ cat }}" class="px-3 py-1.5 rounded-lg font-medium transition-all {% if active_category == cat %}bg-purple-600 text-white shadow-md shadow-purple-600/30{% else %}bg-slate-900 text-slate-400 hover:text-white border border-slate-800{% endif %}">
+                        {{ cat }}
+                    </a>
+                {% endfor %}
+            </div>
+
+            <!-- Pricing Filter Switch -->
+            <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800">
+                <a href="/?category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-medium transition-all {% if active_pricing == 'All' %}bg-slate-800 text-white{% else %}text-slate-400 hover:text-white{% endif %}">
+                    All
+                </a>
+                <a href="/?pricing=Paid&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-medium transition-all {% if active_pricing == 'Paid' %}bg-rose-500/20 text-rose-300 border border-rose-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
+                    Paid (With Free Trial)
+                </a>
+                <a href="/?pricing=Free&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-medium transition-all {% if active_pricing == 'Free' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
+                    Free / Alternatives
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Dynamic Tools Grid Container -->
+    <div id="tools-grid">
+        {% include "components/tool_grid.html" %}
+    </div>
+
+    <!-- Category Paid vs Free Side-by-Side Comparison Section -->
+    <div class="mt-16 pt-12 border-t border-slate-800/80 space-y-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-2xl font-extrabold text-white">Side-by-Side Category Breakdown</h2>
+                <p class="text-xs sm:text-sm text-slate-400 mt-1">Directly compare each paid industry benchmark against its top free alternative.</p>
+            </div>
+            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                12 Categories
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for item in category_pairs %}
+                <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-5 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-400">
+                            {{ loop.index }}. {{ item.category }}
+                        </span>
+                    </div>
+
+                    <!-- Paid Tool Row -->
+                    {% if item.paid %}
+                    <div class="p-3 rounded-xl bg-slate-950/60 border border-rose-500/20 flex items-center justify-between">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">Paid</span>
+                                <a href="/tool/{{ item.paid.id }}" class="text-sm font-bold text-white hover:text-purple-300">{{ item.paid.name }}</a>
+                            </div>
+                            <span class="text-[11px] text-slate-400">{{ item.paid.free_tier_limit }}</span>
+                        </div>
+                        <span class="text-xs font-bold text-rose-400">{{ item.paid.price_display }}</span>
+                    </div>
+                    {% endif %}
+
+                    <!-- Free Alternative Row -->
+                    {% if item.free %}
+                    <div class="p-3 rounded-xl bg-slate-950/60 border border-emerald-500/20 flex items-center justify-between">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Free</span>
+                                <a href="/tool/{{ item.free.id }}" class="text-sm font-bold text-white hover:text-emerald-300">{{ item.free.name }}</a>
+                            </div>
+                            <span class="text-[11px] text-slate-400">{{ item.free.free_tier_limit }}</span>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-400">$0/mo</span>
+                    </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
