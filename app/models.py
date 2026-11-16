@@ -11,6 +11,7 @@ class AITool(BaseModel):
     free_tier_limit: str
     description: str
     url: str
+    image_url: Optional[str] = None
     alternative_id: Optional[str] = None
 
 class CategorySummary(BaseModel):

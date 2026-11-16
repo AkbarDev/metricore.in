@@ -1,145 +1,261 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+<div class="relative w-full overflow-hidden">
 
-    <!-- Hero Section -->
-    <div class="text-center max-w-3xl mx-auto space-y-4">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold">
-            <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
-            Curated 2026 AI Stack • Paid vs Free Alternatives
-        </div>
-        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Discover the Best <span class="bg-gradient-to-r from-purple-400 via-indigo-300 to-pink-400 bg-clip-text text-transparent">AI Tools</span> for Every Workflow
-        </h1>
-        <p class="text-sm sm:text-base text-slate-400 leading-relaxed">
-            Stop overpaying on subscriptions. Compare industry-standard paid AI tools against their best free alternatives, and test paid tools using their official free tier allowances.
-        </p>
+    <!-- Breathing Background Ambient Lights -->
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-600/15 rounded-full blur-[140px] pointer-events-none animate-breathe"></div>
+    <div class="absolute top-[400px] -left-40 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-[700px] -right-40 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <!-- Stats Bar -->
-        <div class="grid grid-cols-3 gap-3 pt-4 max-w-md mx-auto">
-            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                <div class="text-2xl font-bold text-white">12</div>
-                <div class="text-[11px] uppercase tracking-wider text-slate-400 font-medium">Topic Categories</div>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                <div class="text-2xl font-bold text-purple-400">24</div>
-                <div class="text-[11px] uppercase tracking-wider text-slate-400 font-medium">Curated Tools</div>
-            </div>
-            <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                <div class="text-2xl font-bold text-emerald-400">100%</div>
-                <div class="text-[11px] uppercase tracking-wider text-slate-400 font-medium">Free Tier Tested</div>
-            </div>
-        </div>
-    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 relative z-10">
 
-    <!-- Search & Filter Controls -->
-    <div class="space-y-4 max-w-4xl mx-auto">
-        <!-- Live Instant Search Bar (HTMX Enabled) -->
-        <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <!-- ================= HERO & PIPELINE STATUS ================= -->
+        <div class="text-center max-w-4xl mx-auto space-y-4">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold backdrop-blur-md animate-breathe-glow">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Neural Pipeline Online</span>
+                <span class="text-slate-500">•</span>
+                <span class="text-slate-300">Logged in as Akbar (Admin)</span>
             </div>
-            <input 
-                type="text" 
-                name="q" 
-                value="{{ search_query }}"
-                placeholder="Search by tool name, category, free tier limit, or description (e.g. Midjourney, Voice, Video)..." 
-                class="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm shadow-xl transition-all"
-                hx-get="/api/search"
-                hx-trigger="keyup changed delay:250ms, search"
-                hx-target="#tools-grid"
-                hx-include="#category-select, #pricing-select"
-            >
+
+            <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
+                All-in-One <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-300 bg-clip-text text-transparent">AI Platform & Tools</span> Directory
+            </h1>
+
+            <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                Explore the complete multi-node AI ecosystem. Benchmark paid industry leaders against high-performance free alternatives, and test every tool with official free-tier trial limits.
+            </p>
+
+            <!-- Live Neural System Metrics -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 max-w-2xl mx-auto">
+                <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-white">12</div>
+                    <div class="text-[10px] uppercase tracking-wider text-purple-400 font-bold">Category Nodes</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-indigo-400">24</div>
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">AI Platforms</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-emerald-400">100%</div>
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Free Tiers Tested</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-pink-400">0 ms</div>
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Instant Search</div>
+                </div>
+            </div>
         </div>
 
-        <!-- Filter Pills Bar -->
-        <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
-            <!-- Category Pills -->
-            <div class="flex flex-wrap gap-1.5 items-center">
-                <a href="/" class="px-3 py-1.5 rounded-lg font-medium transition-all {% if active_category == 'All' %}bg-purple-600 text-white shadow-md shadow-purple-600/30{% else %}bg-slate-900 text-slate-400 hover:text-white border border-slate-800{% endif %}">
-                    All Categories
-                </a>
-                {% for cat in categories %}
-                    <a href="/?category={{ cat }}" class="px-3 py-1.5 rounded-lg font-medium transition-all {% if active_category == cat %}bg-purple-600 text-white shadow-md shadow-purple-600/30{% else %}bg-slate-900 text-slate-400 hover:text-white border border-slate-800{% endif %}">
-                        {{ cat }}
+        <!-- ================= INTERACTIVE WORKFLOW PIPELINE STUDIO ================= -->
+        <div class="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
+                        <h2 class="text-xl font-black text-white">Metricore Neural Pipeline Studio</h2>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1">Multi-stage pipeline flow. Click any cluster node to instantly filter the tool directory.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="/login" class="px-3.5 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 text-xs font-bold transition-all flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        Full Canvas Node Editor
                     </a>
+                </div>
+            </div>
+
+            <!-- Dynamic Node Flow Grid (5 Interconnected Stages) -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
+                <!-- Node A: Ingress -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 relative group hover:border-purple-500/50 transition-all hover:-translate-y-1 shadow-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-mono text-emerald-400 font-bold uppercase">Stage 01</span>
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    </div>
+                    <div class="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">Visitor Ingress</div>
+                    <p class="text-[11px] text-slate-400 mt-1">HTTPS Inbound traffic routed through Akbar Admin session.</p>
+                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-500 font-mono flex justify-between">
+                        <span>Status: Live</span>
+                        <span class="text-emerald-400">99.9%</span>
+                    </div>
+                </div>
+
+                <!-- Node B: Auth & Gatekeeper -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-purple-500/40 relative group hover:border-purple-400 transition-all hover:-translate-y-1 shadow-lg shadow-purple-500/10">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-mono text-purple-400 font-bold uppercase">Stage 02</span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">AUTH</span>
+                    </div>
+                    <div class="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">Auth Gateway</div>
+                    <p class="text-[11px] text-slate-400 mt-1">Encrypted cookie handshake, unlock credentials verified.</p>
+                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-mono flex justify-between">
+                        <span>User: Akbar</span>
+                        <span class="text-purple-300">ADMIN</span>
+                    </div>
+                </div>
+
+                <!-- Node C: Neural Core -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-indigo-500/50 relative group hover:border-indigo-400 transition-all hover:-translate-y-1 shadow-lg shadow-indigo-500/10 animate-breathe-glow">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-mono text-indigo-400 font-bold uppercase">Stage 03</span>
+                        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
+                    </div>
+                    <div class="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">Neural Core Hub</div>
+                    <p class="text-[11px] text-slate-400 mt-1">Central dispatcher coordinating 12 parallel tool pipelines.</p>
+                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-mono flex justify-between">
+                        <span>Dispatched: 24 Tools</span>
+                        <span class="text-indigo-300">Active</span>
+                    </div>
+                </div>
+
+                <!-- Node D: Free-Tier Evaluator -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-emerald-500/40 relative group hover:border-emerald-400 transition-all hover:-translate-y-1 shadow-lg shadow-emerald-500/10">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-mono text-emerald-400 font-bold uppercase">Stage 04</span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">TRIAL</span>
+                    </div>
+                    <div class="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">Trial & Cost Guard</div>
+                    <p class="text-[11px] text-slate-400 mt-1">Tracks monthly allowances, free credits, and zero-cost trials.</p>
+                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-mono flex justify-between">
+                        <span>Savings: Max</span>
+                        <span class="text-emerald-400">Enabled</span>
+                    </div>
+                </div>
+
+                <!-- Node E: 12 Category Endpoints -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-pink-500/40 relative group hover:border-pink-400 transition-all hover:-translate-y-1 shadow-lg shadow-pink-500/10">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-[10px] font-mono text-pink-400 font-bold uppercase">Stage 05</span>
+                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 font-mono">ROUTER</span>
+                    </div>
+                    <div class="text-sm font-bold text-white group-hover:text-pink-300 transition-colors">12 Domain Pipelines</div>
+                    <p class="text-[11px] text-slate-400 mt-1">Creative, Coding, Voice, Music, Video, and Research endpoints.</p>
+                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-mono flex justify-between">
+                        <span>Endpoints: 12</span>
+                        <span class="text-pink-300">Ready</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SEARCH & INTERACTIVE CONTROLS ================= -->
+        <div class="space-y-5 max-w-4xl mx-auto">
+            <!-- Search Bar with Live HTMX -->
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                    <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <input 
+                    type="text" 
+                    name="q" 
+                    value="{{ search_query }}"
+                    placeholder="Search by tool name, topic, trial limit, or keywords (e.g., Midjourney, Voice, Video, Cursor)..." 
+                    class="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm shadow-2xl transition-all"
+                    hx-get="/api/search"
+                    hx-trigger="keyup changed delay:200ms, search"
+                    hx-target="#tools-grid"
+                >
+            </div>
+
+            <!-- Category Pills & Pricing Toggle -->
+            <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
+                <!-- Category Pills -->
+                <div class="flex flex-wrap gap-1.5 items-center">
+                    <a href="/" class="px-3.5 py-1.5 rounded-xl font-bold transition-all {% if active_category == 'All' %}bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800{% endif %}">
+                        All ({{ total_count }})
+                    </a>
+                    {% for cat in categories %}
+                        <a href="/?category={{ cat }}" class="px-3 py-1.5 rounded-xl font-medium transition-all {% if active_category == cat %}bg-purple-600 text-white shadow-md shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700{% endif %}">
+                            {{ cat }}
+                        </a>
+                    {% endfor %}
+                </div>
+
+                <!-- Pricing Filter -->
+                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800 shadow-md">
+                    <a href="/?category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'All' %}bg-slate-800 text-white{% else %}text-slate-400 hover:text-white{% endif %}">
+                        All
+                    </a>
+                    <a href="/?pricing=Paid&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'Paid' %}bg-rose-500/20 text-rose-300 border border-rose-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
+                        Paid (With Free Trial)
+                    </a>
+                    <a href="/?pricing=Free&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'Free' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
+                        Free Alternatives
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= DYNAMIC TOOLS GRID ================= -->
+        <div id="tools-grid" class="transition-all duration-300">
+            {% include "components/tool_grid.html" %}
+        </div>
+
+        <!-- ================= SIDE-BY-SIDE CATEGORY BENCHMARK BREAKDOWN ================= -->
+        <div class="mt-20 pt-12 border-t border-slate-800/80 space-y-8">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-black text-white">Side-by-Side Category Benchmarks</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-1">Directly compare each paid industry benchmark against its top free alternative with free-tier trial limits.</p>
+                </div>
+                <span class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-900 text-purple-300 border border-slate-800 self-start sm:self-auto">
+                    12 Topics • 24 Verified Tools
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for item in category_pairs %}
+                    <div class="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-5 space-y-4 hover:border-slate-700 transition-all hover:shadow-xl">
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                            <span class="text-xs font-black uppercase tracking-wider text-purple-400 flex items-center gap-2">
+                                <span class="w-5 h-5 rounded-md bg-purple-500/20 text-purple-300 text-[10px] flex items-center justify-center font-bold">
+                                    {{ "%02d"|format(loop.index) }}
+                                </span>
+                                {{ item.category }}
+                            </span>
+                            <span class="text-[10px] text-slate-500 font-mono">PAIR #{{ loop.index }}</span>
+                        </div>
+
+                        <!-- Paid Tool Row with Image Thumbnail -->
+                        {% if item.paid %}
+                        <div class="p-3 rounded-2xl bg-slate-950/70 border border-rose-500/20 flex items-center justify-between gap-3 group hover:border-rose-500/40 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <img src="{{ item.paid.image_url }}" alt="{{ item.paid.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">Paid</span>
+                                        <a href="/tool/{{ item.paid.id }}" class="text-xs font-bold text-white hover:text-purple-300">{{ item.paid.name }}</a>
+                                    </div>
+                                    <div class="text-[10px] text-slate-400 mt-0.5">{{ item.paid.free_tier_limit }}</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-black text-rose-400 font-mono">{{ item.paid.price_display }}</span>
+                        </div>
+                        {% endif %}
+
+                        <!-- Free Alternative Row with Image Thumbnail -->
+                        {% if item.free %}
+                        <div class="p-3 rounded-2xl bg-slate-950/70 border border-emerald-500/20 flex items-center justify-between gap-3 group hover:border-emerald-500/40 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <img src="{{ item.free.image_url }}" alt="{{ item.free.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Free</span>
+                                        <a href="/tool/{{ item.free.id }}" class="text-xs font-bold text-white hover:text-emerald-300">{{ item.free.name }}</a>
+                                    </div>
+                                    <div class="text-[10px] text-slate-400 mt-0.5">{{ item.free.free_tier_limit }}</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-black text-emerald-400 font-mono">$0/mo</span>
+                        </div>
+                        {% endif %}
+                    </div>
                 {% endfor %}
             </div>
-
-            <!-- Pricing Filter Switch -->
-            <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800">
-                <a href="/?category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-medium transition-all {% if active_pricing == 'All' %}bg-slate-800 text-white{% else %}text-slate-400 hover:text-white{% endif %}">
-                    All
-                </a>
-                <a href="/?pricing=Paid&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-medium transition-all {% if active_pricing == 'Paid' %}bg-rose-500/20 text-rose-300 border border-rose-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
-                    Paid (With Free Trial)
-                </a>
-                <a href="/?pricing=Free&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-medium transition-all {% if active_pricing == 'Free' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
-                    Free / Alternatives
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Live Dynamic Tools Grid Container -->
-    <div id="tools-grid">
-        {% include "components/tool_grid.html" %}
-    </div>
-
-    <!-- Category Paid vs Free Side-by-Side Comparison Section -->
-    <div class="mt-16 pt-12 border-t border-slate-800/80 space-y-6">
-        <div class="flex items-center justify-between">
-            <div>
-                <h2 class="text-2xl font-extrabold text-white">Side-by-Side Category Breakdown</h2>
-                <p class="text-xs sm:text-sm text-slate-400 mt-1">Directly compare each paid industry benchmark against its top free alternative.</p>
-            </div>
-            <span class="text-xs font-semibold px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                12 Categories
-            </span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for item in category_pairs %}
-                <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-5 space-y-4">
-                    <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-                        <span class="text-xs font-bold uppercase tracking-wider text-purple-400">
-                            {{ loop.index }}. {{ item.category }}
-                        </span>
-                    </div>
-
-                    <!-- Paid Tool Row -->
-                    {% if item.paid %}
-                    <div class="p-3 rounded-xl bg-slate-950/60 border border-rose-500/20 flex items-center justify-between">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">Paid</span>
-                                <a href="/tool/{{ item.paid.id }}" class="text-sm font-bold text-white hover:text-purple-300">{{ item.paid.name }}</a>
-                            </div>
-                            <span class="text-[11px] text-slate-400">{{ item.paid.free_tier_limit }}</span>
-                        </div>
-                        <span class="text-xs font-bold text-rose-400">{{ item.paid.price_display }}</span>
-                    </div>
-                    {% endif %}
-
-                    <!-- Free Alternative Row -->
-                    {% if item.free %}
-                    <div class="p-3 rounded-xl bg-slate-950/60 border border-emerald-500/20 flex items-center justify-between">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Free</span>
-                                <a href="/tool/{{ item.free.id }}" class="text-sm font-bold text-white hover:text-emerald-300">{{ item.free.name }}</a>
-                            </div>
-                            <span class="text-[11px] text-slate-400">{{ item.free.free_tier_limit }}</span>
-                        </div>
-                        <span class="text-xs font-bold text-emerald-400">$0/mo</span>
-                    </div>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
     </div>
-
 </div>
 {% endblock %}
-
