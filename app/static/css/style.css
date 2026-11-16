@@ -1,5 +1,69 @@
-/* Metricore custom styles */
-body {
-    -webkit-font-smoothing: antialiased;
+/* Metricore Modern AI Workflow & Lively Animations */
+
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.25));
+    }
+    50% {
+        transform: scale(1.025);
+        filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.55));
+    }
 }
 
+@keyframes breatheGlow {
+    0%, 100% {
+        opacity: 0.4;
+        box-shadow: 0 0 25px rgba(99, 102, 241, 0.2);
+    }
+    50% {
+        opacity: 0.85;
+        box-shadow: 0 0 50px rgba(168, 85, 247, 0.5);
+    }
+}
+
+@keyframes floatGentle {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(0.5deg);
+    }
+}
+
+@keyframes pulseParticle {
+    0% {
+        r: 3;
+        opacity: 0.3;
+    }
+    50% {
+        r: 6;
+        opacity: 1;
+    }
+    100% {
+        r: 3;
+        opacity: 0.3;
+    }
+}
+
+.animate-breathe {
+    animation: breathe 5s ease-in-out infinite;
+}
+
+.animate-breathe-glow {
+    animation: breatheGlow 4s ease-in-out infinite;
+}
+
+.animate-float {
+    animation: floatGentle 6s ease-in-out infinite;
+}
+
+.glass-panel {
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.card-image-gradient {
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.95) 100%);
+}

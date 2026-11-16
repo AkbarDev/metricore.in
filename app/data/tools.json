@@ -9,6 +9,7 @@
     "free_tier_limit": "Limited promotional trial credits",
     "description": "Leading AI image synthesis tool known for photorealistic and highly artistic visual generation.",
     "url": "https://www.midjourney.com",
+    "image_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "nano-banana"
   },
   {
@@ -21,6 +22,7 @@
     "free_tier_limit": "Free unlimited/daily usage",
     "description": "Fast and accessible free AI image generator for rapid prototyping, stickers, and concepts.",
     "url": "https://nanobanana.com",
+    "image_url": "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "midjourney"
   },
   {
@@ -33,6 +35,7 @@
     "free_tier_limit": "5 Pro Searches / 4 hours + Unlimited Quick Searches",
     "description": "Conversational AI search engine delivering sourced answers, academic references, and web synthesis.",
     "url": "https://www.perplexity.ai",
+    "image_url": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "consensus"
   },
   {
@@ -45,6 +48,7 @@
     "free_tier_limit": "Unlimited searches + 20 AI credits/month",
     "description": "AI-powered search engine designed to surface insights and scientific consensus directly from peer-reviewed research.",
     "url": "https://consensus.app",
+    "image_url": "https://images.unsplash.com/photo-1507668077129-56e32842fceb?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "perplexity"
   },
   {
@@ -57,6 +61,7 @@
     "free_tier_limit": "1 free credit (1 min video) on signup",
     "description": "Enterprise AI video generation platform creating hyper-realistic digital avatars with studio-grade lip-syncing.",
     "url": "https://www.heygen.com",
+    "image_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "hedra"
   },
   {
@@ -69,6 +74,7 @@
     "free_tier_limit": "Daily free generation credits",
     "description": "Expressive AI avatar and character creation studio that turns still images and audio into full-motion talking videos.",
     "url": "https://www.hedra.com",
+    "image_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "heygen"
   },
   {
@@ -81,6 +87,7 @@
     "free_tier_limit": "30-day full trial / Free for students & OSS",
     "description": "The AI pair programmer integrated into VS Code, JetBrains, and GitHub CLI for context-aware code completion and chat.",
     "url": "https://github.com/features/copilot",
+    "image_url": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "cursor"
   },
   {
@@ -93,6 +100,7 @@
     "free_tier_limit": "2,000 completions + 50 premium requests/mo",
     "description": "AI-first code editor built on VS Code with multi-file codebase indexing, inline edits, and intelligent terminal execution.",
     "url": "https://www.cursor.com",
+    "image_url": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "github-copilot"
   },
   {
@@ -105,6 +113,7 @@
     "free_tier_limit": "125 one-time video credits",
     "description": "Cinematic generative video suite with camera controls, motion brushes, text-to-video, and image-to-video synthesis.",
     "url": "https://runwayml.com",
+    "image_url": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "stable-diffusion"
   },
   {
@@ -117,6 +126,7 @@
     "free_tier_limit": "Unlimited local / Free open-source",
     "description": "Open-source latent diffusion models by Stability AI for unrestricted local generation of images and cinematic sequences.",
     "url": "https://stability.ai",
+    "image_url": "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "runway-ml"
   },
   {
@@ -129,6 +139,7 @@
     "free_tier_limit": "25 free generative credits / month",
     "description": "Commercial-safe generative AI built into Photoshop, Illustrator, and web for generative fill, text effects, and thumbnails.",
     "url": "https://firefly.adobe.com",
+    "image_url": "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "photoroom"
   },
   {
@@ -141,6 +152,7 @@
     "free_tier_limit": "Free background removal & editing",
     "description": "AI photo editing studio specialized in one-click background removal, product showcases, and high-CTR thumbnail creation.",
     "url": "https://www.photoroom.com",
+    "image_url": "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "adobe-firefly"
   },
   {
@@ -153,6 +165,7 @@
     "free_tier_limit": "Free app trial generation credits",
     "description": "Mobile-first AI video generation platform tailored for social creators, featuring realistic human motion and cinematic camera angles.",
     "url": "https://higgsfield.ai",
+    "image_url": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "hailuo"
   },
   {
@@ -165,6 +178,7 @@
     "free_tier_limit": "Free daily high-definition generations",
     "description": "Cutting-edge text-to-video and image-to-video platform by MiniMax offering physics-accurate motion and filmic consistency.",
     "url": "https://hailuoai.video",
+    "image_url": "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "higgsfield"
   },
   {
@@ -177,6 +191,7 @@
     "free_tier_limit": "3 channels + 10 scheduled posts/channel",
     "description": "Intuitive social media management and scheduling tool equipped with AI copywriting and multi-channel publishing.",
     "url": "https://buffer.com",
+    "image_url": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "publer"
   },
   {
@@ -189,6 +204,7 @@
     "free_tier_limit": "3 social accounts + 10 pending posts",
     "description": "Feature-rich social media management platform with AI content generation, link in bio, and calendar scheduling.",
     "url": "https://publer.io",
+    "image_url": "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "buffer"
   },
   {
@@ -201,6 +217,7 @@
     "free_tier_limit": "7-day full feature trial",
     "description": "Enterprise AI marketing copilot designed to generate on-brand copy, blogs, email sequences, and ad creatives.",
     "url": "https://www.jasper.ai",
+    "image_url": "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "quillbot"
   },
   {
@@ -213,6 +230,7 @@
     "free_tier_limit": "125 words Paraphrase + Unlimited Grammar Check",
     "description": "Comprehensive AI writing and editing assistant for paraphrasing, proofreading, citations, and summarizing content.",
     "url": "https://quillbot.com",
+    "image_url": "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "jasper"
   },
   {
@@ -225,6 +243,7 @@
     "free_tier_limit": "400 AI creation credits on signup",
     "description": "AI-powered presentation, document, and webpage generator that builds complete, beautifully styled slide decks in seconds.",
     "url": "https://gamma.app",
+    "image_url": "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "canva"
   },
   {
@@ -237,6 +256,7 @@
     "free_tier_limit": "Perpetual free tier with Magic AI design",
     "description": "Global design suite with collaborative presentation creator, Magic Presentation generator, and rich graphics library.",
     "url": "https://www.canva.com",
+    "image_url": "https://images.unsplash.com/photo-1542744094-3a31f272c490?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "gamma"
   },
   {
@@ -249,6 +269,7 @@
     "free_tier_limit": "10,000 free characters / month",
     "description": "Industry benchmark in AI voice generation, voice cloning, and multilingual text-to-speech with emotional depth.",
     "url": "https://elevenlabs.io",
+    "image_url": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "playht"
   },
   {
@@ -261,6 +282,7 @@
     "free_tier_limit": "12,500 characters + 1 voice clone",
     "description": "AI voice generator and conversational text-to-speech platform with over 900+ expressive voices in 142 languages.",
     "url": "https://play.ht",
+    "image_url": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "elevenlabs"
   },
   {
@@ -273,6 +295,7 @@
     "free_tier_limit": "50 daily credits (10 songs / day)",
     "description": "Pioneering AI music engine capable of generating full, radio-quality songs with lyrics, vocals, and instruments from any prompt.",
     "url": "https://suno.com",
+    "image_url": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "udio"
   },
   {
@@ -285,7 +308,7 @@
     "free_tier_limit": "10 daily + 100 monthly generation credits",
     "description": "Advanced AI music studio created by former Google DeepMind researchers for nuanced genre blending and high-fidelity vocal tracks.",
     "url": "https://www.udio.com",
+    "image_url": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&auto=format&fit=crop&q=80",
     "alternative_id": "suno"
   }
 ]
-
