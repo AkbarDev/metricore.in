@@ -32,6 +32,11 @@ class AITool(BaseModel):
     eval_recency: Optional[str] = None
     eval_ecosystem: Optional[str] = None
 
+    # Efficiency, Accuracy & Modality Metrics
+    modality_type: Optional[str] = None          # "Image / Visual", "Sound / Audio / Music", "Video / Motion", "Text / Writing", "Code / Dev", "Workflow / Automation", "Research & Reasoning"
+    eval_latency: Optional[str] = None           # "Real-time (<500ms)", "Interactive (1s-3s)", "Batch (5s+)"
+    eval_accuracy_tier: Optional[str] = None     # "Frontier Reasoning", "Web Grounded with Citations", "High-Fidelity Generative"
+
 class CategorySummary(BaseModel):
     name: str
     count: int
