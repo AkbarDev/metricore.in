@@ -14,6 +14,24 @@ class AITool(BaseModel):
     image_url: Optional[str] = None
     alternative_id: Optional[str] = None
 
+    # Provenance & Company
+    founded_year: Optional[int] = None
+    founders: Optional[str] = None
+    country_name: Optional[str] = None
+    country_flag: Optional[str] = None
+    github_stars: Optional[str] = None
+    operational_status: Optional[str] = "Active"
+    total_funding: Optional[str] = None
+    relevancy_2026: Optional[str] = None
+
+    # 6 Builder Evaluation Metrics (2026/2027 Stack)
+    eval_api_readiness: Optional[str] = None
+    eval_license_risk: Optional[str] = None
+    eval_compliance: Optional[str] = None
+    eval_scalability: Optional[str] = None
+    eval_recency: Optional[str] = None
+    eval_ecosystem: Optional[str] = None
+
 class CategorySummary(BaseModel):
     name: str
     count: int

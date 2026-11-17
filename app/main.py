@@ -189,6 +189,7 @@ async def home(
     category: Optional[str] = None,
     pricing: Optional[str] = None,
     q: Optional[str] = None,
+    view: Optional[str] = None,
 ):
     if not is_authenticated(request):
         return RedirectResponse(url="/login", status_code=302)
@@ -196,10 +197,14 @@ async def home(
     all_tools = load_tools()
     categories = get_categories(all_tools)
 
+    is_eval_board = (category == "AI tool eval board") or (view == "eval-board")
+    if is_eval_board:
+        category = "AI tool eval board"
+
     filtered = all_tools
-    if category:
+    if category and category != "AI tool eval board" and category != "All":
         filtered = [t for t in filtered if t.category.lower() == category.lower()]
-    if pricing:
+    if pricing and pricing != "All":
         filtered = [t for t in filtered if t.pricing_type.lower() == pricing.lower()]
     if q:
         query_str = q.lower()
@@ -209,6 +214,8 @@ async def home(
             or query_str in t.description.lower()
             or query_str in t.category.lower()
             or query_str in t.free_tier_limit.lower()
+            or (t.founders and query_str in t.founders.lower())
+            or (t.country_name and query_str in t.country_name.lower())
         ]
 
     # Organize by category for comparison view
@@ -228,11 +235,13 @@ async def home(
         name="index.html",
         context={
             "tools": filtered,
+            "all_tools": all_tools,
             "categories": categories,
             "category_pairs": category_pairs,
             "active_category": category or "All",
             "active_pricing": pricing or "All",
             "search_query": q or "",
+            "is_eval_board": is_eval_board,
             "total_count": len(filtered),
             "is_authenticated": True,
             "username": get_current_user_name(request),
