@@ -159,38 +159,65 @@
                 >
             </div>
 
-            <!-- Category Pills & Pricing Toggle -->
+            <!-- Category Pills & Pricing / View Toggle -->
             <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
-                <!-- Category Pills -->
+                <!-- Category Pills (Including Dedicated AI Tool Eval Board Tab) -->
                 <div class="flex flex-wrap gap-1.5 items-center">
-                    <a href="/" class="px-3.5 py-1.5 rounded-xl font-bold transition-all {% if active_category == 'All' %}bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800{% endif %}">
+                    <!-- Dedicated AI Tool Eval Board Tab (As Requested) -->
+                    <a href="/?category=AI+tool+eval+board" class="px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 {% if is_eval_board or active_category == 'AI tool eval board' %}bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 text-white shadow-lg shadow-purple-600/40 ring-2 ring-purple-400/40{% else %}bg-purple-950/50 text-purple-300 hover:text-white border border-purple-500/40 hover:bg-purple-900/40{% endif %}">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>📊 AI Tool Eval Board</span>
+                    </a>
+
+                    <a href="/" class="px-3.5 py-1.5 rounded-xl font-bold transition-all {% if active_category == 'All' and not is_eval_board %}bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800{% endif %}">
                         All ({{ total_count }})
                     </a>
                     {% for cat in categories %}
-                        <a href="/?category={{ cat }}" class="px-3 py-1.5 rounded-xl font-medium transition-all {% if active_category == cat %}bg-purple-600 text-white shadow-md shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700{% endif %}">
+                        <a href="/?category={{ cat }}" class="px-3 py-1.5 rounded-xl font-medium transition-all {% if active_category == cat and not is_eval_board %}bg-purple-600 text-white shadow-md shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700{% endif %}">
                             {{ cat }}
                         </a>
                     {% endfor %}
                 </div>
 
-                <!-- Pricing Filter -->
-                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800 shadow-md">
-                    <a href="/?category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'All' %}bg-slate-800 text-white{% else %}text-slate-400 hover:text-white{% endif %}">
-                        All
-                    </a>
-                    <a href="/?pricing=Paid&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'Paid' %}bg-rose-500/20 text-rose-300 border border-rose-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
-                        Paid (With Free Trial)
-                    </a>
-                    <a href="/?pricing=Free&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'Free' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
-                        Free Alternatives
-                    </a>
+                <!-- View & Pricing Filter -->
+                <div class="flex items-center gap-2">
+                    <!-- Mode Switcher -->
+                    <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800 shadow-md">
+                        <a href="/?category={{ active_category if (active_category != 'All' and not is_eval_board) else '' }}" class="px-2.5 py-1 rounded-lg font-bold transition-all flex items-center gap-1 {% if not is_eval_board %}bg-slate-800 text-white{% else %}text-slate-400 hover:text-white{% endif %}">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                            <span>Cards</span>
+                        </a>
+                        <a href="/?category=AI+tool+eval+board" class="px-2.5 py-1 rounded-lg font-bold transition-all flex items-center gap-1 {% if is_eval_board %}bg-purple-600 text-white shadow-sm{% else %}text-slate-400 hover:text-white{% endif %}">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            <span>Eval Board</span>
+                        </a>
+                    </div>
+
+                    <!-- Pricing Filter (Shown on Cards View) -->
+                    {% if not is_eval_board %}
+                    <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800 shadow-md">
+                        <a href="/?category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'All' %}bg-slate-800 text-white{% else %}text-slate-400 hover:text-white{% endif %}">
+                            All
+                        </a>
+                        <a href="/?pricing=Paid&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'Paid' %}bg-rose-500/20 text-rose-300 border border-rose-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
+                            Paid
+                        </a>
+                        <a href="/?pricing=Free&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'Free' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
+                            Free
+                        </a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- ================= DYNAMIC TOOLS GRID ================= -->
+        <!-- ================= DYNAMIC TOOLS VIEW (GRID CARDS OR TABULAR EVAL BOARD) ================= -->
         <div id="tools-grid" class="transition-all duration-300">
-            {% include "components/tool_grid.html" %}
+            {% if is_eval_board or active_category == 'AI tool eval board' %}
+                {% include "components/eval_board.html" %}
+            {% else %}
+                {% include "components/tool_grid.html" %}
+            {% endif %}
         </div>
 
         <!-- ================= SIDE-BY-SIDE CATEGORY BENCHMARK BREAKDOWN ================= -->
@@ -201,7 +228,7 @@
                     <p class="text-xs sm:text-sm text-slate-400 mt-1">Directly compare each paid industry benchmark against its top free alternative with free-tier trial limits.</p>
                 </div>
                 <span class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-900 text-purple-300 border border-slate-800 self-start sm:self-auto">
-                    12 Topics • 24 Verified Tools
+                    {{ category_pairs|length }} Topics • {{ all_tools|length }} Verified Tools
                 </span>
             </div>
 
