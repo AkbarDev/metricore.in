@@ -1,4 +1,5 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+<!-- 4 Cards Per Row Grid (5 Rows = 20 Cards per Page) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
     {% for tool in tools %}
         {% include "components/tool_card.html" %}
     {% else %}
@@ -9,4 +10,7 @@
         </div>
     {% endfor %}
 </div>
+
+<!-- Benchmark-grade Pagination Bar at bottom of Grid -->
+{% include "components/pagination.html" %}
 

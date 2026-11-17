@@ -23,7 +23,7 @@
             <!-- Summary KPI Badges -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center flex-shrink-0">
                 <div class="p-2.5 px-3 rounded-2xl bg-slate-950/70 border border-slate-800">
-                    <div class="text-lg font-black text-white">{{ tools|length }}</div>
+                    <div class="text-lg font-black text-white">{{ (all_filtered_tools or tools)|length }}</div>
                     <div class="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Evaluated Tools</div>
                 </div>
                 <div class="p-2.5 px-3 rounded-2xl bg-slate-950/70 border border-slate-800">
@@ -59,7 +59,7 @@
             <!-- Quick Pill Filter Tags -->
             <div class="flex flex-wrap items-center gap-1.5 w-full sm:w-auto text-[11px]">
                 <button type="button" onclick="setEvalFilter('all')" class="eval-filter-tag active px-3 py-1.5 rounded-xl font-bold bg-purple-600 text-white shadow-md">
-                    All ({{ tools|length }})
+                    All ({{ (all_filtered_tools or tools)|length }})
                 </button>
                 <button type="button" onclick="setEvalFilter('tier1')" class="eval-filter-tag px-3 py-1.5 rounded-xl font-medium bg-slate-950/80 text-slate-300 hover:text-white border border-slate-800">
                     ✦ Tier 1 Essential
@@ -98,7 +98,7 @@
 
                 <!-- Table Body -->
                 <tbody id="eval-table-body" class="divide-y divide-slate-800/60 text-slate-200">
-                    {% for tool in tools %}
+                    {% for tool in (all_filtered_tools or tools) %}
                     <tr class="eval-row hover:bg-slate-800/40 transition-colors group"
                         data-name="{{ tool.name|lower }}"
                         data-category="{{ tool.category|lower }}"
