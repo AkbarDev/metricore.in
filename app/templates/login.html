@@ -260,14 +260,75 @@
             mouse.y = -9999;
         });
 
-        // Generate Uniform Concentric Orbital Rings
+        // Generate Uniform Multi-Tier Neural Constellation Rings (References 1, 2, 3, 4)
         let nodes = [];
         const ringConfigs = [
-            { radiusOffset: 255, count: 32, orbitSpeed: 0.0016, jitter: 12 },  // Inner track
-            { radiusOffset: 295, count: 36, orbitSpeed: -0.0012, jitter: 14 }, // Mid-inner (counter-revolving)
-            { radiusOffset: 340, count: 42, orbitSpeed: 0.0010, jitter: 16 },  // Mid-outer
-            { radiusOffset: 385, count: 48, orbitSpeed: -0.0008, jitter: 18 }  // Outer halo (counter-revolving)
+            { radiusOffset: 250, count: 34, orbitSpeed: 0.0013, jitter: 10, tier: 'inner' },  // Inner boundary
+            { radiusOffset: 288, count: 40, orbitSpeed: -0.0010, jitter: 12, tier: 'mid-in' }, // Mid-inner counter-revolving
+            { radiusOffset: 330, count: 48, orbitSpeed: 0.0008, jitter: 16, tier: 'core' },   // Core dense constellation
+            { radiusOffset: 375, count: 50, orbitSpeed: -0.0006, jitter: 18, tier: 'mid-out' },// Mid-outer counter-revolving
+            { radiusOffset: 420, count: 42, orbitSpeed: 0.0005, jitter: 24, tier: 'outer' }   // Outer corona & spikes
         ];
+
+        // Helper: Multi-stop Chromatic Gradient interpolation (Cyan -> Indigo -> Magenta -> Coral Pink)
+        function getConstellationColor(angleRatio, isDay, alpha = 1) {
+            // angleRatio: 0 to 1
+            // Palette stops:
+            // 0.00: Cyan / Teal
+            // 0.28: Electric Royal Blue
+            // 0.55: Neon Purple / Violet
+            // 0.78: Magenta / Fuchsia
+            // 0.92: Coral Pink / Rose
+            let r, g, b;
+            if (isDay) {
+                // High-contrast vibrant ink tones for crisp white backdrop (Ref Image 1 & 4)
+                if (angleRatio < 0.25) {
+                    const t = angleRatio / 0.25;
+                    r = Math.round(2 + t * 27);     // 2 -> 29
+                    g = Math.round(132 - t * 54);   // 132 -> 78
+                    b = Math.round(199 + t * 17);   // 199 -> 216
+                } else if (angleRatio < 0.50) {
+                    const t = (angleRatio - 0.25) / 0.25;
+                    r = Math.round(29 + t * 50);    // 29 -> 79
+                    g = Math.round(78 - t * 8);     // 78 -> 70
+                    b = Math.round(216 + t * 13);   // 216 -> 229
+                } else if (angleRatio < 0.75) {
+                    const t = (angleRatio - 0.50) / 0.25;
+                    r = Math.round(79 + t * 47);    // 79 -> 126
+                    g = Math.round(70 - t * 36);    // 70 -> 34
+                    b = Math.round(229 - t * 23);   // 229 -> 206
+                } else {
+                    const t = (angleRatio - 0.75) / 0.25;
+                    r = Math.round(126 + t * 64);   // 126 -> 190
+                    g = Math.round(34 - t * 10);    // 34 -> 24
+                    b = Math.round(206 - t * 113);  // 206 -> 93
+                }
+            } else {
+                // Luminous Neon Glow for Dark Backdrop (Ref Image 2 & 3)
+                if (angleRatio < 0.25) {
+                    const t = angleRatio / 0.25;
+                    r = Math.round(6 + t * 53);     // 6 -> 59
+                    g = Math.round(182 - t * 52);   // 182 -> 130
+                    b = Math.round(212 + t * 34);   // 212 -> 246
+                } else if (angleRatio < 0.50) {
+                    const t = (angleRatio - 0.25) / 0.25;
+                    r = Math.round(59 + t * 80);    // 59 -> 139
+                    g = Math.round(130 - t * 38);   // 130 -> 92
+                    b = Math.round(246);            // 246 -> 246
+                } else if (angleRatio < 0.75) {
+                    const t = (angleRatio - 0.50) / 0.25;
+                    r = Math.round(139 + t * 78);   // 139 -> 217
+                    g = Math.round(92 - t * 22);    // 92 -> 70
+                    b = Math.round(246 - t * 7);    // 246 -> 239
+                } else {
+                    const t = (angleRatio - 0.75) / 0.25;
+                    r = Math.round(217 + t * 27);   // 217 -> 244
+                    g = Math.round(70 - t * 7);     // 70 -> 63
+                    b = Math.round(239 - t * 145);  // 239 -> 94
+                }
+            }
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
 
         function initCircularNodes() {
             nodes = [];
@@ -276,6 +337,7 @@
             const isDay = document.documentElement.classList.contains("day-mode");
             const scale = Math.min(1, Math.max(0.65, width / 1100));
 
+            // Populate Concentric Constellation Rings
             ringConfigs.forEach((ring, ringIdx) => {
                 const baseRadius = ring.radiusOffset * scale;
                 const count = Math.round(ring.count * (width < 640 ? 0.65 : 1));
@@ -283,25 +345,25 @@
                 for (let i = 0; i < count; i++) {
                     const angle = (i / count) * Math.PI * 2;
                     const r = baseRadius + (Math.random() - 0.5) * ring.jitter * scale;
-                    const jitterAngle = angle + (Math.random() - 0.5) * 0.08;
+                    const jitterAngle = angle + (Math.random() - 0.5) * 0.07;
 
                     const x = centerX + Math.cos(jitterAngle) * r;
                     const y = centerY + Math.sin(jitterAngle) * r;
 
-                    const colorAngleRatio = (angle / (Math.PI * 2));
-                    let color, hoverColor;
-                    if (isDay) {
-                        if (colorAngleRatio < 0.25) color = "rgba(2, 132, 199, ";
-                        else if (colorAngleRatio < 0.50) color = "rgba(37, 99, 235, ";
-                        else if (colorAngleRatio < 0.75) color = "rgba(124, 58, 237, ";
-                        else color = "rgba(219, 39, 119, ";
-                        hoverColor = "#2563eb";
-                    } else {
-                        if (colorAngleRatio < 0.25) color = "rgba(56, 189, 248, ";
-                        else if (colorAngleRatio < 0.50) color = "rgba(99, 102, 241, ";
-                        else if (colorAngleRatio < 0.75) color = "rgba(168, 85, 247, ";
-                        else color = "rgba(236, 72, 153, ";
-                        hoverColor = "#38bdf8";
+                    const normAngle = (jitterAngle % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+                    const angleRatio = normAngle / (Math.PI * 2);
+
+                    // Hierarchy: Hub (large anchor), Junction (mid), Satellite (fine particle)
+                    const randType = Math.random();
+                    let tier = 'junction';
+                    let baseRadiusVal = 2.4 + Math.random() * 1.2;
+
+                    if (randType < 0.14) {
+                        tier = 'hub';
+                        baseRadiusVal = 4.2 + Math.random() * 1.6; // Large glowing AI hub
+                    } else if (randType > 0.72) {
+                        tier = 'satellite';
+                        baseRadiusVal = 1.1 + Math.random() * 0.8; // Floating stardust
                     }
 
                     nodes.push({
@@ -314,10 +376,9 @@
                         y: y,
                         vx: 0,
                         vy: 0,
-                        baseRadius: 2.2 + Math.random() * 2.5,
-                        radius: 2.2 + Math.random() * 2.5,
-                        color: color,
-                        hoverColor: hoverColor,
+                        tier: tier,
+                        baseRadius: baseRadiusVal,
+                        angleRatio: angleRatio,
                         ringIdx: ringIdx,
                         pulsePhase: Math.random() * Math.PI * 2,
                         pulseSpeed: 0.02 + Math.random() * 0.025,
@@ -325,6 +386,35 @@
                     });
                 }
             });
+
+            // Add 25 subtle ambient floating outer satellites (Depth dust like Ref 1 & 3)
+            const ambientCount = width < 640 ? 12 : 25;
+            for (let i = 0; i < ambientCount; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const r = (430 + Math.random() * 90) * scale;
+                const x = centerX + Math.cos(angle) * r;
+                const y = centerY + Math.sin(angle) * r;
+                const angleRatio = angle / (Math.PI * 2);
+
+                nodes.push({
+                    angle: angle,
+                    r: r,
+                    orbitSpeed: (Math.random() - 0.5) * 0.0006,
+                    baseX: x,
+                    baseY: y,
+                    x: x,
+                    y: y,
+                    vx: 0,
+                    vy: 0,
+                    tier: 'satellite',
+                    baseRadius: 1.0 + Math.random() * 0.7,
+                    angleRatio: angleRatio,
+                    ringIdx: 99,
+                    pulsePhase: Math.random() * Math.PI * 2,
+                    pulseSpeed: 0.015 + Math.random() * 0.02,
+                    hoverIntensity: 0
+                });
+            }
         }
 
         initCircularNodes();
@@ -339,7 +429,8 @@
                 x2: n2.x,
                 y2: n2.y,
                 progress: 0,
-                speed: 0.02 + Math.random() * 0.02
+                speed: 0.025 + Math.random() * 0.025,
+                colorRatio: (n1.angleRatio + n2.angleRatio) / 2
             });
         }
 
@@ -347,12 +438,11 @@
         window.addEventListener("click", (e) => {
             nodes.forEach(n => {
                 const dist = Math.hypot(e.clientX - n.x, e.clientY - n.y);
-                if (dist < 180) {
-                    n.vx += (n.x - e.clientX) * 0.12;
-                    n.vy += (n.y - e.clientY) * 0.12;
-                    // Trigger pulse
+                if (dist < 200) {
+                    n.vx += (n.x - e.clientX) * 0.14;
+                    n.vy += (n.y - e.clientY) * 0.14;
                     for (let j = 0; j < nodes.length; j++) {
-                        if (nodes[j] !== n && Math.hypot(n.x - nodes[j].x, n.y - nodes[j].y) < 70) {
+                        if (nodes[j] !== n && Math.hypot(n.x - nodes[j].x, n.y - nodes[j].y) < 85) {
                             createPulse(n, nodes[j]);
                             break;
                         }
@@ -368,9 +458,12 @@
             const centerX = width / 2;
             const centerY = height / 2;
             const scale = Math.min(1, Math.max(0.65, width / 1100));
-            const maxConnectDist = 65 * scale;
+            // Interconnection reach for triangulated geometric web mesh (Reference 4)
+            const maxConnectDist = 82 * scale;
 
-            // 1. UPDATE CIRCLING / ORBITAL MOTION FOR EVERY NODE
+            // 1. UPDATE CIRCLING / ORBITAL MOTION & HOVER FOR EVERY NODE
+            let nearestNodesToMouse = [];
+
             for (let i = 0; i < nodes.length; i++) {
                 const n = nodes[i];
 
@@ -378,6 +471,9 @@
                 n.angle += n.orbitSpeed;
                 n.baseX = centerX + Math.cos(n.angle) * n.r;
                 n.baseY = centerY + Math.sin(n.angle) * n.r;
+
+                // Update angle ratio for seamless color gradation
+                n.angleRatio = ((n.angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2) / (Math.PI * 2);
 
                 // Mouse interaction / Hover physics
                 if (mouse.isHovering) {
@@ -388,21 +484,14 @@
                     if (distMouse < mouse.radius) {
                         const force = (1 - distMouse / mouse.radius);
                         // Elastic repulsion
-                        n.vx -= (dx / distMouse) * force * 4.5;
-                        n.vy -= (dy / distMouse) * force * 4.5;
-                        n.hoverIntensity = Math.min(1, n.hoverIntensity + 0.12);
+                        n.vx -= (dx / distMouse) * force * 5.0;
+                        n.vy -= (dy / distMouse) * force * 5.0;
+                        n.hoverIntensity = Math.min(1, n.hoverIntensity + 0.15);
 
-                        // Connect mouse to node with dynamic laser beam
-                        const laserAlpha = (1 - distMouse / mouse.radius) * (isDay ? 0.45 : 0.65);
-                        ctx.strokeStyle = isDay ? `rgba(37, 99, 235, ${laserAlpha})` : `rgba(56, 189, 248, ${laserAlpha})`;
-                        ctx.lineWidth = 1.4;
-                        ctx.beginPath();
-                        ctx.moveTo(mouse.x, mouse.y);
-                        ctx.lineTo(n.x, n.y);
-                        ctx.stroke();
+                        nearestNodesToMouse.push({ node: n, dist: distMouse });
 
-                        // Occasionally spawn pulse from mouse hover
-                        if (Math.random() < 0.015 && pulses.length < 35) {
+                        // Occasionally trigger photon packet pulse on hover
+                        if (Math.random() < 0.02 && pulses.length < 40) {
                             for (let j = 0; j < nodes.length; j++) {
                                 if (nodes[j] !== n && Math.hypot(n.x - nodes[j].x, n.y - nodes[j].y) < maxConnectDist) {
                                     createPulse(n, nodes[j]);
@@ -411,10 +500,10 @@
                             }
                         }
                     } else {
-                        n.hoverIntensity = Math.max(0, n.hoverIntensity - 0.03);
+                        n.hoverIntensity = Math.max(0, n.hoverIntensity - 0.035);
                     }
                 } else {
-                    n.hoverIntensity = Math.max(0, n.hoverIntensity - 0.03);
+                    n.hoverIntensity = Math.max(0, n.hoverIntensity - 0.035);
                 }
 
                 // Smooth physics integration
@@ -424,40 +513,60 @@
                 n.vy *= 0.88;
 
                 // Restoring spring pulling back to its orbital path
-                n.x += (n.baseX - n.x) * 0.06;
-                n.y += (n.baseY - n.y) * 0.06;
+                n.x += (n.baseX - n.x) * 0.065;
+                n.y += (n.baseY - n.y) * 0.065;
             }
 
-            // 2. DRAW CONNECTING MESH LINES BETWEEN NEARBY ORBITAL NODES
+            // Draw interactive synaptic laser beams from mouse to closest 4 nodes
+            if (mouse.isHovering && nearestNodesToMouse.length > 0) {
+                nearestNodesToMouse.sort((a, b) => a.dist - b.dist);
+                const maxBeams = Math.min(4, nearestNodesToMouse.length);
+                for (let k = 0; k < maxBeams; k++) {
+                    const item = nearestNodesToMouse[k];
+                    const laserAlpha = (1 - item.dist / mouse.radius) * (isDay ? 0.5 : 0.7);
+                    ctx.strokeStyle = getConstellationColor(item.node.angleRatio, isDay, laserAlpha);
+                    ctx.lineWidth = 1.3;
+                    ctx.beginPath();
+                    ctx.moveTo(mouse.x, mouse.y);
+                    ctx.lineTo(item.node.x, item.node.y);
+                    ctx.stroke();
+                }
+            }
+
+            // 2. DRAW TRIANGULATED GEOMETRIC MESH CONNECTIONS (Ref 4 & 1)
             for (let i = 0; i < nodes.length; i++) {
+                const ni = nodes[i];
+                if (ni.tier === 'satellite' && Math.random() < 0.3) continue; // Keep dust lighter
+
                 for (let j = i + 1; j < nodes.length; j++) {
-                    const dx = nodes[i].x - nodes[j].x;
-                    const dy = nodes[i].y - nodes[j].y;
+                    const nj = nodes[j];
+                    const dx = ni.x - nj.x;
+                    const dy = ni.y - nj.y;
                     const dist = Math.hypot(dx, dy);
 
                     if (dist < maxConnectDist) {
-                        const hoverBoost = Math.max(nodes[i].hoverIntensity, nodes[j].hoverIntensity);
-                        const baseAlpha = (1 - dist / maxConnectDist) * (isDay ? 0.35 : 0.5);
-                        const finalAlpha = Math.min(0.9, baseAlpha + hoverBoost * 0.4);
+                        const hoverBoost = Math.max(ni.hoverIntensity, nj.hoverIntensity);
+                        const baseAlpha = (1 - dist / maxConnectDist) * (isDay ? 0.32 : 0.42);
+                        const finalAlpha = Math.min(0.92, baseAlpha + hoverBoost * 0.45);
 
-                        ctx.strokeStyle = isDay 
-                            ? `rgba(59, 130, 246, ${finalAlpha})` 
-                            : `rgba(139, 92, 246, ${finalAlpha})`;
-                        ctx.lineWidth = 1.0 + hoverBoost * 0.8;
+                        const midRatio = (ni.angleRatio + nj.angleRatio) / 2;
+                        ctx.strokeStyle = getConstellationColor(midRatio, isDay, finalAlpha);
+                        ctx.lineWidth = (ni.tier === 'hub' || nj.tier === 'hub') ? (1.1 + hoverBoost * 0.7) : (0.8 + hoverBoost * 0.5);
+
                         ctx.beginPath();
-                        ctx.moveTo(nodes[i].x, nodes[i].y);
-                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.moveTo(ni.x, ni.y);
+                        ctx.lineTo(nj.x, nj.y);
                         ctx.stroke();
 
-                        // Random natural pulse
-                        if (Math.random() < 0.0003 && pulses.length < 25) {
-                            createPulse(nodes[i], nodes[j]);
+                        // Ambient occasional firing packet
+                        if (Math.random() < 0.0004 && pulses.length < 30) {
+                            createPulse(ni, nj);
                         }
                     }
                 }
             }
 
-            // 3. DRAW TRAVELING PULSES
+            // 3. DRAW TRAVELING PHOTON LIGHT PULSES
             for (let i = pulses.length - 1; i >= 0; i--) {
                 const p = pulses[i];
                 p.progress += p.speed;
@@ -468,33 +577,50 @@
                 const px = p.x1 + (p.x2 - p.x1) * p.progress;
                 const py = p.y1 + (p.y2 - p.y1) * p.progress;
 
-                ctx.fillStyle = isDay ? "#2563eb" : "#38bdf8";
+                // Glowing pulse packet
+                ctx.fillStyle = getConstellationColor(p.colorRatio, isDay, 0.95);
                 ctx.beginPath();
-                ctx.arc(px, py, 3.0, 0, Math.PI * 2);
+                ctx.arc(px, py, 3.2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Subtle packet halo
+                ctx.fillStyle = getConstellationColor(p.colorRatio, isDay, 0.3);
+                ctx.beginPath();
+                ctx.arc(px, py, 6.5, 0, Math.PI * 2);
                 ctx.fill();
             }
 
-            // 4. DRAW NODES (WITH BREATHING & HOVER EXPANSION)
+            // 4. DRAW NODES (HIERARCHY: HUBS, JUNCTIONS, SATELLITES WITH HOVER SWELL)
             for (let i = 0; i < nodes.length; i++) {
                 const n = nodes[i];
                 n.pulsePhase += n.pulseSpeed;
 
-                // Base breathing + dynamic hover swelling
-                const breathing = Math.sin(n.pulsePhase) * 1.0;
-                const currentRadius = n.baseRadius + breathing + (n.hoverIntensity * 3.5);
-                const currentAlpha = Math.min(1, 0.7 + Math.sin(n.pulsePhase) * 0.3 + n.hoverIntensity * 0.3);
+                const breathing = Math.sin(n.pulsePhase) * (n.tier === 'hub' ? 1.2 : 0.6);
+                const currentRadius = Math.max(0.8, n.baseRadius + breathing + (n.hoverIntensity * 3.2));
+                const currentAlpha = Math.min(1, 0.72 + Math.sin(n.pulsePhase) * 0.28 + n.hoverIntensity * 0.28);
 
-                // Outer Glow Halo
-                ctx.fillStyle = n.color + (currentAlpha * 0.3 + n.hoverIntensity * 0.3) + ")";
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, currentRadius * 2.4, 0, Math.PI * 2);
-                ctx.fill();
+                // Outer Halo for Hubs and Hovered Nodes (Ref Image 1 & 4)
+                if (n.tier === 'hub' || n.hoverIntensity > 0.15) {
+                    const haloRadius = currentRadius * (n.tier === 'hub' ? 2.6 : 2.0);
+                    ctx.fillStyle = getConstellationColor(n.angleRatio, isDay, (currentAlpha * 0.22 + n.hoverIntensity * 0.3));
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, haloRadius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
 
                 // Core Node Point
-                ctx.fillStyle = n.hoverIntensity > 0.5 ? n.hoverColor : (n.color + currentAlpha + ")");
+                ctx.fillStyle = getConstellationColor(n.angleRatio, isDay, currentAlpha);
                 ctx.beginPath();
                 ctx.arc(n.x, n.y, currentRadius, 0, Math.PI * 2);
                 ctx.fill();
+
+                // Bright center core for major hubs
+                if (n.tier === 'hub') {
+                    ctx.fillStyle = isDay ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.95)";
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, currentRadius * 0.45, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
 
             requestAnimationFrame(animate);
