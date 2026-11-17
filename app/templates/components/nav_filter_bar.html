@@ -1,0 +1,335 @@
+<!-- SMART NAV EVALUATION & ACCURACY FILTER BAR -->
+<div id="smart-nav-filter-bar" class="rounded-3xl bg-slate-900/85 border border-purple-500/30 p-4 sm:p-5 backdrop-blur-xl shadow-2xl space-y-4 relative overflow-hidden transition-all duration-300">
+    <!-- Ambient Backdrop Aura -->
+    <div class="absolute -right-8 -top-8 w-48 h-48 bg-purple-600/10 rounded-full blur-2xl pointer-events-none"></div>
+    <div class="absolute -left-8 -bottom-8 w-48 h-48 bg-indigo-600/10 rounded-full blur-2xl pointer-events-none"></div>
+
+    <!-- Header Row: Title, Live Match Count, and Controls -->
+    <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3.5">
+        <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-500/30 text-purple-300 flex items-center justify-center font-black text-xs shadow-inner">
+                ⚡
+            </span>
+            <div>
+                <div class="flex items-center gap-2">
+                    <h3 class="text-sm font-extrabold text-white tracking-tight">Smart AI Stack & Model Selector</h3>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300 font-mono font-semibold">
+                        2026/27 Evals
+                    </span>
+                </div>
+                <p class="text-[11px] text-slate-400">Filter all 47 platforms by category, speed, accuracy, open-weights, and GitHub stars without page reload.</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2 self-start sm:self-auto">
+            <!-- Live Match Counter Badge -->
+            <div class="px-3 py-1 rounded-xl bg-slate-950/90 border border-slate-800 text-xs font-mono">
+                <span class="text-slate-400">Showing:</span>
+                <span id="nav-match-count" class="font-extrabold text-purple-300 ml-1">{{ tools|length }}</span>
+                <span class="text-slate-500">/ {{ all_tools|length or tools|length }}</span>
+            </div>
+
+            <!-- Reset All Filters Button -->
+            <button 
+                type="button" 
+                onclick="resetNavFilters()" 
+                id="nav-reset-btn"
+                class="px-2.5 py-1 rounded-xl bg-slate-950/80 hover:bg-rose-500/10 hover:border-rose-500/30 text-slate-400 hover:text-rose-300 border border-slate-800 text-[11px] font-semibold transition-all flex items-center gap-1"
+                title="Reset all filters"
+            >
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span>Reset</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Filter Selectors Grid (2 Rows for High Legibility) -->
+    <div class="relative z-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs">
+
+        <!-- 1. DYNAMIC CATEGORY TOPIC (Auto-updates with any new category from topic headers) -->
+        <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-purple-300 mb-1 flex items-center gap-1">
+                <span>📁 Category Topic</span>
+                <span class="text-[9px] text-purple-400/80 font-normal">({{ categories|length }})</span>
+            </label>
+            <select id="filter-category" onchange="applyNavFilters()" class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-slate-800 text-white text-[11px] font-medium focus:outline-none focus:border-purple-500 cursor-pointer">
+                <option value="all">All Category Topics</option>
+                {% for cat in categories %}
+                    <option value="{{ cat }}">{{ cat }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- 2. MODALITY / TYPE OF AI TOOL (Image, Sound, Video, Text, Code, Agents, Research) -->
+        <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-purple-300 mb-1 flex items-center gap-1">
+                <span>🎨 AI Tool Type / Modality</span>
+            </label>
+            <select id="filter-modality" onchange="applyNavFilters()" class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-slate-800 text-white text-[11px] font-medium focus:outline-none focus:border-purple-500 cursor-pointer">
+                <option value="all">All Types & Modalities</option>
+                {% for mod in modalities %}
+                    <option value="{{ mod }}">{{ mod }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- 3. GITHUB STARS / COMMUNITY POPULARITY -->
+        <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-amber-300 mb-1 flex items-center gap-1">
+                <span>★ GitHub Stars / Popularity</span>
+            </label>
+            <select id="filter-stars" onchange="applyNavFilters()" class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-slate-800 text-white text-[11px] font-medium focus:outline-none focus:border-purple-500 cursor-pointer">
+                <option value="all">All Community Tiers</option>
+                <option value="50k">★ 50k+ Stars (Mega Repos)</option>
+                <option value="10k">★ 10k+ Stars (High Adoption)</option>
+                <option value="has_stars">Open Source with Stars</option>
+                <option value="saas">Proprietary / Enterprise SaaS</option>
+            </select>
+        </div>
+
+        <!-- 4. 2026/2027 RELEVANCY STACK -->
+        <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-indigo-300 mb-1 flex items-center gap-1">
+                <span>✦ 2026/27 Relevancy</span>
+            </label>
+            <select id="filter-relevancy" onchange="applyNavFilters()" class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-slate-800 text-white text-[11px] font-medium focus:outline-none focus:border-purple-500 cursor-pointer">
+                <option value="all">All Relevancy Tiers</option>
+                <option value="tier1">✦ Tier 1 Essential (Core Stack)</option>
+                <option value="tier2">Tier 2 Specialized</option>
+            </select>
+        </div>
+
+        <!-- 5. LICENSE & VENDOR LOCK-IN RISK -->
+        <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-emerald-300 mb-1 flex items-center gap-1">
+                <span>🔓 License & Lock-in Risk</span>
+            </label>
+            <select id="filter-license" onchange="applyNavFilters()" class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-slate-800 text-white text-[11px] font-medium focus:outline-none focus:border-purple-500 cursor-pointer">
+                <option value="all">All License Models</option>
+                <option value="opensource">Open Weights (Apache/MIT)</option>
+                <option value="selfhosted">Fair-Code / Self-Hostable</option>
+                <option value="proprietary">Proprietary Cloud</option>
+            </select>
+        </div>
+
+        <!-- 6. DATA PRIVACY & COMPLIANCE (ZDR) -->
+        <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-cyan-300 mb-1 flex items-center gap-1">
+                <span>🛡️ Privacy & Compliance</span>
+            </label>
+            <select id="filter-compliance" onchange="applyNavFilters()" class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-slate-800 text-white text-[11px] font-medium focus:outline-none focus:border-purple-500 cursor-pointer">
+                <option value="all">All Compliance Levels</option>
+                <option value="zdr">Zero Data Retention (ZDR)</option>
+                <option value="soc2">SOC2 Type II Certified</option>
+                <option value="gdpr">GDPR Sovereign / European</option>
+            </select>
+        </div>
+
+        <!-- 7. EFFICIENCY & LATENCY / SPEED -->
+        <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-pink-300 mb-1 flex items-center gap-1">
+                <span>⚡ Latency & Speed</span>
+            </label>
+            <select id="filter-latency" onchange="applyNavFilters()" class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-slate-800 text-white text-[11px] font-medium focus:outline-none focus:border-purple-500 cursor-pointer">
+                <option value="all">All Latency Tiers</option>
+                <option value="realtime">Real-time Streaming (<500ms)</option>
+                <option value="interactive">Interactive (1s - 3s)</option>
+                <option value="batch">Batch Generation (5s+)</option>
+            </select>
+        </div>
+
+        <!-- 8. ACCURACY TIER & GROUNDING -->
+        <div>
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-amber-300 mb-1 flex items-center gap-1">
+                <span>🧠 Accuracy & Reasoning</span>
+            </label>
+            <select id="filter-accuracy" onchange="applyNavFilters()" class="w-full px-2.5 py-2 rounded-xl bg-slate-950/90 border border-slate-800 text-white text-[11px] font-medium focus:outline-none focus:border-purple-500 cursor-pointer">
+                <option value="all">All Accuracy Tiers</option>
+                <option value="reasoning">Frontier Reasoning</option>
+                <option value="grounded">Web Grounded with Citations</option>
+                <option value="generative">High-Fidelity Generative</option>
+                <option value="automation">Deterministic Automation</option>
+            </select>
+        </div>
+
+    </div>
+
+    <!-- Active Filter Chips Row -->
+    <div id="active-filter-chips" class="relative z-10 flex flex-wrap items-center gap-1.5 pt-1 text-[11px] hidden">
+        <span class="text-slate-500 text-[10px] font-mono font-medium">Active Filters:</span>
+        <div id="filter-chips-container" class="flex flex-wrap items-center gap-1.5"></div>
+    </div>
+</div>
+
+<!-- CLIENT-SIDE MULTI-DIMENSION EVALUATION FILTER ENGINE -->
+<script>
+    function parseStarCount(starsStr) {
+        if (!starsStr || starsStr === 'N/A' || starsStr === 'None') return 0;
+        const cleaned = starsStr.toLowerCase().replace(/stars|\+|\s/g, '');
+        if (cleaned.includes('k')) {
+            return parseFloat(cleaned.replace('k', '')) * 1000;
+        }
+        return parseFloat(cleaned) || 0;
+    }
+
+    function applyNavFilters() {
+        const catVal = document.getElementById('filter-category')?.value || 'all';
+        const modVal = document.getElementById('filter-modality')?.value || 'all';
+        const starsVal = document.getElementById('filter-stars')?.value || 'all';
+        const relVal = document.getElementById('filter-relevancy')?.value || 'all';
+        const licVal = document.getElementById('filter-license')?.value || 'all';
+        const compVal = document.getElementById('filter-compliance')?.value || 'all';
+        const latVal = document.getElementById('filter-latency')?.value || 'all';
+        const accVal = document.getElementById('filter-accuracy')?.value || 'all';
+
+        // Update active chips UI
+        updateFilterChips({
+            Category: catVal !== 'all' ? catVal : null,
+            Type: modVal !== 'all' ? modVal : null,
+            Stars: starsVal !== 'all' ? starsVal : null,
+            Relevancy: relVal !== 'all' ? relVal : null,
+            License: licVal !== 'all' ? licVal : null,
+            Privacy: compVal !== 'all' ? compVal : null,
+            Speed: latVal !== 'all' ? latVal : null,
+            Accuracy: accVal !== 'all' ? accVal : null
+        });
+
+        let visibleCount = 0;
+
+        // 1. Filter UI Grid Cards
+        const cardContainers = document.querySelectorAll('.tool-card-item');
+        cardContainers.forEach(card => {
+            const match = evaluateToolMatch(card, { catVal, modVal, starsVal, relVal, licVal, compVal, latVal, accVal });
+            if (match) {
+                card.style.display = '';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        // 2. Filter Eval Board Table Rows (if active)
+        const tableRows = document.querySelectorAll('.eval-row');
+        if (tableRows.length > 0) {
+            let tableVisibleCount = 0;
+            tableRows.forEach(row => {
+                const match = evaluateToolMatch(row, { catVal, modVal, starsVal, relVal, licVal, compVal, latVal, accVal });
+                if (match) {
+                    row.style.display = '';
+                    tableVisibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            if (cardContainers.length === 0) {
+                visibleCount = tableVisibleCount;
+            }
+        }
+
+        // Update counter
+        const counter = document.getElementById('nav-match-count');
+        if (counter) counter.textContent = visibleCount;
+    }
+
+    function evaluateToolMatch(el, f) {
+        const cat = (el.getAttribute('data-category') || '').toLowerCase();
+        const mod = (el.getAttribute('data-modality') || '').toLowerCase();
+        const starsStr = el.getAttribute('data-stars') || '';
+        const starsNum = parseStarCount(starsStr);
+        const rel = (el.getAttribute('data-relevancy') || '').toLowerCase();
+        const lic = (el.getAttribute('data-license') || '').toLowerCase();
+        const comp = (el.getAttribute('data-compliance') || '').toLowerCase();
+        const lat = (el.getAttribute('data-latency') || '').toLowerCase();
+        const acc = (el.getAttribute('data-accuracy') || '').toLowerCase();
+
+        // 1. Category Topic
+        if (f.catVal !== 'all' && cat !== f.catVal.toLowerCase()) return false;
+
+        // 2. Modality / Type
+        if (f.modVal !== 'all' && mod !== f.modVal.toLowerCase()) return false;
+
+        // 3. GitHub Stars
+        if (f.starsVal === '50k' && starsNum < 50000) return false;
+        if (f.starsVal === '10k' && starsNum < 10000) return false;
+        if (f.starsVal === 'has_stars' && starsNum < 1) return false;
+        if (f.starsVal === 'saas' && starsNum > 0) return false;
+
+        // 4. Relevancy
+        if (f.relVal === 'tier1' && !rel.includes('tier 1')) return false;
+        if (f.relVal === 'tier2' && !rel.includes('tier 2')) return false;
+
+        // 5. License
+        if (f.licVal === 'opensource' && !(lic.includes('open') || lic.includes('apache'))) return false;
+        if (f.licVal === 'selfhosted' && !(lic.includes('self-host') || lic.includes('fair-code') || lic.includes('docker'))) return false;
+        if (f.licVal === 'proprietary' && !lic.includes('proprietary')) return false;
+
+        // 6. Privacy & Compliance
+        if (f.compVal === 'zdr' && !(comp.includes('zero') || comp.includes('zdr') || comp.includes('self-hosted'))) return false;
+        if (f.compVal === 'soc2' && !comp.includes('soc2')) return false;
+        if (f.compVal === 'gdpr' && !comp.includes('gdpr')) return false;
+
+        // 7. Latency & Speed
+        if (f.latVal === 'realtime' && !lat.includes('real-time')) return false;
+        if (f.latVal === 'interactive' && !lat.includes('interactive')) return false;
+        if (f.latVal === 'batch' && !lat.includes('batch')) return false;
+
+        // 8. Accuracy Tier
+        if (f.accVal === 'reasoning' && !acc.includes('frontier reasoning')) return false;
+        if (f.accVal === 'grounded' && !acc.includes('grounded')) return false;
+        if (f.accVal === 'generative' && !acc.includes('generative')) return false;
+        if (f.accVal === 'automation' && !acc.includes('automation')) return false;
+
+        return true;
+    }
+
+    function resetNavFilters() {
+        ['filter-category', 'filter-modality', 'filter-stars', 'filter-relevancy', 'filter-license', 'filter-compliance', 'filter-latency', 'filter-accuracy'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = 'all';
+        });
+        applyNavFilters();
+    }
+
+    function updateFilterChips(activeFilters) {
+        const container = document.getElementById('filter-chips-container');
+        const wrapper = document.getElementById('active-filter-chips');
+        if (!container || !wrapper) return;
+
+        container.innerHTML = '';
+        let hasActive = false;
+
+        for (const [key, val] of Object.entries(activeFilters)) {
+            if (val) {
+                hasActive = true;
+                const chip = document.createElement('span');
+                chip.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-purple-600/20 text-purple-300 border border-purple-500/30 text-[10px] font-semibold';
+                chip.innerHTML = `<span>${key}: <strong>${val}</strong></span><button type="button" onclick="clearSpecificFilter('${key}')" class="hover:text-white ml-0.5">✕</button>`;
+                container.appendChild(chip);
+            }
+        }
+
+        if (hasActive) {
+            wrapper.classList.remove('hidden');
+        } else {
+            wrapper.classList.add('hidden');
+        }
+    }
+
+    function clearSpecificFilter(key) {
+        const map = {
+            Category: 'filter-category',
+            Type: 'filter-modality',
+            Stars: 'filter-stars',
+            Relevancy: 'filter-relevancy',
+            License: 'filter-license',
+            Privacy: 'filter-compliance',
+            Speed: 'filter-latency',
+            Accuracy: 'filter-accuracy'
+        };
+        const id = map[key];
+        if (id && document.getElementById(id)) {
+            document.getElementById(id).value = 'all';
+            applyNavFilters();
+        }
+    }
+</script>

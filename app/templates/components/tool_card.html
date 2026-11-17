@@ -1,4 +1,14 @@
-<div class="group relative rounded-3xl border border-slate-800/90 bg-slate-900/60 overflow-hidden hover:border-purple-500/60 hover:bg-slate-900/90 transition-all duration-500 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1">
+<div class="tool-card-item group relative rounded-3xl border border-slate-800/90 bg-slate-900/60 overflow-hidden hover:border-purple-500/60 hover:bg-slate-900/90 transition-all duration-500 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1"
+    data-name="{{ tool.name|lower }}"
+    data-category="{{ tool.category|lower }}"
+    data-modality="{{ (tool.modality_type or '')|lower }}"
+    data-stars="{{ tool.github_stars or '' }}"
+    data-relevancy="{{ (tool.relevancy_2026 or '')|lower }}"
+    data-license="{{ (tool.eval_license_risk or '')|lower }}"
+    data-compliance="{{ (tool.eval_compliance or '')|lower }}"
+    data-latency="{{ (tool.eval_latency or '')|lower }}"
+    data-accuracy="{{ (tool.eval_accuracy_tier or '')|lower }}"
+>
 
     <!-- Card Top Visual Image Banner with Breathing Glow -->
     <div class="relative h-44 w-full overflow-hidden bg-slate-950">

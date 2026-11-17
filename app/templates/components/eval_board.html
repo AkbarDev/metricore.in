@@ -102,11 +102,15 @@
                     <tr class="eval-row hover:bg-slate-800/40 transition-colors group"
                         data-name="{{ tool.name|lower }}"
                         data-category="{{ tool.category|lower }}"
+                        data-modality="{{ (tool.modality_type or '')|lower }}"
+                        data-stars="{{ tool.github_stars or '' }}"
                         data-founders="{{ (tool.founders or '')|lower }}"
                         data-country="{{ (tool.country_name or '')|lower }}"
                         data-relevancy="{{ (tool.relevancy_2026 or '')|lower }}"
                         data-license="{{ (tool.eval_license_risk or '')|lower }}"
                         data-compliance="{{ (tool.eval_compliance or '')|lower }}"
+                        data-latency="{{ (tool.eval_latency or '')|lower }}"
+                        data-accuracy="{{ (tool.eval_accuracy_tier or '')|lower }}"
                         data-api="{{ (tool.eval_api_readiness or '')|lower }}"
                     >
                         <!-- Column 1: Tool & Platform (Sticky Left) -->

@@ -196,6 +196,7 @@ async def home(
 
     all_tools = load_tools()
     categories = get_categories(all_tools)
+    modalities = sorted(list(set(t.modality_type for t in all_tools if t.modality_type)))
 
     is_eval_board = (category == "AI tool eval board") or (view == "eval-board")
     if is_eval_board:
@@ -237,6 +238,7 @@ async def home(
             "tools": filtered,
             "all_tools": all_tools,
             "categories": categories,
+            "modalities": modalities,
             "category_pairs": category_pairs,
             "active_category": category or "All",
             "active_pricing": pricing or "All",
