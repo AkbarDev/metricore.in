@@ -1,5 +1,6 @@
 import json
 import os
+import math
 from pathlib import Path
 from typing import Optional, List
 from fastapi import FastAPI, Request, Query, HTTPException, Form, Response
@@ -190,6 +191,7 @@ async def home(
     pricing: Optional[str] = None,
     q: Optional[str] = None,
     view: Optional[str] = None,
+    page: int = Query(1, ge=1),
 ):
     if not is_authenticated(request):
         return RedirectResponse(url="/login", status_code=302)
@@ -219,6 +221,18 @@ async def home(
             or (t.country_name and query_str in t.country_name.lower())
         ]
 
+    # Benchmark-grade pagination (4 cards per row x 5 rows = 20 cards per page)
+    total_tools = len(filtered)
+    page_size = 20
+    total_pages = max(1, math.ceil(total_tools / page_size))
+    current_page = max(1, min(page, total_pages))
+
+    start_idx = (current_page - 1) * page_size
+    end_idx = min(start_idx + page_size, total_tools)
+    paginated_tools = filtered[start_idx:end_idx]
+    start_item = start_idx + 1 if total_tools > 0 else 0
+    end_item = end_idx
+
     # Organize by category for comparison view
     category_pairs = []
     for cat in categories:
@@ -235,7 +249,8 @@ async def home(
         request=request,
         name="index.html",
         context={
-            "tools": filtered,
+            "tools": paginated_tools,
+            "all_filtered_tools": filtered,
             "all_tools": all_tools,
             "categories": categories,
             "modalities": modalities,
@@ -244,7 +259,12 @@ async def home(
             "active_pricing": pricing or "All",
             "search_query": q or "",
             "is_eval_board": is_eval_board,
-            "total_count": len(filtered),
+            "total_count": total_tools,
+            "current_page": current_page,
+            "total_pages": total_pages,
+            "page_size": page_size,
+            "start_item": start_item,
+            "end_item": end_item,
             "is_authenticated": True,
             "username": get_current_user_name(request),
             "role": get_current_role(request),
@@ -274,18 +294,19 @@ async def tool_detail(request: Request, tool_id: str):
         },
     )
 
-# HTMX Live Search Endpoint (Returns partial HTML of cards)
+# HTMX Live Search Endpoint (Returns partial HTML of cards with pagination support)
 @app.get("/api/search", response_class=HTMLResponse)
 async def live_search(
     request: Request,
     q: Optional[str] = "",
     category: Optional[str] = None,
     pricing: Optional[str] = None,
+    page: int = 1,
 ):
     all_tools = load_tools()
     filtered = all_tools
 
-    if category and category != "All":
+    if category and category != "All" and category != "AI tool eval board":
         filtered = [t for t in filtered if t.category.lower() == category.lower()]
     if pricing and pricing != "All":
         filtered = [t for t in filtered if t.pricing_type.lower() == pricing.lower()]
@@ -297,13 +318,35 @@ async def live_search(
             or query_str in t.description.lower()
             or query_str in t.category.lower()
             or query_str in t.free_tier_limit.lower()
+            or (t.founders and query_str in t.founders.lower())
+            or (t.country_name and query_str in t.country_name.lower())
         ]
+
+    total_tools = len(filtered)
+    page_size = 20
+    total_pages = max(1, math.ceil(total_tools / page_size))
+    current_page = max(1, min(page, total_pages))
+
+    start_idx = (current_page - 1) * page_size
+    end_idx = min(start_idx + page_size, total_tools)
+    paginated_tools = filtered[start_idx:end_idx]
+    start_item = start_idx + 1 if total_tools > 0 else 0
+    end_item = end_idx
 
     return templates.TemplateResponse(
         request=request,
         name="components/tool_grid.html",
         context={
-            "tools": filtered,
+            "tools": paginated_tools,
+            "total_count": total_tools,
+            "current_page": current_page,
+            "total_pages": total_pages,
+            "page_size": page_size,
+            "start_item": start_item,
+            "end_item": end_item,
+            "active_category": category or "All",
+            "active_pricing": pricing or "All",
+            "search_query": q or "",
         },
     )
 
