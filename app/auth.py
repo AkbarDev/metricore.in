@@ -96,3 +96,4 @@ def register_user(username: str, email: str, password: str) -> tuple[bool, str]:
     users.append(new_user)
     _save_users(users)
     return True, "Account created successfully!"
+
