@@ -12,8 +12,8 @@
     <!-- UNIFORM CIRCULAR NEURAL NETWORK CANVAS (Encircles the Sign In Form) -->
     <canvas id="neural-network-canvas" class="absolute inset-0 w-full h-full pointer-events-auto z-0 opacity-95"></canvas>
 
-    <!-- UN-ENCLOSED SIGN IN CONTAINER (Centered inside the Uniform Circular Halo) -->
-    <div id="node-signin" class="relative z-20 w-full max-w-[340px] p-6 text-center">
+    <!-- UN-ENCLOSED AUTH CONTAINER (Centered inside the Uniform Circular Halo) -->
+    <div id="node-signin" class="relative z-20 w-full max-w-[360px] p-6 text-center">
 
         {% if is_authenticated %}
             <!-- Authenticated State -->
@@ -22,7 +22,7 @@
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 </div>
                 <div>
-                    <h3 class="text-xl font-black text-white drop-shadow-md">Signed In as Akbar</h3>
+                    <h3 class="text-xl font-black text-white drop-shadow-md">Welcome back, {{ username }}!</h3>
                     <p class="text-xs text-slate-400 mt-1">AI Core ecosystem is unlocked.</p>
                 </div>
                 <div class="pt-2 flex flex-col gap-2.5">
@@ -35,67 +35,203 @@
                 </div>
             </div>
         {% else %}
-            <!-- Seamless Sign In Form -->
-            <form method="POST" action="/login" class="space-y-4 text-left">
+            <!-- Auth Form Card with Tabs -->
+            <div class="space-y-4">
+
+                <!-- Mode Switch Tabs (Sign In vs Create Account) -->
+                <div class="inline-flex p-1 rounded-2xl bg-slate-950/80 border border-slate-800/90 backdrop-blur-xl shadow-lg w-full">
+                    <button 
+                        type="button" 
+                        id="tab-signin-btn" 
+                        onclick="switchTab('signin')" 
+                        class="flex-1 py-2 text-xs font-bold rounded-xl transition-all {% if active_tab != 'register' %}bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md{% else %}text-slate-400 hover:text-white{% endif %}"
+                    >
+                        Sign In
+                    </button>
+                    <button 
+                        type="button" 
+                        id="tab-register-btn" 
+                        onclick="switchTab('register')" 
+                        class="flex-1 py-2 text-xs font-bold rounded-xl transition-all {% if active_tab == 'register' %}bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md{% else %}text-slate-400 hover:text-white{% endif %}"
+                    >
+                        Create Account
+                    </button>
+                </div>
+
                 {% if error %}
-                    <div class="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs flex items-center gap-2 backdrop-blur-md">
-                        <svg class="w-4 h-4 text-rose-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span>{{ error }}</span>
+                    <div class="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs text-left flex items-start gap-2.5 backdrop-blur-xl shadow-lg animate-shake">
+                        <svg class="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div>
+                            <span class="font-medium leading-relaxed">{{ error }}</span>
+                            {% if active_tab != 'register' %}
+                                <div class="mt-1 pt-1 border-t border-rose-500/20">
+                                    <button type="button" onclick="switchTab('register')" class="text-purple-300 hover:text-white font-bold underline">
+                                        Click here to create a new account →
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
                     </div>
                 {% endif %}
 
-                <!-- Username Field -->
-                <div>
-                    <label for="username" class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5 drop-shadow">
-                        Admin Username
-                    </label>
-                    <div class="relative">
+                {% if success %}
+                    <div class="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs text-left flex items-center gap-2 backdrop-blur-xl shadow-lg">
+                        <svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <span>{{ success }}</span>
+                    </div>
+                {% endif %}
+
+                <!-- ================= 1. SIGN IN FORM ================= -->
+                <form id="form-signin" method="POST" action="/login" class="space-y-4 text-left {% if active_tab == 'register' %}hidden{% endif %}">
+                    <!-- Username Field -->
+                    <div>
+                        <label for="username" class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5 drop-shadow">
+                            Username
+                        </label>
                         <input 
                             type="text" 
                             id="username" 
                             name="username" 
-                            value="{{ entered_username or default_user }}" 
+                            value="{{ entered_username or '' }}" 
                             required 
                             autocomplete="username"
-                            placeholder="Username (Akbar)"
+                            placeholder="Enter your username"
                             class="w-full px-4 py-3 rounded-2xl bg-slate-950/85 border border-slate-800/90 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 backdrop-blur-xl transition-all font-medium shadow-xl"
                         >
-                        <span class="absolute right-3.5 top-3.5 text-[9px] text-purple-400 font-mono font-bold">ADMIN</span>
                     </div>
-                </div>
 
-                <!-- Password Field -->
-                <div>
-                    <label for="password" class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5 drop-shadow">
-                        Admin Password
-                    </label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        value="unlock"
-                        required 
-                        autocomplete="current-password"
-                        placeholder="Password (unlock)"
-                        class="w-full px-4 py-3 rounded-2xl bg-slate-950/85 border border-slate-800/90 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 backdrop-blur-xl transition-all font-medium shadow-xl"
+                    <!-- Password Field -->
+                    <div>
+                        <label for="password" class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1.5 drop-shadow">
+                            Password
+                        </label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            required 
+                            autocomplete="current-password"
+                            placeholder="Enter your password"
+                            class="w-full px-4 py-3 rounded-2xl bg-slate-950/85 border border-slate-800/90 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 backdrop-blur-xl transition-all font-medium shadow-xl"
+                        >
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button 
+                        type="submit" 
+                        class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 hover:from-cyan-500 hover:via-purple-500 hover:to-pink-500 text-white text-xs font-bold uppercase tracking-wider shadow-2xl shadow-purple-600/30 transition-all flex items-center justify-center gap-2 group hover:-translate-y-0.5 active:translate-y-0"
                     >
-                </div>
+                        <span>Sign In & Unlock Portal</span>
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
 
-                <!-- Submit Button -->
-                <button 
-                    type="submit" 
-                    class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 hover:from-cyan-500 hover:via-purple-500 hover:to-pink-500 text-white text-xs font-bold uppercase tracking-wider shadow-2xl shadow-purple-600/30 transition-all flex items-center justify-center gap-2 group hover:-translate-y-0.5 active:translate-y-0"
-                >
-                    <span>Sign In & Unlock AI Core</span>
-                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                </button>
-            </form>
+                    <!-- Prompt to register -->
+                    <div class="text-center pt-2">
+                        <span class="text-xs text-slate-400">Don't have an account? </span>
+                        <button type="button" onclick="switchTab('register')" class="text-xs font-bold text-purple-400 hover:text-purple-300 underline">
+                            Create an Account
+                        </button>
+                    </div>
+                </form>
+
+                <!-- ================= 2. CREATE ACCOUNT FORM ================= -->
+                <form id="form-register" method="POST" action="/register" class="space-y-3.5 text-left {% if active_tab != 'register' %}hidden{% endif %}">
+                    <!-- New Username Field -->
+                    <div>
+                        <label for="reg_username" class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1 drop-shadow">
+                            Choose Username
+                        </label>
+                        <input 
+                            type="text" 
+                            id="reg_username" 
+                            name="username" 
+                            value="{{ entered_username or '' }}" 
+                            required 
+                            minlength="3"
+                            placeholder="At least 3 characters"
+                            class="w-full px-4 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/90 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 backdrop-blur-xl transition-all font-medium shadow-xl"
+                        >
+                    </div>
+
+                    <!-- Email Field -->
+                    <div>
+                        <label for="reg_email" class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1 drop-shadow">
+                            Email Address
+                        </label>
+                        <input 
+                            type="email" 
+                            id="reg_email" 
+                            name="email" 
+                            value="{{ entered_email or '' }}" 
+                            required 
+                            placeholder="name@example.com"
+                            class="w-full px-4 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/90 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 backdrop-blur-xl transition-all font-medium shadow-xl"
+                        >
+                    </div>
+
+                    <!-- New Password Field -->
+                    <div>
+                        <label for="reg_password" class="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1 drop-shadow">
+                            Create Password
+                        </label>
+                        <input 
+                            type="password" 
+                            id="reg_password" 
+                            name="password" 
+                            required 
+                            minlength="4"
+                            placeholder="At least 4 characters"
+                            class="w-full px-4 py-2.5 rounded-2xl bg-slate-950/85 border border-slate-800/90 text-white text-xs focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 backdrop-blur-xl transition-all font-medium shadow-xl"
+                        >
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button 
+                        type="submit" 
+                        class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:via-teal-500 hover:to-cyan-500 text-white text-xs font-bold uppercase tracking-wider shadow-2xl shadow-emerald-600/30 transition-all flex items-center justify-center gap-2 group hover:-translate-y-0.5 active:translate-y-0"
+                    >
+                        <span>Register & Unlock Portal</span>
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </button>
+
+                    <!-- Link to switch back to sign in -->
+                    <div class="text-center pt-1.5">
+                        <span class="text-xs text-slate-400">Already registered? </span>
+                        <button type="button" onclick="switchTab('signin')" class="text-xs font-bold text-purple-400 hover:text-purple-300 underline">
+                            Sign In
+                        </button>
+                    </div>
+                </form>
+
+            </div>
         {% endif %}
 
     </div>
 </div>
 
-<!-- UNIFORM CIRCULAR NEURAL NETWORK ENGINE (True Geometric Ring Architecture) -->
+<!-- TAB SWITCHER SCRIPT -->
+<script>
+    function switchTab(tab) {
+        const formSignIn = document.getElementById("form-signin");
+        const formRegister = document.getElementById("form-register");
+        const btnSignIn = document.getElementById("tab-signin-btn");
+        const btnRegister = document.getElementById("tab-register-btn");
+
+        if (tab === 'register') {
+            formSignIn.classList.add("hidden");
+            formRegister.classList.remove("hidden");
+            btnRegister.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md";
+            btnSignIn.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all text-slate-400 hover:text-white";
+        } else {
+            formRegister.classList.add("hidden");
+            formSignIn.classList.remove("hidden");
+            btnSignIn.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md";
+            btnRegister.className = "flex-1 py-2 text-xs font-bold rounded-xl transition-all text-slate-400 hover:text-white";
+        }
+    }
+</script>
+
+<!-- UNIFORM CIRCULAR NEURAL NETWORK ENGINE (Adaptive for Day & Night Modes) -->
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const canvas = document.getElementById("neural-network-canvas");
@@ -121,10 +257,10 @@
         // Generate Uniform Concentric Circular Rings of Nodes
         let nodes = [];
         const ringConfigs = [
-            { radiusOffset: 255, count: 32, jitter: 12 }, // Inner clear boundary (safe breathing distance from form)
-            { radiusOffset: 295, count: 36, jitter: 15 }, // Mid-inner ring
-            { radiusOffset: 340, count: 42, jitter: 18 }, // Mid-outer ring
-            { radiusOffset: 385, count: 48, jitter: 20 }  // Outer halo ring
+            { radiusOffset: 255, count: 32, jitter: 12 },
+            { radiusOffset: 295, count: 36, jitter: 15 },
+            { radiusOffset: 340, count: 42, jitter: 18 },
+            { radiusOffset: 385, count: 48, jitter: 20 }
         ];
 
         function initCircularNodes() {
@@ -133,7 +269,6 @@
             const centerY = height / 2;
             const isDay = document.documentElement.classList.contains("day-mode");
 
-            // Responsive radius scale: scales down gracefully on small mobile screens
             const scale = Math.min(1, Math.max(0.65, width / 1100));
 
             ringConfigs.forEach((ring, ringIdx) => {
@@ -142,28 +277,24 @@
 
                 for (let i = 0; i < count; i++) {
                     const angle = (i / count) * Math.PI * 2;
-                    // Controlled jitter to maintain uniform circular shape with organic geometric mesh
                     const r = baseRadius + (Math.random() - 0.5) * ring.jitter * scale;
                     const jitterAngle = angle + (Math.random() - 0.5) * 0.08;
 
                     const x = centerX + Math.cos(jitterAngle) * r;
                     const y = centerY + Math.sin(jitterAngle) * r;
 
-                    // Color palette according to angular sector and Day/Night mode
                     const colorAngleRatio = (angle / (Math.PI * 2));
                     let color;
                     if (isDay) {
-                        // High-contrast Day Mode palette (Deep Royal Blue, Sapphire, Purple, Ruby)
-                        if (colorAngleRatio < 0.25) color = "rgba(2, 132, 199, "; // Sapphire Cyan
-                        else if (colorAngleRatio < 0.50) color = "rgba(37, 99, 235, "; // Royal Blue
-                        else if (colorAngleRatio < 0.75) color = "rgba(124, 58, 237, "; // Deep Purple
-                        else color = "rgba(219, 39, 119, "; // Ruby Rose
+                        if (colorAngleRatio < 0.25) color = "rgba(2, 132, 199, ";
+                        else if (colorAngleRatio < 0.50) color = "rgba(37, 99, 235, ";
+                        else if (colorAngleRatio < 0.75) color = "rgba(124, 58, 237, ";
+                        else color = "rgba(219, 39, 119, ";
                     } else {
-                        // Night Mode palette (Neon Electric Cyan, Indigo, Vivid Purple, Pink)
-                        if (colorAngleRatio < 0.25) color = "rgba(56, 189, 248, "; // Electric Cyan
-                        else if (colorAngleRatio < 0.50) color = "rgba(99, 102, 241, "; // Indigo
-                        else if (colorAngleRatio < 0.75) color = "rgba(168, 85, 247, "; // Vivid Purple
-                        else color = "rgba(236, 72, 153, "; // Pink / Rose
+                        if (colorAngleRatio < 0.25) color = "rgba(56, 189, 248, ";
+                        else if (colorAngleRatio < 0.50) color = "rgba(99, 102, 241, ";
+                        else if (colorAngleRatio < 0.75) color = "rgba(168, 85, 247, ";
+                        else color = "rgba(236, 72, 153, ";
                     }
 
                     nodes.push({
@@ -204,8 +335,6 @@
         function animate() {
             ctx.clearRect(0, 0, width, height);
             const isDay = document.documentElement.classList.contains("day-mode");
-
-            // Connect adjacent nodes to form uniform circular geometric mesh
             const maxConnectDist = 65 * Math.min(1, Math.max(0.7, width / 1100));
 
             for (let i = 0; i < nodes.length; i++) {
@@ -223,7 +352,6 @@
                         ctx.lineTo(nodes[j].x, nodes[j].y);
                         ctx.stroke();
 
-                        // Periodic traveling pulses
                         if (Math.random() < 0.0003 && pulses.length < 24) {
                             createPulse(nodes[i], nodes[j]);
                         }
@@ -231,7 +359,6 @@
                 }
             }
 
-            // Draw traveling pulses
             for (let i = pulses.length - 1; i >= 0; i--) {
                 const p = pulses[i];
                 p.progress += p.speed;
@@ -248,19 +375,15 @@
                 ctx.fill();
             }
 
-            // Draw and update each node in the ring
             for (let i = 0; i < nodes.length; i++) {
                 const n = nodes[i];
 
-                // Gentle organic drift
                 n.x += n.vx;
                 n.y += n.vy;
 
-                // Strong restoring force to maintain the perfect circular geometry
                 n.x += (n.baseX - n.x) * 0.035;
                 n.y += (n.baseY - n.y) * 0.035;
 
-                // Interactive mouse repulsion/deflection
                 const dxMouse = mouse.x - n.x;
                 const dyMouse = mouse.y - n.y;
                 const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
@@ -270,18 +393,15 @@
                     n.y -= (dyMouse / distMouse) * force * 12;
                 }
 
-                // Breathing pulse animation
                 n.pulsePhase += n.pulseSpeed;
                 const currentRadius = n.radius + Math.sin(n.pulsePhase) * 1.0;
                 const currentAlpha = 0.7 + Math.sin(n.pulsePhase) * 0.3;
 
-                // Outer Node Glow Halo
                 ctx.fillStyle = n.color + (currentAlpha * 0.25) + ")";
                 ctx.beginPath();
                 ctx.arc(n.x, n.y, currentRadius * 2.2, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Core Node Point
                 ctx.fillStyle = n.color + currentAlpha + ")";
                 ctx.beginPath();
                 ctx.arc(n.x, n.y, currentRadius, 0, Math.PI * 2);
