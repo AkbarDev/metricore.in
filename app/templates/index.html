@@ -136,67 +136,164 @@
             </div>
 
             <!-- ================= SIDE-BY-SIDE CATEGORY BENCHMARKS (PAID VS FREE) ================= -->
-            <div class="mt-20 pt-12 border-t border-slate-800/80 space-y-8">
+            <div id="benchmarks-section" class="mt-16 pt-10 border-t border-slate-800/80 space-y-6">
+                <!-- Header with Toggle Controls -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <h2 class="text-2xl font-black text-white">Side-by-Side Category Benchmarks</h2>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-2xl font-black text-white">Side-by-Side Category Benchmarks</h2>
+                            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                                {{ category_pairs|length }} Pairs
+                            </span>
+                        </div>
                         <p class="text-xs sm:text-sm text-slate-400 mt-1">Directly compare paid industry benchmarks against top free alternatives with free-tier trial limits.</p>
                     </div>
-                    <span class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-900 text-purple-300 border border-slate-800 self-start sm:self-auto">
-                        {{ category_pairs|length }} Topics • {{ all_tools|length }} Verified Tools
+
+                    <div class="flex items-center gap-3 self-start sm:self-auto">
+                        <span class="hidden md:inline-block text-xs font-bold px-3 py-1.5 rounded-full bg-slate-900 text-slate-400 border border-slate-800 font-mono">
+                            {{ all_tools|length }} Verified Tools
+                        </span>
+                        
+                        <!-- Collapse / Expand Toggle Button -->
+                        <button 
+                            type="button" 
+                            id="benchmarks-toggle-btn"
+                            onclick="toggleBenchmarksSection()"
+                            class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-200 hover:text-white border border-purple-500/30 text-xs font-extrabold transition-all shadow-md hover:shadow-purple-500/10 cursor-pointer"
+                            aria-expanded="false"
+                            aria-controls="benchmarks-collapsible-content"
+                        >
+                            <span id="benchmarks-toggle-text">Show Benchmarks</span>
+                            <svg id="benchmarks-toggle-icon" class="w-4 h-4 transition-transform duration-300 transform rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sleek Collapsed Teaser / Expand Strip -->
+                <div 
+                    id="benchmarks-teaser" 
+                    onclick="toggleBenchmarksSection()"
+                    class="cursor-pointer group p-4 rounded-2xl bg-slate-900/40 hover:bg-slate-900/80 border border-dashed border-slate-800 hover:border-purple-500/40 transition-all flex items-center justify-between gap-4"
+                >
+                    <div class="flex items-center gap-3 text-xs text-slate-400 group-hover:text-slate-200 transition-colors">
+                        <span class="p-2 rounded-xl bg-purple-500/10 text-purple-400 text-base">⚖️</span>
+                        <div>
+                            <span class="font-bold text-slate-200">Head-to-head category comparisons are currently collapsed.</span>
+                            <span class="block text-[11px] text-slate-500 mt-0.5">Click to view {{ category_pairs|length }} verified Paid vs. Free alternative benchmark matchups with trial limits.</span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-purple-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                        <span>Expand</span>
+                        <span>↓</span>
                     </span>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {% for item in category_pairs %}
-                        <div class="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-5 space-y-4 hover:border-slate-700 transition-all hover:shadow-xl">
-                            <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-                                <span class="text-xs font-black uppercase tracking-wider text-purple-400 flex items-center gap-2">
-                                    <span class="w-5 h-5 rounded-md bg-purple-500/20 text-purple-300 text-[10px] flex items-center justify-center font-bold">
-                                        {{ "%02d"|format(loop.index) }}
+                <!-- Collapsible Grid Container (Collapsed by Default) -->
+                <div id="benchmarks-collapsible-content" class="hidden space-y-6 pt-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {% for item in category_pairs %}
+                            <div class="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-5 space-y-4 hover:border-slate-700 transition-all hover:shadow-xl">
+                                <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                                    <span class="text-xs font-black uppercase tracking-wider text-purple-400 flex items-center gap-2">
+                                        <span class="w-5 h-5 rounded-md bg-purple-500/20 text-purple-300 text-[10px] flex items-center justify-center font-bold">
+                                            {{ "%02d"|format(loop.index) }}
+                                        </span>
+                                        {{ item.category }}
                                     </span>
-                                    {{ item.category }}
-                                </span>
-                                <span class="text-[10px] text-slate-500 font-mono">PAIR #{{ loop.index }}</span>
-                            </div>
-
-                            <!-- Paid Tool Row -->
-                            {% if item.paid %}
-                            <div class="p-3 rounded-2xl bg-slate-950/70 border border-rose-500/20 flex items-center justify-between gap-3 group hover:border-rose-500/40 transition-colors">
-                                <div class="flex items-center gap-3">
-                                    <img src="{{ item.paid.image_url }}" alt="{{ item.paid.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
-                                    <div>
-                                        <div class="flex items-center gap-1.5">
-                                            <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">Paid</span>
-                                            <a href="/tool/{{ item.paid.id }}" class="text-xs font-bold text-white hover:text-purple-300">{{ item.paid.name }}</a>
-                                        </div>
-                                        <div class="text-[10px] text-slate-400 mt-0.5">{{ item.paid.free_tier_limit }}</div>
-                                    </div>
+                                    <span class="text-[10px] text-slate-500 font-mono">PAIR #{{ loop.index }}</span>
                                 </div>
-                                <span class="text-xs font-black text-rose-400 font-mono">{{ item.paid.price_display }}</span>
-                            </div>
-                            {% endif %}
 
-                            <!-- Free Alternative Row -->
-                            {% if item.free %}
-                            <div class="p-3 rounded-2xl bg-slate-950/70 border border-emerald-500/20 flex items-center justify-between gap-3 group hover:border-emerald-500/40 transition-colors">
-                                <div class="flex items-center gap-3">
-                                    <img src="{{ item.free.image_url }}" alt="{{ item.free.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
-                                    <div>
-                                        <div class="flex items-center gap-1.5">
-                                            <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Free</span>
-                                            <a href="/tool/{{ item.free.id }}" class="text-xs font-bold text-white hover:text-emerald-300">{{ item.free.name }}</a>
+                                <!-- Paid Tool Row -->
+                                {% if item.paid %}
+                                <div class="p-3 rounded-2xl bg-slate-950/70 border border-rose-500/20 flex items-center justify-between gap-3 group hover:border-rose-500/40 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <img src="{{ item.paid.image_url }}" alt="{{ item.paid.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
+                                        <div>
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">Paid</span>
+                                                <a href="/tool/{{ item.paid.id }}" class="text-xs font-bold text-white hover:text-purple-300">{{ item.paid.name }}</a>
+                                            </div>
+                                            <div class="text-[10px] text-slate-400 mt-0.5">{{ item.paid.free_tier_limit }}</div>
                                         </div>
-                                        <div class="text-[10px] text-slate-400 mt-0.5">{{ item.free.free_tier_limit }}</div>
                                     </div>
+                                    <span class="text-xs font-black text-rose-400 font-mono">{{ item.paid.price_display }}</span>
                                 </div>
-                                <span class="text-xs font-black text-emerald-400 font-mono">$0/mo</span>
+                                {% endif %}
+
+                                <!-- Free Alternative Row -->
+                                {% if item.free %}
+                                <div class="p-3 rounded-2xl bg-slate-950/70 border border-emerald-500/20 flex items-center justify-between gap-3 group hover:border-emerald-500/40 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <img src="{{ item.free.image_url }}" alt="{{ item.free.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
+                                        <div>
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Free</span>
+                                                <a href="/tool/{{ item.free.id }}" class="text-xs font-bold text-white hover:text-emerald-300">{{ item.free.name }}</a>
+                                            </div>
+                                            <div class="text-[10px] text-slate-400 mt-0.5">{{ item.free.free_tier_limit }}</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-xs font-black text-emerald-400 font-mono">$0/mo</span>
+                                </div>
+                                {% endif %}
                             </div>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
+
+                    <!-- Bottom Quick Collapse Button -->
+                    <div class="pt-4 text-center">
+                        <button 
+                            type="button" 
+                            onclick="toggleBenchmarksSection()" 
+                            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 text-xs font-bold transition-all cursor-pointer hover:border-slate-700"
+                        >
+                            <span>Collapse Benchmarks Section</span>
+                            <span>▲</span>
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            <!-- Client Script to Toggle Benchmarks & Remember State -->
+            <script>
+                function toggleBenchmarksSection() {
+                    const content = document.getElementById('benchmarks-collapsible-content');
+                    const teaser = document.getElementById('benchmarks-teaser');
+                    const btn = document.getElementById('benchmarks-toggle-btn');
+                    const text = document.getElementById('benchmarks-toggle-text');
+                    const icon = document.getElementById('benchmarks-toggle-icon');
+
+                    if (!content) return;
+
+                    const isCurrentlyHidden = content.classList.contains('hidden');
+                    if (isCurrentlyHidden) {
+                        content.classList.remove('hidden');
+                        if (teaser) teaser.classList.add('hidden');
+                        if (text) text.textContent = 'Hide Benchmarks';
+                        if (icon) icon.classList.add('rotate-180');
+                        if (btn) btn.setAttribute('aria-expanded', 'true');
+                        try { sessionStorage.setItem('benchmarks_open', 'true'); } catch(e){}
+                    } else {
+                        content.classList.add('hidden');
+                        if (teaser) teaser.classList.remove('hidden');
+                        if (text) text.textContent = 'Show Benchmarks';
+                        if (icon) icon.classList.remove('rotate-180');
+                        if (btn) btn.setAttribute('aria-expanded', 'false');
+                        try { sessionStorage.removeItem('benchmarks_open'); } catch(e){}
+                    }
+                }
+
+                // Restore open state within session if user expanded it previously
+                document.addEventListener('DOMContentLoaded', () => {
+                    try {
+                        if (sessionStorage.getItem('benchmarks_open') === 'true') {
+                            toggleBenchmarksSection();
+                        }
+                    } catch(e){}
+                });
+            </script>
 
         {% endif %}
 
