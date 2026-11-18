@@ -209,50 +209,146 @@
 
             {% for layer_name, layer_tools in grouped_tools.items() %}
             <div class="space-y-4">
-                <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                    <h3 class="text-base font-extrabold uppercase tracking-wider text-slate-200">
-                        {{ layer_name }} ({{ layer_tools|length }} Tools)
-                    </h3>
+                <div class="flex items-center justify-between border-b border-slate-800/60 pb-2">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        <h3 class="text-base font-extrabold uppercase tracking-wider text-slate-200">
+                            {{ layer_name }} ({{ layer_tools|length }} Tools)
+                        </h3>
+                    </div>
+                    <span class="text-[11px] font-mono text-slate-500">Corporate & Freelance Stack</span>
                 </div>
 
-                <!-- Tools Grid for this Layer -->
+                <!-- Tools Grid for this Layer (Matching Open Source / AI Tool UI Card Layout) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     {% for tool in layer_tools %}
-                    <div class="rounded-2xl border border-slate-800/90 bg-slate-900/60 p-4 space-y-3 flex flex-col justify-between hover:border-slate-700 transition-colors">
-                        <div class="space-y-1.5">
-                            <div class="flex items-center justify-between gap-1.5">
-                                <span class="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">
-                                    {{ tool.category }}
+                    <div class="group relative rounded-3xl border border-slate-800/90 bg-slate-900/60 overflow-hidden hover:border-emerald-500/60 hover:bg-slate-900/90 transition-all duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-emerald-500/10 hover:-translate-y-1">
+                        
+                        <!-- Tool Visual Image / Logo Banner -->
+                        <div class="relative h-32 sm:h-36 w-full overflow-hidden bg-slate-950">
+                            {% if tool.image_url %}
+                            <img 
+                                src="{{ tool.image_url }}" 
+                                alt="{{ tool.name }}" 
+                                loading="lazy"
+                                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out filter brightness-90 group-hover:brightness-105"
+                            >
+                            {% else %}
+                            <div class="w-full h-full bg-gradient-to-br from-slate-900 via-slate-950 to-emerald-950/40 flex items-center justify-center font-black text-slate-600 text-3xl">
+                                {{ tool.name[0] }}
+                            </div>
+                            {% endif %}
+                            
+                            <!-- Overlay Gradients -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+                            
+                            <!-- Badges on Image -->
+                            <div class="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-1.5">
+                                <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-950/80 text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-md flex items-center gap-1 truncate max-w-[150px]">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+                                    <span class="truncate">{{ tool.category }}</span>
                                 </span>
-                                <span class="text-[9px] font-mono text-purple-300 font-bold">
+                                <span class="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 backdrop-blur-md shadow-md flex-shrink-0">
                                     {{ tool.level }}
                                 </span>
                             </div>
 
-                            <!-- Tool Name (Strict Rule: Plain text only, no logos, no brand colors) -->
-                            <div class="text-base font-black text-white pt-1">
-                                {{ tool.name }}
+                            <!-- Bottom Tool Name Pill on Image -->
+                            <div class="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between gap-2">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-950/90 backdrop-blur-md border border-slate-800 text-white font-black text-xs shadow-lg truncate max-w-[75%]">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    <span class="truncate">{{ tool.name }}</span>
+                                </span>
+                                <span class="text-[9px] px-2 py-0.5 rounded-lg bg-slate-900/90 text-slate-300 border border-slate-700/60 font-mono font-bold flex-shrink-0 backdrop-blur-md">
+                                    {{ tool.license_type or 'Cloud' }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Card Body Content -->
+                        <div class="p-4 flex-grow flex flex-col justify-between space-y-3">
+                            <!-- Tool Title & Status -->
+                            <div class="space-y-1">
+                                <div class="flex items-start justify-between gap-2">
+                                    <h4 class="text-base font-extrabold text-white group-hover:text-emerald-300 transition-colors tracking-tight truncate flex-1">
+                                        {{ tool.name }}
+                                    </h4>
+                                    {% if tool.github_stars and tool.github_stars != 'N/A' %}
+                                    <span class="text-[10px] font-mono font-bold text-amber-400 flex items-center gap-0.5 flex-shrink-0">
+                                        ★ {{ tool.github_stars }}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-[10px] font-mono font-bold text-slate-400 flex-shrink-0">
+                                        {{ tool.operational_status or 'Active' }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                                    {{ tool.purpose }}
+                                </p>
                             </div>
 
-                            <!-- Purpose (our own words) -->
-                            <p class="text-xs text-slate-300 leading-relaxed">
-                                {{ tool.purpose }}
-                            </p>
+                            <!-- Provenance & Key Metrics (Est / Country / Founders / Stars) -->
+                            <div class="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/80 space-y-1.5">
+                                <div class="flex items-center justify-between text-[11px]">
+                                    <!-- Country Logo & Name -->
+                                    <span class="flex items-center gap-1 font-semibold text-slate-200 truncate max-w-[130px]">
+                                        <span class="text-sm leading-none">{{ tool.country_flag or '🌐' }}</span>
+                                        <span class="truncate">{{ tool.country_name or 'Global' }}</span>
+                                    </span>
+                                    <!-- Year Founded -->
+                                    {% if tool.founded_year %}
+                                    <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-slate-900 border border-slate-800 text-purple-300 font-bold flex-shrink-0">
+                                        Est. {{ tool.founded_year }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="flex items-center justify-between text-[10px] pt-1.5 border-t border-slate-800/60">
+                                    <!-- Founder Name -->
+                                    <span class="truncate max-w-[135px]" title="{{ tool.founders }}">
+                                        <span class="text-slate-500 font-medium">By:</span>
+                                        <span class="text-slate-300 font-medium">{{ tool.founders or 'Founding Team' }}</span>
+                                    </span>
+                                    <!-- GitHub Stars or Pricing -->
+                                    {% if tool.github_stars and tool.github_stars != 'N/A' %}
+                                    <span class="inline-flex items-center gap-0.5 text-[9px] font-mono font-bold text-amber-400 bg-amber-400/10 px-1.5 py-0.2 rounded border border-amber-400/20 flex-shrink-0">
+                                        ★ {{ tool.github_stars }}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-[9px] font-mono text-emerald-400 truncate max-w-[100px]">
+                                        {{ tool.pricing_display or 'Standard SaaS' }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Compliance / Data Privacy Note -->
+                            <div class="p-2 rounded-xl bg-slate-950/80 border border-slate-800/90 text-[10px] flex items-center justify-between text-slate-300">
+                                <span class="flex items-center gap-1 truncate text-slate-400">
+                                    <span>🛡️</span>
+                                    <span class="truncate">{{ tool.eval_compliance or 'Standard Enterprise Cloud' }}</span>
+                                </span>
+                                <span class="text-[9px] font-mono text-emerald-400 font-semibold flex-shrink-0 ml-1">Verified</span>
+                            </div>
+
+                            <!-- Footer Outbound Link -->
+                            <div class="pt-2 border-t border-slate-800/60 flex items-center justify-between text-xs">
+                                <span class="text-[10px] font-mono text-slate-500">
+                                    {{ tool.level }} Level
+                                </span>
+                                <a 
+                                    href="{{ tool.official_url }}" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+                                >
+                                    <span>Visit Site</span>
+                                    <span>↗</span>
+                                </a>
+                            </div>
                         </div>
 
-                        <!-- Outbound link to official site (with standard compliance attributes) -->
-                        <div class="pt-2 border-t border-slate-800/60 text-right">
-                            <a 
-                                href="{{ tool.official_url }}" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-emerald-300 transition-colors"
-                            >
-                                <span>Official site</span>
-                                <span>↗</span>
-                            </a>
-                        </div>
                     </div>
                     {% endfor %}
                 </div>
@@ -290,3 +386,4 @@
 }
 </script>
 {% endblock %}
+
