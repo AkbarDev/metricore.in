@@ -12,6 +12,16 @@ from fastapi.templating import Jinja2Templates
 from app.models import AITool, TopCategoryInfo
 from app.auth import verify_credentials, register_user, get_user_by_username
 from app.categories import TOP_CATEGORIES, get_top_category_by_slug, get_all_top_categories
+from app.industry_stacks import (
+    get_all_stacks,
+    get_stack_by_slug,
+    get_all_tools as get_all_stack_tools,
+    get_tools_for_stack,
+    get_tools_grouped_by_layer,
+    get_all_use_cases,
+    get_use_cases_for_stack,
+    get_use_case_by_slug,
+)
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -547,6 +557,107 @@ async def submit_tool(payload: Dict = Body(...)):
         "status": "success",
         "message": "Tool submission received for editorial review."
     })
+
+# ================= INDUSTRY TOOL STACKS ROUTES =================
+@app.get("/industry-tool-stacks/", response_class=HTMLResponse)
+async def industry_tool_stacks_overview(
+    request: Request,
+    preview: Optional[str] = None,
+):
+    is_preview = (preview == "true" or preview == "1") or is_authenticated(request)
+    all_stacks = get_all_stacks()
+    stacks_with_counts = []
+    for s in all_stacks:
+        use_cases = get_use_cases_for_stack(s["slug"], include_unreviewed=is_preview)
+        stacks_with_counts.append({
+            **s,
+            "use_case_count": len(use_cases)
+        })
+
+    return templates.TemplateResponse(
+        request=request,
+        name="industry_stacks/overview.html",
+        context={
+            "stacks": stacks_with_counts,
+            "is_preview": is_preview,
+            "show_filters_row": False,
+            "active_category_slug": "industry-tool-stacks",
+            "is_authenticated": is_authenticated(request),
+            "username": get_current_user_name(request),
+            "role": get_current_role(request),
+        },
+    )
+
+@app.get("/industry-tool-stacks/{stack_slug}/", response_class=HTMLResponse)
+async def industry_stack_detail(
+    request: Request,
+    stack_slug: str,
+    preview: Optional[str] = None,
+):
+    is_preview = (preview == "true" or preview == "1") or is_authenticated(request)
+    stack = get_stack_by_slug(stack_slug)
+    if not stack:
+        raise HTTPException(status_code=404, detail="Industry stack not found")
+
+    tools = get_tools_for_stack(stack.get("tool_ids", []))
+    grouped_tools = get_tools_grouped_by_layer(stack.get("tool_ids", []))
+    use_cases = get_use_cases_for_stack(stack_slug, include_unreviewed=is_preview)
+
+    return templates.TemplateResponse(
+        request=request,
+        name="industry_stacks/stack_detail.html",
+        context={
+            "stack": stack,
+            "tools": tools,
+            "grouped_tools": grouped_tools,
+            "use_cases": use_cases,
+            "is_preview": is_preview,
+            "show_filters_row": False,
+            "active_category_slug": "industry-tool-stacks",
+            "is_authenticated": is_authenticated(request),
+            "username": get_current_user_name(request),
+            "role": get_current_role(request),
+        },
+    )
+
+@app.get("/industry-tool-stacks/{stack_slug}/{use_case_slug}/", response_class=HTMLResponse)
+async def industry_use_case_detail(
+    request: Request,
+    stack_slug: str,
+    use_case_slug: str,
+    preview: Optional[str] = None,
+):
+    is_preview = (preview == "true" or preview == "1") or is_authenticated(request)
+    stack = get_stack_by_slug(stack_slug)
+    if not stack:
+        raise HTTPException(status_code=404, detail="Industry stack not found")
+
+    use_case = get_use_case_by_slug(stack_slug, use_case_slug, include_unreviewed=is_preview)
+    if not use_case:
+        unreviewed = get_use_case_by_slug(stack_slug, use_case_slug, include_unreviewed=True)
+        if unreviewed and not is_preview:
+            raise HTTPException(status_code=403, detail="This use case is currently pending editorial human review. Add ?preview=true to view in preview mode.")
+        raise HTTPException(status_code=404, detail="Use case not found")
+
+    tools_used = get_tools_for_stack(use_case.get("tool_ids", []))
+    main_tool_name = tools_used[0]["name"] if tools_used else "Corporate Tools"
+
+    return templates.TemplateResponse(
+        request=request,
+        name="industry_stacks/use_case_detail.html",
+        context={
+            "stack": stack,
+            "use_case": use_case,
+            "tools_used": tools_used,
+            "main_tool_name": main_tool_name,
+            "is_preview": is_preview,
+            "show_filters_row": False,
+            "active_category_slug": "industry-tool-stacks",
+            "is_authenticated": is_authenticated(request),
+            "username": get_current_user_name(request),
+            "role": get_current_role(request),
+        },
+    )
 
 @app.get("/tool/{tool_id}", response_class=HTMLResponse)
 async def tool_detail(request: Request, tool_id: str):

@@ -1,0 +1,766 @@
+{
+  "stacks": [
+    {
+      "slug": "ai-marketing-stack",
+      "name": "AI Marketing Stack",
+      "function": "Marketing",
+      "summary": "A modern corporate marketing stack combining generative AI, core marketing platforms, analytics engines, and workflow automation to execute omnichannel campaigns.",
+      "description": "Marketing teams today combine generative drafting tools, cross-channel engagement engines, web analytics, and workflow automation. This stack outlines how enterprise and growth teams connect these tools together in daily operations.",
+      "tool_ids": [
+        "chatgpt",
+        "gemini",
+        "grok",
+        "claude",
+        "midjourney",
+        "jasper",
+        "copy-ai",
+        "google-veo",
+        "canva",
+        "hubspot",
+        "salesforce-marketing-cloud",
+        "adobe-marketo-engage",
+        "braze",
+        "iterable",
+        "google-analytics-4",
+        "google-ads",
+        "google-marketing-platform",
+        "meta-business-suite",
+        "semrush",
+        "mailchimp",
+        "wordpress",
+        "webengage",
+        "moengage",
+        "freshchat",
+        "zapier",
+        "make",
+        "optimizely-opal",
+        "superagi",
+        "cognosys",
+        "langchain",
+        "llamaindex",
+        "relevance-ai"
+      ],
+      "use_case_ids": [
+        "weekly-campaign-performance-brief",
+        "lead-follow-up-automation",
+        "multichannel-content-repurposing",
+        "ad-copy-variation-testing",
+        "churn-risk-customer-reactivation",
+        "social-media-asset-batching",
+        "competitive-keyword-gap-brief",
+        "omnichannel-onboarding-sync",
+        "sentiment-categorization-inbound",
+        "client-pitch-positioning-sheet"
+      ]
+    },
+    {
+      "slug": "data-analytics-stack",
+      "name": "Data & Business Intelligence Stack",
+      "function": "Data & Analytics",
+      "summary": "Enterprise data aggregation, transformation, and automated reporting stack used by analytics and business intelligence teams.",
+      "description": "How corporate analysts extract pipeline metrics from databases, run automated data validation checks, and generate qualitative stakeholder reports.",
+      "tool_ids": [
+        "chatgpt",
+        "claude",
+        "google-analytics-4",
+        "make",
+        "llamaindex"
+      ],
+      "use_case_ids": []
+    },
+    {
+      "slug": "hr-operations-stack",
+      "name": "People Operations & HR Stack",
+      "function": "Human Resources",
+      "summary": "Recruiting, onboarding orchestration, and internal communication automation stack used by corporate people teams.",
+      "description": "How HR coordinators connect applicant tracking, role profile drafting, and employee onboarding notification workflows.",
+      "tool_ids": [
+        "chatgpt",
+        "claude",
+        "zapier",
+        "freshchat"
+      ],
+      "use_case_ids": []
+    },
+    {
+      "slug": "product-operations-stack",
+      "name": "Product Operations & Research Stack",
+      "function": "Product & Operations",
+      "summary": "User feedback synthesis, product requirements drafting, and feature rollout tracking stack.",
+      "description": "Connects user interview transcript analysis, competitive benchmarking, and roadmap status communication into streamlined product workflows.",
+      "tool_ids": [
+        "claude",
+        "chatgpt",
+        "make",
+        "relevance-ai"
+      ],
+      "use_case_ids": []
+    }
+  ],
+  "tools": [
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "layer": "Generative AI",
+      "category": "Conversational AI & Drafting",
+      "purpose": "Drafts campaign copy variants, outlines editorial briefs, and summarizes complex market research notes.",
+      "level": "Beginner",
+      "official_url": "https://chatgpt.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini",
+      "layer": "Generative AI",
+      "category": "Multimodal Generative Assistant",
+      "purpose": "Analyzes multimodal inputs including slides and documents to synthesize cross-functional marketing research.",
+      "level": "Beginner",
+      "official_url": "https://gemini.google.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "grok",
+      "name": "Grok",
+      "layer": "Generative AI",
+      "category": "Real-Time Context AI",
+      "purpose": "Assists with real-time topical research, community conversation scanning, and concise draft generation.",
+      "level": "Intermediate",
+      "official_url": "https://x.ai",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "claude",
+      "name": "Claude",
+      "layer": "Generative AI",
+      "category": "Long-Form Analysis & Reasoning",
+      "purpose": "Evaluates long brand guidelines, proofreads regulatory copy, and structures qualitative interview transcripts.",
+      "level": "Beginner",
+      "official_url": "https://claude.ai",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "midjourney",
+      "name": "Midjourney",
+      "layer": "Generative AI",
+      "category": "Visual Generation",
+      "purpose": "Generates conceptual imagery, creative style tiles, and mood boards for early creative pitch decks.",
+      "level": "Intermediate",
+      "official_url": "https://www.midjourney.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "jasper",
+      "name": "Jasper",
+      "layer": "Generative AI",
+      "category": "Enterprise Content Generation",
+      "purpose": "Maintains brand tone rules across distributed teams drafting blog outlines, social posts, and product updates.",
+      "level": "Intermediate",
+      "official_url": "https://www.jasper.ai",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "copy-ai",
+      "name": "Copy.ai",
+      "layer": "Generative AI",
+      "category": "Workflow Copy Generation",
+      "purpose": "Produces short-form digital ad headlines, email subject lines, and bulk ecommerce description drafts.",
+      "level": "Beginner",
+      "official_url": "https://www.copy.ai",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "google-veo",
+      "name": "Google Veo",
+      "layer": "Generative AI",
+      "category": "Generative Video Modeling",
+      "purpose": "Creates short video concept snippets and visual motion mockups from text prompts for creative storyboards.",
+      "level": "Advanced",
+      "official_url": "https://deepmind.google/technologies/veo/",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "canva",
+      "name": "Canva",
+      "layer": "Marketing platforms and analytics",
+      "category": "Collaborative Visual Design",
+      "purpose": "Formats approved copy into branded social cards, presentation pitch slides, and digital display collateral.",
+      "level": "Beginner",
+      "official_url": "https://www.canva.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "hubspot",
+      "name": "HubSpot",
+      "layer": "Marketing platforms and analytics",
+      "category": "Inbound Marketing & CRM",
+      "purpose": "Tracks customer lifecycle stages, schedules email drip campaigns, and captures inbound form leads.",
+      "level": "Intermediate",
+      "official_url": "https://www.hubspot.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "salesforce-marketing-cloud",
+      "name": "Salesforce Marketing Cloud",
+      "layer": "Marketing platforms and analytics",
+      "category": "Enterprise Omnichannel Engagement",
+      "purpose": "Manages customer journey logic, automated transactional messaging, and large customer database segmentation.",
+      "level": "Advanced",
+      "official_url": "https://www.salesforce.com/marketing/",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "adobe-marketo-engage",
+      "name": "Adobe Marketo Engage",
+      "layer": "Marketing platforms and analytics",
+      "category": "B2B Lead Nurturing & Scoring",
+      "purpose": "Scores prospect engagement across digital touchpoints and routes qualified leads to sales pipelines.",
+      "level": "Advanced",
+      "official_url": "https://business.adobe.com/products/marketo/main.html",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "braze",
+      "name": "Braze",
+      "layer": "Marketing platforms and analytics",
+      "category": "Mobile & Cross-Channel Engagement",
+      "purpose": "Dispatches event-triggered mobile push alerts, in-app messaging, and targeted retention emails.",
+      "level": "Advanced",
+      "official_url": "https://www.braze.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "iterable",
+      "name": "Iterable",
+      "layer": "Marketing platforms and analytics",
+      "category": "Customer Journey Orchestration",
+      "purpose": "Coordinates multichannel message sequences across SMS, email, and webhooks based on real-time user actions.",
+      "level": "Intermediate",
+      "official_url": "https://iterable.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "google-analytics-4",
+      "name": "Google Analytics 4",
+      "layer": "Marketing platforms and analytics",
+      "category": "Digital Analytics & Reporting",
+      "purpose": "Monitors website traffic sources, user engagement funnels, and primary digital conversion goals.",
+      "level": "Intermediate",
+      "official_url": "https://analytics.google.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "google-ads",
+      "name": "Google Ads",
+      "layer": "Marketing platforms and analytics",
+      "category": "Paid Search & Display Media",
+      "purpose": "Deploys search, display, and video advertising campaigns matched against user search intent.",
+      "level": "Intermediate",
+      "official_url": "https://ads.google.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "google-marketing-platform",
+      "name": "Google Marketing Platform",
+      "layer": "Marketing platforms and analytics",
+      "category": "Enterprise Programmatic Advertising",
+      "purpose": "Coordinates programmatic ad inventory buying, cross-exchange bidding, and enterprise analytics governance.",
+      "level": "Advanced",
+      "official_url": "https://marketingplatform.google.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "meta-business-suite",
+      "name": "Meta Business Suite",
+      "layer": "Marketing platforms and analytics",
+      "category": "Social Media Operations & Ads",
+      "purpose": "Schedules organic posts, moderates community commentary, and runs targeted ads on Facebook and Instagram.",
+      "level": "Beginner",
+      "official_url": "https://business.facebook.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "semrush",
+      "name": "Semrush",
+      "layer": "Marketing platforms and analytics",
+      "category": "SEO & Competitive Intelligence",
+      "purpose": "Audits organic search visibility, identifies competitor keyword gaps, and tracks monthly search volume.",
+      "level": "Intermediate",
+      "official_url": "https://www.semrush.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "mailchimp",
+      "name": "Mailchimp",
+      "layer": "Marketing platforms and analytics",
+      "category": "Email Marketing & Broadcasts",
+      "purpose": "Designs recurring email newsletters, manages subscriber lists, and sends targeted broadcast announcements.",
+      "level": "Beginner",
+      "official_url": "https://mailchimp.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "wordpress",
+      "name": "WordPress",
+      "layer": "Marketing platforms and analytics",
+      "category": "Content Management System",
+      "purpose": "Publishes editorial articles, hosts marketing resource libraries, and manages customer-facing landing pages.",
+      "level": "Beginner",
+      "official_url": "https://wordpress.org",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "webengage",
+      "name": "WebEngage",
+      "layer": "Marketing platforms and analytics",
+      "category": "Retention & Lifecycle Engagement",
+      "purpose": "Delivers personalized web banners, push alerts, and automated user retention campaigns.",
+      "level": "Intermediate",
+      "official_url": "https://webengage.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "moengage",
+      "name": "MoEngage",
+      "layer": "Marketing platforms and analytics",
+      "category": "Consumer Engagement Platform",
+      "purpose": "Segments mobile application users and delivers personalized notifications based on behavioral milestones.",
+      "level": "Intermediate",
+      "official_url": "https://www.moengage.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "freshchat",
+      "name": "Freshchat",
+      "layer": "Marketing platforms and analytics",
+      "category": "Conversational Support & Engagement",
+      "purpose": "Connects live website visitors to support reps and automates basic qualification bot conversations.",
+      "level": "Beginner",
+      "official_url": "https://www.freshworks.com/live-chat-software/",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "zapier",
+      "name": "Zapier",
+      "layer": "Automation and agents",
+      "category": "Cloud App Integration",
+      "purpose": "Connects form submissions, CRM records, and team chat channels via automated trigger-action steps.",
+      "level": "Beginner",
+      "official_url": "https://zapier.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "make",
+      "name": "Make",
+      "layer": "Automation and agents",
+      "category": "Visual Workflow Orchestration",
+      "purpose": "Constructs multi-branch data transformation pipelines and complex scheduled business automation routines.",
+      "level": "Intermediate",
+      "official_url": "https://www.make.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "optimizely-opal",
+      "name": "Optimizely Opal",
+      "layer": "Automation and agents",
+      "category": "Experimentation AI Assistant",
+      "purpose": "Assists marketing teams in hypothesizing A/B test angles, structuring test variants, and summarizing results.",
+      "level": "Intermediate",
+      "official_url": "https://www.optimizely.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "superagi",
+      "name": "SuperAGI",
+      "layer": "Automation and agents",
+      "category": "Autonomous Agent Infrastructure",
+      "purpose": "Runs multi-step agent loops that execute sequential web searches and document preparation autonomously.",
+      "level": "Advanced",
+      "official_url": "https://superagi.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "cognosys",
+      "name": "Cognosys",
+      "layer": "Automation and agents",
+      "category": "Browser-Based Research Agents",
+      "purpose": "Gathers publicly available web signals, compiles market overviews, and organizes competitive notes.",
+      "level": "Intermediate",
+      "official_url": "https://www.cognosys.ai",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "langchain",
+      "name": "LangChain",
+      "layer": "Automation and agents",
+      "category": "LLM Application Framework",
+      "purpose": "Enables engineers to connect language model prompts with company databases, APIs, and document parsers.",
+      "level": "Advanced",
+      "official_url": "https://www.langchain.com",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "llamaindex",
+      "name": "LlamaIndex",
+      "layer": "Automation and agents",
+      "category": "Data Framework for LLMs",
+      "purpose": "Indexes internal files, product specs, and documentation into search-ready representations for query agents.",
+      "level": "Advanced",
+      "official_url": "https://www.llamaindex.ai",
+      "last_checked_date": "2026-11-18"
+    },
+    {
+      "id": "relevance-ai",
+      "name": "Relevance AI",
+      "layer": "Automation and agents",
+      "category": "No-Code Digital Workforce",
+      "purpose": "Builds autonomous task agents that execute outbound lead enrichment, research, and follow-up logging.",
+      "level": "Intermediate",
+      "official_url": "https://relevanceai.com",
+      "last_checked_date": "2026-11-18"
+    }
+  ],
+  "use_cases": [
+    {
+      "slug": "weekly-campaign-performance-brief",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Weekly campaign performance brief",
+      "role": "Marketing manager",
+      "audience": "job",
+      "level": "Intermediate",
+      "situation": "Every Monday leadership expects a summary of last week's website and ad performance. Collecting numbers from several dashboards takes hours and the written summary is often rushed.",
+      "tool_ids": [
+        "google-analytics-4",
+        "google-ads",
+        "chatgpt"
+      ],
+      "workflow_steps": [
+        "Export last week's key metrics from GA4 and Google Ads into one sheet.",
+        "Give the assistant the numbers and ask it to list the biggest changes against the previous week and any unusual spikes or drops.",
+        "Ask it to draft a short summary in plain language for non-technical readers.",
+        "Check every figure against the source dashboards and correct anything wrong.",
+        "Add your own recommendations and send."
+      ],
+      "result": "Reporting becomes faster and more consistent, leaving more time for decisions.",
+      "freelance_angle": "Offer a recurring \"weekly insights brief\" to small business clients.",
+      "guardrails": [
+        "Verify all numbers manually against primary source dashboards before distribution.",
+        "Do not share confidential, personal or client-identifiable data with any AI or cloud tool without explicit permission and an approved enterprise data policy."
+      ],
+      "practice_skills": [
+        "Reading GA4 acquisition and event reports",
+        "Writing clear data analysis prompts",
+        "Basic spreadsheet validation checks"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": false
+    },
+    {
+      "slug": "lead-follow-up-automation",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Lead follow-up automation for a small client",
+      "role": "Freelancer",
+      "audience": "freelance",
+      "level": "Beginner",
+      "situation": "A small business receives enquiries through a website form but follows up late and inconsistently.",
+      "tool_ids": [
+        "wordpress",
+        "hubspot",
+        "zapier",
+        "chatgpt"
+      ],
+      "workflow_steps": [
+        "A form submission on the WordPress site triggers an automation in Zapier.",
+        "The contact is added to the CRM with the right tag and category.",
+        "A generative AI tool drafts a personalised reply based on the enquiry.",
+        "The draft is sent to the owner for review and approval before it goes out.",
+        "A follow-up reminder is scheduled if there is no reply within three business days."
+      ],
+      "result": "Faster and more consistent follow-up, with the owner staying in control.",
+      "freelance_angle": "Package it as a fixed-scope \"enquiry follow-up setup\" for clients.",
+      "guardrails": [
+        "Get explicit consent for storing contact data under applicable privacy laws.",
+        "Always maintain human review and approval before sending external client communications."
+      ],
+      "practice_skills": [
+        "Automation triggers and actions in Zapier",
+        "CRM contact property basics",
+        "Writing prompt templates with dynamic variables"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": false
+    },
+    {
+      "slug": "multichannel-content-repurposing",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Multichannel content repurposing workflow",
+      "role": "Content lead",
+      "audience": "job",
+      "level": "Intermediate",
+      "situation": "The team writes thorough monthly articles on the corporate blog, but lacks the editorial bandwidth to break each piece down into newsletter snippets, social posts, and visual carousels.",
+      "tool_ids": [
+        "wordpress",
+        "claude",
+        "canva",
+        "meta-business-suite"
+      ],
+      "workflow_steps": [
+        "Copy the finalized blog post text from WordPress into Claude.",
+        "Prompt the assistant to extract five core takeaways and draft three distinct social post angles with appropriate line breaks.",
+        "Review the generated drafts against brand editorial standards and refine the tone.",
+        "Import approved headline snippets into Canva layout templates to format visual cards.",
+        "Schedule the approved posts and graphics inside Meta Business Suite across target channels."
+      ],
+      "result": "Editorial output extends across multiple platforms with consistent brand messaging.",
+      "freelance_angle": "Offer a \"blog-to-social repurposing package\" to founders and busy marketing teams on a monthly retainer.",
+      "guardrails": [
+        "Review every post manually for accurate factual context and appropriate tone.",
+        "Ensure no proprietary internal strategic plans are pasted into unapproved tools."
+      ],
+      "practice_skills": [
+        "Structuring long-form text for extraction",
+        "Consistent brand voice editing",
+        "Social graphic layout assembly in Canva"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": true
+    },
+    {
+      "slug": "ad-copy-variation-testing",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Paid search ad copy variant generation and verification",
+      "role": "Performance marketer",
+      "audience": "job",
+      "level": "Intermediate",
+      "situation": "Search campaigns require dozens of character-limited headlines and descriptions to improve ad relevance, but brainstorming variations manually is tedious and prone to formatting errors.",
+      "tool_ids": [
+        "semrush",
+        "google-ads",
+        "chatgpt"
+      ],
+      "workflow_steps": [
+        "Identify target commercial search queries and search intent terms using Semrush.",
+        "Prompt the generative assistant to write 15 headlines (under 30 characters) and 4 descriptions (under 90 characters) targeting those exact intents.",
+        "Run an automated character count check in a spreadsheet to ensure zero truncation.",
+        "Check each variation for compliance with Google Ads editorial policies and brand voice guidelines.",
+        "Upload the approved responsive search ad assets directly into Google Ads campaign groups."
+      ],
+      "result": "Faster creation of structured ad variants that adhere strictly to platform constraints.",
+      "freelance_angle": "Offer an \"ad copy refresh and intent alignment\" sprint for small ecommerce accounts.",
+      "guardrails": [
+        "Strictly verify character count limits before uploading.",
+        "Never make unsubstantiated claims or misleading guarantees in ad copy."
+      ],
+      "practice_skills": [
+        "Search intent analysis in Semrush",
+        "Writing prompt constraints with character length limits",
+        "Responsive search ad structuring in Google Ads"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": true
+    },
+    {
+      "slug": "churn-risk-customer-reactivation",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Automated churn-risk customer reactivation journey",
+      "role": "CRM manager",
+      "audience": "job",
+      "level": "Advanced",
+      "situation": "Subscribers who stop opening weekly product announcements are at risk of lapsing, but generic email blasts fail to re-engage them.",
+      "tool_ids": [
+        "braze",
+        "chatgpt",
+        "make"
+      ],
+      "workflow_steps": [
+        "Define an inactive segment criteria in Braze based on last login and open milestones.",
+        "Draft three differentiated re-engagement messages tailored to recent browsing categories using an assistant.",
+        "Set up an automated journey in Make to sync updated user preference flags between the database and Braze.",
+        "Subject the draft copy to internal team review and run a proof test send to internal seed addresses.",
+        "Launch the automated reactivation branch with holdout control groups to measure real engagement lift."
+      ],
+      "result": "Lapsed users receive timely, relevant messaging without requiring manual campaign intervention.",
+      "freelance_angle": "Consult for growth startups to design and configure their dormant user reactivation flows.",
+      "guardrails": [
+        "Verify all opt-out and unsubscribe links function seamlessly according to anti-spam regulations.",
+        "Ensure user segments contain no unhashed personal identifiers during webhook transfers."
+      ],
+      "practice_skills": [
+        "Audience lifecycle segmentation in Braze",
+        "Constructing webhook branches in Make",
+        "Design of holdout testing methodologies"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": true
+    },
+    {
+      "slug": "social-media-asset-batching",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Social media creative asset batching and localized variations",
+      "role": "Freelancer / Creative strategist",
+      "audience": "freelance",
+      "level": "Beginner",
+      "situation": "A regional business wants weekly social graphics tailored to three local markets, but creating each visual independently is time-consuming.",
+      "tool_ids": [
+        "canva",
+        "midjourney",
+        "chatgpt"
+      ],
+      "workflow_steps": [
+        "Use Midjourney to create stylized, royalty-free background textures matching the client's brand palette.",
+        "Prompt a generative tool to adapt one master promotional message into three regional localized phrases.",
+        "Review the regional terms with the client to verify local relevance and cultural appropriateness.",
+        "Batch create the visual banners using Canva's template bulk-create features.",
+        "Package the finished creative files into organized cloud folders with suggested publication dates."
+      ],
+      "result": "Streamlined asset production allowing consistent regional presence without excessive production time.",
+      "freelance_angle": "Offer multi-market \"monthly visual batching\" retainers to regional hospitality and retail businesses.",
+      "guardrails": [
+        "Ensure all generated imagery conforms to commercial usage guidelines.",
+        "Have the client explicitly approve localized wording prior to any public release."
+      ],
+      "practice_skills": [
+        "Generating consistent visual textures",
+        "Canva bulk-creation workflows",
+        "Client asset organization and handoff standards"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": true
+    },
+    {
+      "slug": "competitive-keyword-gap-brief",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Competitive keyword gap and content brief generator",
+      "role": "Small-agency owner",
+      "audience": "both",
+      "level": "Intermediate",
+      "situation": "Prospective clients ask where their organic search presence is falling behind competitors, but conducting keyword gap research manually takes several days per audit.",
+      "tool_ids": [
+        "semrush",
+        "claude",
+        "wordpress"
+      ],
+      "workflow_steps": [
+        "Export the keyword overlap and gap report between the client and their top three competitors from Semrush.",
+        "Feed the raw keyword terms and search volumes into Claude with instructions to cluster them into logical topic clusters.",
+        "Have the model outline a 5-part content pillar brief highlighting missing search intent angles.",
+        "Verify search volumes and competitiveness manually in Semrush to ensure achievable ranking targets.",
+        "Format the approved content outline as an editorial roadmap for the client's WordPress publication calendar."
+      ],
+      "result": "Faster audit turnaround that provides prospective clients with a clear, intent-grounded editorial roadmap.",
+      "freelance_angle": "Sell standalone \"Competitive SEO & Content Gap Audits\" as an entry point for agency client acquisition.",
+      "guardrails": [
+        "Manually double-check search difficulty metrics before promising client outcomes.",
+        "Do not paste private client contract details or proprietary company metrics into the assistant."
+      ],
+      "practice_skills": [
+        "Semrush keyword gap extraction",
+        "Prompting language models to cluster semantic search data",
+        "Formatting actionable editorial briefs"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": true
+    },
+    {
+      "slug": "omnichannel-onboarding-sync",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Omnichannel onboarding trigger and messaging sync",
+      "role": "CRM lead / Growth marketer",
+      "audience": "job",
+      "level": "Advanced",
+      "situation": "New users sign up on the website but often miss critical setup milestones because onboarding emails and website live-chat prompts operate independently.",
+      "tool_ids": [
+        "hubspot",
+        "freshchat",
+        "zapier"
+      ],
+      "workflow_steps": [
+        "Map key milestone events in the customer onboarding journey inside HubSpot.",
+        "Build a Zapier webhook that triggers when a user has been registered for 48 hours without completing step two.",
+        "Trigger a contextual, helpful conversation prompt via Freshchat when the user next visits the portal.",
+        "Test the trigger sequence across test accounts to confirm no duplicate messages are dispatched.",
+        "Review conversation logs weekly to identify where users still experience friction."
+      ],
+      "result": "Coordinated messaging across email and web chat that guides users through initial setup without confusion.",
+      "freelance_angle": "Package this as an \"onboarding flow audit and sync\" for B2B SaaS and service companies.",
+      "guardrails": [
+        "Include rate-limiting rules so users are never bombarded across multiple channels simultaneously.",
+        "Keep human support agents accessible if an automated prompt fails to resolve the user's issue."
+      ],
+      "practice_skills": [
+        "Event tracking and webhook payload inspection",
+        "Conditional branching in Zapier",
+        "Live-chat conversation routing rules"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": true
+    },
+    {
+      "slug": "sentiment-categorization-inbound",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Autonomous customer feedback sentiment categorization and ticketing",
+      "role": "Marketing operations manager",
+      "audience": "job",
+      "level": "Advanced",
+      "situation": "Hundreds of post-campaign survey responses arrive every month. Reading and tagging each response manually creates a backlog, delaying urgent customer follow-ups.",
+      "tool_ids": [
+        "relevance-ai",
+        "make",
+        "hubspot"
+      ],
+      "workflow_steps": [
+        "Connect survey form submissions to a Make scenario that triggers on new entry.",
+        "Route the qualitative response text through a Relevance AI agent with strict tagging rules (Product, Billing, Campaign, Sentiment).",
+        "If negative sentiment or an urgent issue is detected, create a high-priority follow-up ticket in HubSpot.",
+        "Store the classified metadata in a shared spreadsheet for weekly trend analysis.",
+        "Have an operations coordinator audit a 10% sample of categorized tickets weekly for classification accuracy."
+      ],
+      "result": "Urgent customer feedback surfaces quickly while general feedback trends are structured automatically.",
+      "freelance_angle": "Implement automated feedback-triage systems for customer success and marketing operations teams.",
+      "guardrails": [
+        "Enforce strict human sampling to detect automated misclassifications early.",
+        "Anonymize feedback text so personal contact details are not passed to third-party endpoints unnecessarily."
+      ],
+      "practice_skills": [
+        "Configuring AI agent task instructions",
+        "Error handling and fallback routes in Make",
+        "CRM ticket property automation"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": true
+    },
+    {
+      "slug": "client-pitch-positioning-sheet",
+      "stack_slug": "ai-marketing-stack",
+      "title": "Client pitch and market positioning tear-sheet",
+      "role": "Small-agency owner / Consultant",
+      "audience": "freelance",
+      "level": "Intermediate",
+      "situation": "Before a prospective client call, the consultant needs to understand the prospect's brand voice, core competitors, and current digital marketing footprint in under an hour.",
+      "tool_ids": [
+        "gemini",
+        "semrush",
+        "canva"
+      ],
+      "workflow_steps": [
+        "Extract public search metrics and top traffic drivers for the prospect's website using Semrush.",
+        "Feed public website copy and recent company announcements into Gemini to identify their stated target audience and positioning tone.",
+        "Draft three specific discussion topics where digital execution could be strengthened.",
+        "Assemble the verified notes into a clean, one-page tear-sheet using a standard Canva template.",
+        "Review the notes before the call and use them to guide the client discovery conversation."
+      ],
+      "result": "Consultant arrives prepared with tailored talking points that immediately demonstrate understanding of the client's business.",
+      "freelance_angle": "Use this workflow as standard pre-call preparation to elevate close rates on discovery calls.",
+      "guardrails": [
+        "Rely only on verified public information; do not present speculative assertions as facts.",
+        "Keep the focus on asking perceptive questions rather than declaring premature solutions."
+      ],
+      "practice_skills": [
+        "Rapid competitive domain analysis",
+        "Synthesizing qualitative brand positioning",
+        "Creating one-page executive summaries in Canva"
+      ],
+      "last_reviewed_date": "2026-11-18",
+      "needs_human_review": true
+    }
+  ]
+}

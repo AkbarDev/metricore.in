@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block title %}Tool Stacks Used in Real Corporate Work | Industry Tool Stacks | Metricore{% endblock %}
+
+{% block content %}
+<div class="relative w-full overflow-hidden">
+    <!-- Ambient Aura -->
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-emerald-600/10 rounded-full blur-[160px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 relative z-10">
+
+        <!-- ================= BREADCRUMBS ================= -->
+        <nav class="flex items-center space-x-2 text-xs text-slate-400 font-medium" aria-label="Breadcrumb">
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+            <span>/</span>
+            <span class="text-purple-300 font-bold">Industry Tool Stacks</span>
+        </nav>
+
+        <!-- ================= HERO ================= -->
+        <div class="space-y-4 max-w-4xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-bold">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Real-World Corporate Tool Stacks</span>
+            </div>
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                Tool stacks used in real corporate work
+            </h1>
+            <p class="text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed">
+                See which tools teams combine, and how to use them on the job or for clients.
+            </p>
+        </div>
+
+        <!-- ================= PREVIEW MODE BANNER (IF ACTIVE) ================= -->
+        {% if is_preview %}
+        <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-200">
+            <div class="flex items-center gap-2">
+                <span class="text-base">👁️</span>
+                <div>
+                    <span class="font-bold">Preview Mode Active:</span>
+                    <span>Displaying all use cases, including those marked for human review before publication.</span>
+                </div>
+            </div>
+            <a href="/industry-tool-stacks/" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-100 font-bold border border-amber-500/30 transition-colors self-start sm:self-auto">
+                Exit Preview
+            </a>
+        </div>
+        {% else %}
+        <div class="text-right">
+            <a href="/industry-tool-stacks/?preview=true" class="text-[11px] font-mono text-slate-500 hover:text-slate-300 transition-colors">
+                [ 👁️ Editorial Preview Mode ]
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- ================= INTERACTIVE FILTER BAR ================= -->
+        <div class="p-5 rounded-3xl bg-slate-900/80 border border-slate-800/90 backdrop-blur-xl shadow-xl space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                <!-- Search input -->
+                <div class="lg:col-span-2 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="stacks-search" 
+                        oninput="filterStacks()" 
+                        placeholder="Search stacks, tools, or functions..." 
+                        class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950/90 border border-slate-800 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500 font-medium"
+                    >
+                </div>
+
+                <!-- Function filter -->
+                <div>
+                    <select id="filter-function" onchange="filterStacks()" class="w-full py-2.5 px-3 rounded-xl bg-slate-950/90 border border-slate-800 text-xs text-slate-300 focus:outline-none focus:border-emerald-500 font-medium">
+                        <option value="">All Functions</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Data & Analytics">Data & Analytics</option>
+                        <option value="Human Resources">Human Resources</option>
+                        <option value="Product & Operations">Product & Operations</option>
+                    </select>
+                </div>
+
+                <!-- Tool Layer filter -->
+                <div>
+                    <select id="filter-layer" onchange="filterStacks()" class="w-full py-2.5 px-3 rounded-xl bg-slate-950/90 border border-slate-800 text-xs text-slate-300 focus:outline-none focus:border-emerald-500 font-medium">
+                        <option value="">All Tool Layers</option>
+                        <option value="Generative AI">Generative AI</option>
+                        <option value="Marketing platforms and analytics">Platforms & Analytics</option>
+                        <option value="Automation and agents">Automation & Agents</option>
+                    </select>
+                </div>
+
+                <!-- Mode / Audience filter -->
+                <div>
+                    <select id="filter-mode" onchange="filterStacks()" class="w-full py-2.5 px-3 rounded-xl bg-slate-950/90 border border-slate-800 text-xs text-slate-300 focus:outline-none focus:border-emerald-500 font-medium">
+                        <option value="">All Applications</option>
+                        <option value="job">For my job</option>
+                        <option value="freelance">For freelancing</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= STACKS GRID ================= -->
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-sm font-black uppercase tracking-wider text-slate-400">
+                    Corporate Function Stacks ({{ stacks|length }})
+                </h2>
+                <span class="text-xs text-slate-500 font-mono">Tools shown as plain text • No endorsements</span>
+            </div>
+
+            <div id="stacks-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for stack in stacks %}
+                <div 
+                    class="stack-card group rounded-3xl border border-slate-800/90 bg-slate-900/60 p-6 flex flex-col justify-between space-y-5 hover:border-emerald-500/50 hover:bg-slate-900/90 transition-all hover:shadow-2xl hover:-translate-y-1"
+                    data-name="{{ stack.name|lower }}"
+                    data-function="{{ stack.function|lower }}"
+                    data-summary="{{ stack.summary|lower }}"
+                >
+                    <div class="space-y-3">
+                        <!-- Top Metadata Row -->
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                {{ stack.function }}
+                            </span>
+                            <span class="text-[11px] font-mono text-slate-400">
+                                {{ stack.tool_ids|length }} Tools
+                            </span>
+                        </div>
+
+                        <!-- Stack Name -->
+                        <h3 class="text-xl font-black text-white group-hover:text-emerald-300 transition-colors">
+                            <a href="/industry-tool-stacks/{{ stack.slug }}/{% if is_preview %}?preview=true{% endif %}">
+                                {{ stack.name }}
+                            </a>
+                        </h3>
+
+                        <!-- 1-Line Description -->
+                        <p class="text-xs text-slate-300 line-clamp-3 leading-relaxed">
+                            {{ stack.summary }}
+                        </p>
+
+                        <!-- Key Metrics -->
+                        <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+                            <span class="flex items-center gap-1.5 font-medium">
+                                <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+                                <span>{{ stack.use_case_count }} Use Cases</span>
+                            </span>
+                            <span class="text-[11px] text-slate-500 font-mono">
+                                Standard Corporate Workflow
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Bottom CTA Link -->
+                    <div class="pt-2">
+                        <a 
+                            href="/industry-tool-stacks/{{ stack.slug }}/{% if is_preview %}?preview=true{% endif %}"
+                            class="w-full py-2.5 rounded-2xl bg-slate-950/90 hover:bg-emerald-600 text-slate-200 hover:text-white border border-slate-800 hover:border-emerald-500 text-xs font-bold transition-all flex items-center justify-center gap-2 group-hover:shadow-lg"
+                        >
+                            <span>Explore Stack & Workflows</span>
+                            <span class="group-hover:translate-x-1 transition-transform">→</span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ================= MANDATORY TRADEMARK & LEGAL DISCLAIMER ================= -->
+        <div class="mt-16 pt-8 border-t border-slate-900 text-center text-xs text-slate-500 max-w-4xl mx-auto leading-relaxed">
+            <p>
+                All product and company names are trademarks of their respective holders. Metricore is not affiliated with or endorsed by any of them. Tool features and plans change; check each tool's official site.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Dynamic Search Script -->
+<script>
+    function filterStacks() {
+        const query = (document.getElementById('stacks-search')?.value || '').toLowerCase().trim();
+        const fnFilter = (document.getElementById('filter-function')?.value || '').toLowerCase().trim();
+        const cards = document.querySelectorAll('.stack-card');
+
+        cards.forEach(card => {
+            const name = card.getAttribute('data-name') || '';
+            const fn = card.getAttribute('data-function') || '';
+            const summary = card.getAttribute('data-summary') || '';
+
+            const matchesQuery = !query || name.includes(query) || fn.includes(query) || summary.includes(query);
+            const matchesFn = !fnFilter || fn.includes(fnFilter);
+
+            if (matchesQuery && matchesFn) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+<!-- ItemList Structured Data (Schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Tool Stacks Used in Real Corporate Work",
+  "description": "See which tools teams combine, and how to use them on the job or for clients.",
+  "itemListElement": [
+    {% for stack in stacks %}
+    {
+      "@type": "ListItem",
+      "position": {{ loop.index }},
+      "name": "{{ stack.name }}",
+      "url": "https://metricore.in/industry-tool-stacks/{{ stack.slug }}/"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endblock %}
