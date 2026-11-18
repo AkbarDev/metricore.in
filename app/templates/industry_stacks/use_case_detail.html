@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block title %}{{ use_case.title }} with {{ main_tool_name }} | Industry Tool Stacks | Metricore{% endblock %}
+
+{% block content %}
+<div class="relative w-full overflow-hidden">
+    <!-- Ambient Aura -->
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-emerald-600/10 rounded-full blur-[160px] pointer-events-none"></div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 relative z-10">
+
+        <!-- ================= BREADCRUMBS ================= -->
+        <nav class="flex items-center space-x-2 text-xs text-slate-400 font-medium flex-wrap gap-y-1" aria-label="Breadcrumb">
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+            <span>/</span>
+            <a href="/industry-tool-stacks/{% if is_preview %}?preview=true{% endif %}" class="hover:text-white transition-colors">Industry Tool Stacks</a>
+            <span>/</span>
+            <a href="/industry-tool-stacks/{{ stack.slug }}/{% if is_preview %}?preview=true{% endif %}" class="hover:text-white transition-colors">{{ stack.name }}</a>
+            <span>/</span>
+            <span class="text-emerald-300 font-bold truncate max-w-xs">{{ use_case.title }}</span>
+        </nav>
+
+        <!-- ================= 1. TITLE AND WHO IT'S FOR ================= -->
+        <header class="space-y-4 border-b border-slate-800/80 pb-6">
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                    Role: {{ use_case.role }}
+                </span>
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full {% if use_case.audience == 'job' %}bg-blue-500/10 text-blue-300 border border-blue-500/20{% elif use_case.audience == 'freelance' %}bg-purple-500/10 text-purple-300 border border-purple-500/20{% else %}bg-emerald-500/10 text-emerald-300 border border-emerald-500/20{% endif %}">
+                    {% if use_case.audience == 'job' %}For my job{% elif use_case.audience == 'freelance' %}For freelancing{% else %}Job & Freelance{% endif %}
+                </span>
+                <span class="text-xs font-mono text-slate-400 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800">
+                    Level: {{ use_case.level }}
+                </span>
+                <span class="text-[11px] font-mono text-slate-500 ml-auto">
+                    Reviewed: {{ use_case.last_reviewed_date }}
+                </span>
+            </div>
+
+            {% if use_case.needs_human_review %}
+            <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-2 text-xs text-amber-200">
+                <span>⚠️</span>
+                <span><strong>Editorial Status:</strong> Marked for human review. Visible only in preview mode prior to final verification.</span>
+            </div>
+            {% endif %}
+
+            <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight leading-tight">
+                {{ use_case.title }}
+            </h1>
+
+            <p class="text-xs sm:text-sm text-slate-400">
+                From the <a href="/industry-tool-stacks/{{ stack.slug }}/{% if is_preview %}?preview=true{% endif %}" class="text-emerald-400 hover:underline font-bold">{{ stack.name }}</a>
+            </p>
+        </header>
+
+        <!-- ================= 2. SITUATION ================= -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-black text-white flex items-center gap-2">
+                <span class="text-emerald-400">01.</span>
+                <span>Situation</span>
+            </h2>
+            <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/90 text-sm sm:text-base text-slate-200 leading-relaxed shadow-sm">
+                {{ use_case.situation }}
+            </div>
+        </section>
+
+        <!-- ================= 3. TOOLS USED ================= -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-black text-white flex items-center gap-2">
+                <span class="text-emerald-400">02.</span>
+                <span>Tools Used</span>
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                {% for tool in tools_used %}
+                <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800/90 space-y-1.5 flex flex-col justify-between">
+                    <div>
+                        <div class="text-[9px] font-mono uppercase text-purple-400 font-bold tracking-wider">
+                            {{ tool.category }}
+                        </div>
+                        <!-- Tool name: Plain text only -->
+                        <div class="text-sm font-bold text-white pt-0.5">
+                            {{ tool.name }}
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-normal mt-1">
+                            {{ tool.purpose }}
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800/60 text-right">
+                        <a href="{{ tool.official_url }}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold text-slate-400 hover:text-emerald-300 transition-colors inline-flex items-center gap-0.5">
+                            <span>Official site</span>
+                            <span>↗</span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- ================= 4. WORKFLOW ================= -->
+        <section class="space-y-4">
+            <h2 class="text-lg font-black text-white flex items-center gap-2">
+                <span class="text-emerald-400">03.</span>
+                <span>Workflow</span>
+            </h2>
+            <div class="space-y-3">
+                {% for step in use_case.workflow_steps %}
+                <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 flex items-start gap-4">
+                    <span class="w-7 h-7 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-xs font-black flex items-center justify-center flex-shrink-0">
+                        {{ loop.index }}
+                    </span>
+                    <div class="text-xs sm:text-sm text-slate-200 leading-relaxed pt-1">
+                        {{ step }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- ================= 5. RESULT ================= -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-black text-white flex items-center gap-2">
+                <span class="text-emerald-400">04.</span>
+                <span>Result</span>
+            </h2>
+            <div class="p-5 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 text-sm text-emerald-200 leading-relaxed">
+                <p class="font-medium">
+                    {{ use_case.result }}
+                </p>
+                <p class="text-xs text-slate-400 mt-2">
+                    Described qualitatively based on actual workflow improvements (fewer manual transfers, clearer summaries, consistent cadence).
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= 6. FREELANCE VERSION ================= -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-black text-white flex items-center gap-2">
+                <span class="text-emerald-400">05.</span>
+                <span>Freelance Version</span>
+            </h2>
+            <div class="p-5 rounded-2xl bg-purple-950/20 border border-purple-500/30 text-sm text-purple-200 leading-relaxed space-y-2">
+                <p class="font-medium">
+                    {{ use_case.freelance_angle }}
+                </p>
+                <p class="text-xs text-slate-400">
+                    How to frame and package this specific capability into a client deliverable or recurring monthly engagement.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= 7. GUARDRAILS ================= -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-black text-white flex items-center gap-2">
+                <span class="text-emerald-400">06.</span>
+                <span>Guardrails & Approvals</span>
+            </h2>
+            <div class="p-5 rounded-2xl bg-slate-900/60 border border-amber-500/30 space-y-2.5">
+                <div class="text-xs font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                    <span>🛡️</span>
+                    <span>Mandatory Accuracy & Data Privacy Checks</span>
+                </div>
+                <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                    {% for g in use_case.guardrails %}
+                    <li class="flex items-start gap-2">
+                        <span class="text-amber-400 font-bold">•</span>
+                        <span>{{ g }}</span>
+                    </li>
+                    {% endfor %}
+                    <li class="flex items-start gap-2">
+                        <span class="text-amber-400 font-bold">•</span>
+                        <span>Never submit unanonymized corporate financials, confidential client identifiers, or personal customer data into any public AI tool without verified organizational policies and data processing agreements.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ================= 8. SKILLS TO PRACTISE FIRST ================= -->
+        <section class="space-y-3">
+            <h2 class="text-lg font-black text-white flex items-center gap-2">
+                <span class="text-emerald-400">07.</span>
+                <span>Skills to Practise First</span>
+            </h2>
+            <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800/90 space-y-2">
+                <p class="text-xs text-slate-400">
+                    Foundational competencies recommended prior to implementing this workflow on client projects or live corporate campaigns:
+                </p>
+                <div class="flex flex-wrap gap-2 pt-1">
+                    {% for skill in use_case.practice_skills %}
+                    <span class="px-3 py-1.5 rounded-xl bg-slate-950 text-slate-200 border border-slate-800 text-xs font-medium">
+                        ✦ {{ skill }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= BACK TO STACK LINK ================= -->
+        <div class="pt-6 border-t border-slate-800/80 flex items-center justify-between text-xs">
+            <a href="/industry-tool-stacks/{{ stack.slug }}/{% if is_preview %}?preview=true{% endif %}" class="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1.5 transition-colors">
+                <span>← Return to {{ stack.name }}</span>
+            </a>
+            <a href="/industry-tool-stacks/{% if is_preview %}?preview=true{% endif %}" class="text-slate-400 hover:text-white transition-colors">
+                All Industry Stacks
+            </a>
+        </div>
+
+        <!-- ================= MANDATORY TRADEMARK & LEGAL DISCLAIMER ================= -->
+        <div class="mt-16 pt-8 border-t border-slate-900 text-center text-xs text-slate-500 max-w-4xl mx-auto leading-relaxed">
+            <p>
+                All product and company names are trademarks of their respective holders. Metricore is not affiliated with or endorsed by any of them. Tool features and plans change; check each tool's official site.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- HowTo Structured Data (Schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "{{ use_case.title }}",
+  "description": "{{ use_case.situation }}",
+  "step": [
+    {% for step in use_case.workflow_steps %}
+    {
+      "@type": "HowToStep",
+      "position": {{ loop.index }},
+      "text": "{{ step }}"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+
+<!-- Article Structured Data (Schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ use_case.title }} with {{ main_tool_name }}",
+  "description": "{{ use_case.situation }}",
+  "dateModified": "{{ use_case.last_reviewed_date }}",
+  "author": {
+    "@type": "Organization",
+    "name": "Metricore"
+  }
+}
+</script>
+{% endblock %}

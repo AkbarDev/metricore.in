@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}{{ stack.name }} — Corporate Tools & Real Use Cases | Metricore{% endblock %}
+
+{% block content %}
+<div class="relative w-full overflow-hidden">
+    <!-- Ambient Aura -->
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-emerald-600/10 rounded-full blur-[160px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12 relative z-10">
+
+        <!-- ================= BREADCRUMBS ================= -->
+        <nav class="flex items-center space-x-2 text-xs text-slate-400 font-medium" aria-label="Breadcrumb">
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+            <span>/</span>
+            <a href="/industry-tool-stacks/{% if is_preview %}?preview=true{% endif %}" class="hover:text-white transition-colors">Industry Tool Stacks</a>
+            <span>/</span>
+            <span class="text-emerald-300 font-bold">{{ stack.name }}</span>
+        </nav>
+
+        <!-- ================= HERO ================= -->
+        <div class="space-y-4 max-w-4xl">
+            <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                    {{ stack.function }} Function Stack
+                </span>
+                <span class="text-xs font-mono text-slate-400">
+                    {{ tools|length }} Tools across {{ grouped_tools|length }} Layers
+                </span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                {{ stack.name }}
+            </h1>
+
+            <p class="text-base sm:text-lg text-slate-300 leading-relaxed">
+                {{ stack.summary }}
+            </p>
+        </div>
+
+        <!-- ================= PREVIEW MODE BANNER (IF ACTIVE) ================= -->
+        {% if is_preview %}
+        <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs text-amber-200">
+            <div class="flex items-center gap-2">
+                <span>👁️</span>
+                <span><strong>Preview Mode Active:</strong> Showing all use cases, including those marked for human review.</span>
+            </div>
+            <a href="/industry-tool-stacks/{{ stack.slug }}/" class="text-amber-100 font-bold underline">Exit Preview</a>
+        </div>
+        {% endif %}
+
+        <!-- ================= "HOW THESE TOOLS CONNECT" FLOW DIAGRAM ================= -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-slate-800/90 backdrop-blur-xl shadow-xl space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-4">
+                <div>
+                    <h2 class="text-lg font-black text-white tracking-tight flex items-center gap-2">
+                        <span>🔄</span>
+                        <span>How These Tools Connect in Real Work</span>
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5">
+                        A typical corporate architecture connecting drafting, integration, execution, and verification.
+                    </p>
+                </div>
+                <span class="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
+                    Architecture Flow
+                </span>
+            </div>
+
+            <!-- Responsive Visual Flow Architecture -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+                <!-- Step 1: Generative AI -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-purple-500/20 space-y-2 relative">
+                    <div class="text-[10px] font-mono font-bold text-purple-400 uppercase tracking-wider">01 • Ideation & Drafting</div>
+                    <h3 class="text-sm font-bold text-white">Generative AI Layer</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Drafts initial copy variants, brainstorms campaign angles, and summarizes messy source data.
+                    </p>
+                    <div class="pt-2 text-[10px] text-slate-500 font-mono">
+                        ChatGPT • Claude • Gemini
+                    </div>
+                </div>
+
+                <!-- Step 2: Automation & Agents -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-indigo-500/20 space-y-2 relative">
+                    <div class="text-[10px] font-mono font-bold text-indigo-400 uppercase tracking-wider">02 • Routing & Sync</div>
+                    <h3 class="text-sm font-bold text-white">Automation & Agents</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Passes leads, event payloads, and transformed data between apps without manual data entry.
+                    </p>
+                    <div class="pt-2 text-[10px] text-slate-500 font-mono">
+                        Zapier • Make • Relevance AI
+                    </div>
+                </div>
+
+                <!-- Step 3: Marketing Platforms & Analytics -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-emerald-500/20 space-y-2 relative">
+                    <div class="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider">03 • Execution & Reach</div>
+                    <h3 class="text-sm font-bold text-white">Platforms & Analytics</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Hosts published landing pages, dispatches email/push broadcasts, and measures conversion funnels.
+                    </p>
+                    <div class="pt-2 text-[10px] text-slate-500 font-mono">
+                        HubSpot • GA4 • Google Ads
+                    </div>
+                </div>
+
+                <!-- Step 4: Verification & Human Sign-Off -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-amber-500/20 space-y-2 relative">
+                    <div class="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider">04 • Governance</div>
+                    <h3 class="text-sm font-bold text-white">Human Review & Approval</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Verifies factual accuracy, enforces brand tone standards, and signs off before public distribution.
+                    </p>
+                    <div class="pt-2 text-[10px] text-slate-500 font-mono">
+                        Editorial & Stakeholder Checks
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PRACTICAL USE CASES LIST ================= -->
+        <div class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+                <div>
+                    <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                        <span>📋</span>
+                        <span>Practical Use Cases for This Stack</span>
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
+                        Real-world scenarios showing how these tools are used together on the job or for client projects.
+                    </p>
+                </div>
+                <span class="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-slate-900 text-emerald-300 border border-slate-800 self-start sm:self-auto">
+                    {{ use_cases|length }} Scenarios
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {% for uc in use_cases %}
+                <div class="rounded-3xl border border-slate-800/90 bg-slate-900/60 p-6 flex flex-col justify-between space-y-4 hover:border-emerald-500/50 hover:bg-slate-900/90 transition-all shadow-lg hover:shadow-xl">
+                    <div class="space-y-3">
+                        <!-- Top Metadata -->
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full {% if uc.audience == 'job' %}bg-blue-500/10 text-blue-300 border border-blue-500/20{% elif uc.audience == 'freelance' %}bg-purple-500/10 text-purple-300 border border-purple-500/20{% else %}bg-emerald-500/10 text-emerald-300 border border-emerald-500/20{% endif %}">
+                                Role: {{ uc.role }} • {% if uc.audience == 'job' %}For my job{% elif uc.audience == 'freelance' %}For freelancing{% else %}Job & Freelance{% endif %}
+                            </span>
+                            <span class="text-[10px] font-mono text-slate-400 px-2 py-0.5 rounded bg-slate-950 border border-slate-800">
+                                {{ uc.level }}
+                            </span>
+                        </div>
+
+                        {% if uc.needs_human_review %}
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[10px] font-semibold">
+                            <span>⚠️ Pending Human Review (Preview)</span>
+                        </div>
+                        {% endif %}
+
+                        <!-- Title -->
+                        <h3 class="text-lg font-bold text-white hover:text-emerald-300 transition-colors">
+                            <a href="/industry-tool-stacks/{{ stack.slug }}/{{ uc.slug }}/{% if is_preview %}?preview=true{% endif %}">
+                                {{ uc.title }}
+                            </a>
+                        </h3>
+
+                        <!-- Situation Snippet -->
+                        <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                            {{ uc.situation }}
+                        </p>
+
+                        <!-- Tools Involved (Plain text tags) -->
+                        <div class="pt-2 border-t border-slate-800/60">
+                            <div class="text-[10px] uppercase font-bold tracking-wider text-slate-500 mb-1.5">Tools Involved:</div>
+                            <div class="flex flex-wrap gap-1.5">
+                                {% for tid in uc.tool_ids %}
+                                    <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-slate-950 text-slate-300 border border-slate-800">
+                                        {{ tid|replace('-', ' ')|title }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Link -->
+                    <div class="pt-2">
+                        <a 
+                            href="/industry-tool-stacks/{{ stack.slug }}/{{ uc.slug }}/{% if is_preview %}?preview=true{% endif %}"
+                            class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+                        >
+                            <span>Read full workflow and guardrails</span>
+                            <span>→</span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- ================= TOOLS GROUPED BY LAYER ================= -->
+        <div class="space-y-8 pt-4">
+            <div class="border-b border-slate-800/80 pb-4">
+                <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                    <span>🗂️</span>
+                    <span>Tools in This Stack ({{ tools|length }})</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-400 mt-0.5">
+                    Tool names shown as plain text only. Plain-language purposes written in our own words.
+                </p>
+            </div>
+
+            {% for layer_name, layer_tools in grouped_tools.items() %}
+            <div class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                    <h3 class="text-base font-extrabold uppercase tracking-wider text-slate-200">
+                        {{ layer_name }} ({{ layer_tools|length }} Tools)
+                    </h3>
+                </div>
+
+                <!-- Tools Grid for this Layer -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {% for tool in layer_tools %}
+                    <div class="rounded-2xl border border-slate-800/90 bg-slate-900/60 p-4 space-y-3 flex flex-col justify-between hover:border-slate-700 transition-colors">
+                        <div class="space-y-1.5">
+                            <div class="flex items-center justify-between gap-1.5">
+                                <span class="text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">
+                                    {{ tool.category }}
+                                </span>
+                                <span class="text-[9px] font-mono text-purple-300 font-bold">
+                                    {{ tool.level }}
+                                </span>
+                            </div>
+
+                            <!-- Tool Name (Strict Rule: Plain text only, no logos, no brand colors) -->
+                            <div class="text-base font-black text-white pt-1">
+                                {{ tool.name }}
+                            </div>
+
+                            <!-- Purpose (our own words) -->
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                {{ tool.purpose }}
+                            </p>
+                        </div>
+
+                        <!-- Outbound link to official site (with standard compliance attributes) -->
+                        <div class="pt-2 border-t border-slate-800/60 text-right">
+                            <a 
+                                href="{{ tool.official_url }}" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                class="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-emerald-300 transition-colors"
+                            >
+                                <span>Official site</span>
+                                <span>↗</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- ================= MANDATORY TRADEMARK & LEGAL DISCLAIMER ================= -->
+        <div class="mt-16 pt-8 border-t border-slate-900 text-center text-xs text-slate-500 max-w-4xl mx-auto leading-relaxed">
+            <p>
+                All product and company names are trademarks of their respective holders. Metricore is not affiliated with or endorsed by any of them. Tool features and plans change; check each tool's official site.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- ItemList Structured Data (Schema.org) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "{{ stack.name }}",
+  "description": "{{ stack.summary }}",
+  "itemListElement": [
+    {% for uc in use_cases %}
+    {
+      "@type": "ListItem",
+      "position": {{ loop.index }},
+      "name": "{{ uc.title }}",
+      "url": "https://metricore.in/industry-tool-stacks/{{ stack.slug }}/{{ uc.slug }}/"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endblock %}
