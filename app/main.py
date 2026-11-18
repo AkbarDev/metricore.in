@@ -29,8 +29,8 @@ def get_current_role(request: Request) -> str:
     return request.cookies.get(ROLE_COOKIE_NAME) or "user"
 
 app = FastAPI(
-    title="Metricore.in - AI Directory & Platform",
-    description="Curated AI platform tools directory with Paid vs Free alternatives and free-tier testing limits.",
+    title="Metricore.in - AI Tool Finder",
+    description="Curated AI Tool Finder with Paid vs Free alternatives and free-tier testing limits.",
     version="1.0.0",
 )
 
