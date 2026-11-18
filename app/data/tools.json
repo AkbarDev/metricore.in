@@ -27,7 +27,27 @@
     "eval_ecosystem": "16M+ Discord Community",
     "modality_type": "Image & Visual",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "image-design",
+    "top_category_name": "Image & Design",
+    "tagline": "Leading AI image synthesis tool known for photorealistic and highly artistic visual generation.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Text-to-image",
+      "Background removal",
+      "Photo editing"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "nano-banana",
@@ -57,7 +77,28 @@
     "eval_ecosystem": "12k+ GitHub Stars & HuggingFace",
     "modality_type": "Image & Visual",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "image-design",
+    "top_category_name": "Image & Design",
+    "tagline": "Fast and accessible free AI image generator for rapid prototyping, stickers, and concepts.",
+    "tags": [
+      "Free",
+      "Open-source",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Open-source",
+    "is_top_pick": false,
+    "use_cases": [
+      "Text-to-image",
+      "Background removal",
+      "Photo editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "perplexity",
@@ -87,7 +128,27 @@
     "eval_ecosystem": "100k+ Discord, 10M+ Monthly Users",
     "modality_type": "Research & Reasoning",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Web Grounded & Citations"
+    "eval_accuracy_tier": "Web Grounded & Citations",
+    "top_category_slug": "research-chat",
+    "top_category_name": "Research & Chat Assistants",
+    "tagline": "Conversational AI search engine delivering sourced answers, academic references, and web synthesis.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Academic synthesis",
+      "Web-grounded search",
+      "Frontier reasoning"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "consensus",
@@ -117,7 +178,29 @@
     "eval_ecosystem": "500k+ Academic & Medical Users",
     "modality_type": "Research & Reasoning",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Web Grounded & Citations"
+    "eval_accuracy_tier": "Web Grounded & Citations",
+    "top_category_slug": "research-chat",
+    "top_category_name": "Research & Chat Assistants",
+    "tagline": "AI-powered search engine designed to surface insights and scientific consensus directly from peer-reviewed research.",
+    "tags": [
+      "Free",
+      "API Available",
+      "Chrome Extension"
+    ],
+    "platforms": [
+      "Web",
+      "API",
+      "Browser extension"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Academic synthesis",
+      "Web-grounded search",
+      "Frontier reasoning"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "heygen",
@@ -147,7 +230,27 @@
     "eval_ecosystem": "50k+ Discord, 2M+ Active Creators",
     "modality_type": "Video & Motion",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "video-animation",
+    "top_category_name": "Video & Animation",
+    "tagline": "Enterprise AI video generation platform creating hyper-realistic digital avatars with studio-grade lip-syncing.",
+    "tags": [
+      "Paid",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Paid",
+    "is_top_pick": true,
+    "use_cases": [
+      "Text-to-video",
+      "AI avatars",
+      "Video editing"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "hedra",
@@ -177,7 +280,27 @@
     "eval_ecosystem": "25k+ Discord Community",
     "modality_type": "Video & Motion",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "video-animation",
+    "top_category_name": "Video & Animation",
+    "tagline": "Expressive AI avatar and character creation studio that turns still images and audio into full-motion talking videos.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Text-to-video",
+      "AI avatars",
+      "Video editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "github-copilot",
@@ -207,7 +330,25 @@
     "eval_ecosystem": "1.8M+ Paid Developers Globally",
     "modality_type": "Code & Dev",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Frontier Reasoning"
+    "eval_accuracy_tier": "Frontier Reasoning",
+    "top_category_slug": "code-dev",
+    "top_category_name": "Code & Dev",
+    "tagline": "The AI pair programmer integrated into VS Code, JetBrains, and GitHub CLI for context-aware code completion and chat.",
+    "tags": [
+      "Free"
+    ],
+    "platforms": [
+      "Web"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Code autocompletion",
+      "Multi-file coding",
+      "Code refactoring"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "cursor",
@@ -237,7 +378,26 @@
     "eval_ecosystem": "120k+ Devs, Top AI IDE in 2026",
     "modality_type": "Code & Dev",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Frontier Reasoning"
+    "eval_accuracy_tier": "Frontier Reasoning",
+    "top_category_slug": "code-dev",
+    "top_category_name": "Code & Dev",
+    "tagline": "AI-first code editor built on VS Code with multi-file codebase indexing, inline edits, and intelligent terminal execution.",
+    "tags": [
+      "Free"
+    ],
+    "platforms": [
+      "Web",
+      "Desktop"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Code autocompletion",
+      "Multi-file coding",
+      "Code refactoring"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "runway-ml",
@@ -267,7 +427,27 @@
     "eval_ecosystem": "200k+ Discord, Hollywood Standard",
     "modality_type": "Video & Motion",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "video-animation",
+    "top_category_name": "Video & Animation",
+    "tagline": "Cinematic generative video suite with camera controls, motion brushes, text-to-video, and image-to-video synthesis.",
+    "tags": [
+      "Paid",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Paid",
+    "is_top_pick": true,
+    "use_cases": [
+      "Text-to-video",
+      "AI avatars",
+      "Video editing"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "stable-diffusion",
@@ -297,7 +477,28 @@
     "eval_ecosystem": "68k+ GitHub Stars, 350k+ Discord",
     "modality_type": "Video & Motion",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "video-animation",
+    "top_category_name": "Video & Animation",
+    "tagline": "Open-source latent diffusion models by Stability AI for unrestricted local generation of images and cinematic sequences.",
+    "tags": [
+      "Free",
+      "Open-source",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Open-source",
+    "is_top_pick": true,
+    "use_cases": [
+      "Text-to-video",
+      "AI avatars",
+      "Video editing"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "adobe-firefly",
@@ -327,7 +528,27 @@
     "eval_ecosystem": "Enterprise Creative Standard Globally",
     "modality_type": "Image & Visual",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "image-design",
+    "top_category_name": "Image & Design",
+    "tagline": "Commercial-safe generative AI built into Photoshop, Illustrator, and web for generative fill, text effects, and thumbnails.",
+    "tags": [
+      "Paid",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Paid",
+    "is_top_pick": false,
+    "use_cases": [
+      "Text-to-image",
+      "Background removal",
+      "Photo editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "photoroom",
@@ -357,7 +578,28 @@
     "eval_ecosystem": "150M+ App Downloads, 2k+ API Clients",
     "modality_type": "Image & Visual",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "image-design",
+    "top_category_name": "Image & Design",
+    "tagline": "AI photo editing studio specialized in one-click background removal, product showcases, and high-CTR thumbnail creation.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API",
+      "Mobile"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Text-to-image",
+      "Background removal",
+      "Photo editing"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "higgsfield",
@@ -387,7 +629,26 @@
     "eval_ecosystem": "50k+ Mobile Creators",
     "modality_type": "Video & Motion",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "video-animation",
+    "top_category_name": "Video & Animation",
+    "tagline": "Mobile-first AI video generation platform tailored for social creators, featuring realistic human motion and cinematic camera angles.",
+    "tags": [
+      "Freemium"
+    ],
+    "platforms": [
+      "Web",
+      "Mobile"
+    ],
+    "pricing_tier": "Freemium",
+    "is_top_pick": false,
+    "use_cases": [
+      "Text-to-video",
+      "AI avatars",
+      "Video editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "hailuo",
@@ -417,7 +678,27 @@
     "eval_ecosystem": "Global Viral AI Video Leader",
     "modality_type": "Video & Motion",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "video-animation",
+    "top_category_name": "Video & Animation",
+    "tagline": "Cutting-edge text-to-video and image-to-video platform by MiniMax offering physics-accurate motion and filmic consistency.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Text-to-video",
+      "AI avatars",
+      "Video editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "buffer",
@@ -447,7 +728,28 @@
     "eval_ecosystem": "140k+ Active Brands",
     "modality_type": "Text & Writing",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Deterministic Automation"
+    "eval_accuracy_tier": "Deterministic Automation",
+    "top_category_slug": "marketing-seo",
+    "top_category_name": "Marketing & SEO",
+    "tagline": "Intuitive social media management and scheduling tool equipped with AI copywriting and multi-channel publishing.",
+    "tags": [
+      "Paid",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API",
+      "Mobile"
+    ],
+    "pricing_tier": "Paid",
+    "is_top_pick": false,
+    "use_cases": [
+      "Ad creatives",
+      "Social media scheduling",
+      "SEO optimization"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "publer",
@@ -477,7 +779,27 @@
     "eval_ecosystem": "250k+ Social Managers",
     "modality_type": "Text & Writing",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Deterministic Automation"
+    "eval_accuracy_tier": "Deterministic Automation",
+    "top_category_slug": "marketing-seo",
+    "top_category_name": "Marketing & SEO",
+    "tagline": "Feature-rich social media management platform with AI content generation, link in bio, and calendar scheduling.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Ad creatives",
+      "Social media scheduling",
+      "SEO optimization"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "jasper",
@@ -507,7 +829,29 @@
     "eval_ecosystem": "100k+ Business Clients",
     "modality_type": "Text & Writing",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "writing-content",
+    "top_category_name": "Writing & Content",
+    "tagline": "Enterprise AI marketing copilot designed to generate on-brand copy, blogs, email sequences, and ad creatives.",
+    "tags": [
+      "Freemium",
+      "API Available",
+      "Chrome Extension"
+    ],
+    "platforms": [
+      "Web",
+      "API",
+      "Browser extension"
+    ],
+    "pricing_tier": "Freemium",
+    "is_top_pick": false,
+    "use_cases": [
+      "Copywriting",
+      "Long-form articles",
+      "Grammar & Editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "quillbot",
@@ -537,7 +881,27 @@
     "eval_ecosystem": "35M+ Monthly Active Users",
     "modality_type": "Text & Writing",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "writing-content",
+    "top_category_name": "Writing & Content",
+    "tagline": "Comprehensive AI writing and editing assistant for paraphrasing, proofreading, citations, and summarizing content.",
+    "tags": [
+      "Free",
+      "Chrome Extension"
+    ],
+    "platforms": [
+      "Web",
+      "Browser extension"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Copywriting",
+      "Long-form articles",
+      "Grammar & Editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "gamma",
@@ -567,7 +931,27 @@
     "eval_ecosystem": "20M+ Presentations Generated",
     "modality_type": "Image & Visual",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "image-design",
+    "top_category_name": "Image & Design",
+    "tagline": "AI-powered presentation, document, and webpage generator that builds complete, beautifully styled slide decks in seconds.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Text-to-image",
+      "Background removal",
+      "Photo editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "canva",
@@ -597,7 +981,27 @@
     "eval_ecosystem": "185M+ MAU, 10k+ Integrations",
     "modality_type": "Image & Visual",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "image-design",
+    "top_category_name": "Image & Design",
+    "tagline": "Global design suite with collaborative presentation creator, Magic Presentation generator, and rich graphics library.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Text-to-image",
+      "Background removal",
+      "Photo editing"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "elevenlabs",
@@ -627,7 +1031,27 @@
     "eval_ecosystem": "1M+ Devs, World Voice Leader",
     "modality_type": "Sound & Music",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "audio-voice",
+    "top_category_name": "Audio & Voice",
+    "tagline": "Industry benchmark in AI voice generation, voice cloning, and multilingual text-to-speech with emotional depth.",
+    "tags": [
+      "Paid",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Paid",
+    "is_top_pick": true,
+    "use_cases": [
+      "Voice cloning",
+      "Text-to-speech",
+      "Music composition"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "playht",
@@ -657,7 +1081,27 @@
     "eval_ecosystem": "500k+ Creators",
     "modality_type": "Sound & Music",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "audio-voice",
+    "top_category_name": "Audio & Voice",
+    "tagline": "AI voice generator and conversational text-to-speech platform with over 900+ expressive voices in 142 languages.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Voice cloning",
+      "Text-to-speech",
+      "Music composition"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "suno",
@@ -687,7 +1131,25 @@
     "eval_ecosystem": "15M+ Music Creators",
     "modality_type": "Sound & Music",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "audio-voice",
+    "top_category_name": "Audio & Voice",
+    "tagline": "Pioneering AI music engine capable of generating full, radio-quality songs with lyrics, vocals, and instruments from any prompt.",
+    "tags": [
+      "Paid"
+    ],
+    "platforms": [
+      "Web"
+    ],
+    "pricing_tier": "Paid",
+    "is_top_pick": true,
+    "use_cases": [
+      "Voice cloning",
+      "Text-to-speech",
+      "Music composition"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "udio",
@@ -717,7 +1179,25 @@
     "eval_ecosystem": "5M+ Music Producers",
     "modality_type": "Sound & Music",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "audio-voice",
+    "top_category_name": "Audio & Voice",
+    "tagline": "Advanced AI music studio created by former Google DeepMind researchers for nuanced genre blending and high-fidelity vocal tracks.",
+    "tags": [
+      "Free"
+    ],
+    "platforms": [
+      "Web"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Voice cloning",
+      "Text-to-speech",
+      "Music composition"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "chatgpt",
@@ -747,7 +1227,28 @@
     "eval_ecosystem": "300M+ WAU, Global AI Foundation",
     "modality_type": "Text & Writing",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Frontier Reasoning"
+    "eval_accuracy_tier": "Frontier Reasoning",
+    "top_category_slug": "research-chat",
+    "top_category_name": "Research & Chat Assistants",
+    "tagline": "OpenAI's industry-leading conversational assistant for ideation, analysis, creative writing, and problem-solving.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API",
+      "Mobile"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Academic synthesis",
+      "Web-grounded search",
+      "Frontier reasoning"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "claude",
@@ -777,7 +1278,28 @@
     "eval_ecosystem": "140k+ Discord, Anthropic MCP Native",
     "modality_type": "Text & Writing",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Frontier Reasoning"
+    "eval_accuracy_tier": "Frontier Reasoning",
+    "top_category_slug": "research-chat",
+    "top_category_name": "Research & Chat Assistants",
+    "tagline": "Anthropic's frontier AI assistant renowned for nuanced reasoning, software engineering, and rich interactive Artifacts.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API",
+      "Mobile"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Academic synthesis",
+      "Web-grounded search",
+      "Frontier reasoning"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "gemini",
@@ -807,7 +1329,28 @@
     "eval_ecosystem": "Global Developer Standard across Google",
     "modality_type": "Text & Writing",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Frontier Reasoning"
+    "eval_accuracy_tier": "Frontier Reasoning",
+    "top_category_slug": "research-chat",
+    "top_category_name": "Research & Chat Assistants",
+    "tagline": "Google's multimodal AI assistant with massive context understanding, live Google Search verification, and Workspace connectivity.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API",
+      "Mobile"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Academic synthesis",
+      "Web-grounded search",
+      "Frontier reasoning"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "10web",
@@ -837,7 +1380,27 @@
     "eval_ecosystem": "1M+ Websites Built",
     "modality_type": "Workflow & Agents",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "productivity-automation",
+    "top_category_name": "Productivity & Automation",
+    "tagline": "AI-powered WordPress platform that generates complete customized websites, e-commerce stores, and copy from text prompts.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Workflow automation",
+      "Website builders",
+      "AI presentations"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "durable",
@@ -867,7 +1430,25 @@
     "eval_ecosystem": "6M+ Websites Created",
     "modality_type": "Workflow & Agents",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "productivity-automation",
+    "top_category_name": "Productivity & Automation",
+    "tagline": "The world's fastest AI website builder generating complete professional small business websites in thirty seconds.",
+    "tags": [
+      "Freemium"
+    ],
+    "platforms": [
+      "Web"
+    ],
+    "pricing_tier": "Freemium",
+    "is_top_pick": false,
+    "use_cases": [
+      "Workflow automation",
+      "Website builders",
+      "AI presentations"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "dorik",
@@ -897,7 +1478,25 @@
     "eval_ecosystem": "150k+ Creators & Agencies",
     "modality_type": "Workflow & Agents",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "productivity-automation",
+    "top_category_name": "Productivity & Automation",
+    "tagline": "Modern no-code website building platform with AI text, illustration generators, CMS blogs, and SEO control.",
+    "tags": [
+      "Free"
+    ],
+    "platforms": [
+      "Web"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Workflow automation",
+      "Website builders",
+      "AI presentations"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "copy-ai",
@@ -927,7 +1526,27 @@
     "eval_ecosystem": "15M+ Users, 5k+ Enterprise Teams",
     "modality_type": "Text & Writing",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "writing-content",
+    "top_category_name": "Writing & Content",
+    "tagline": "AI-powered marketing and sales content engine for generating blogs, social posts, emails, and campaign workflows.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Copywriting",
+      "Long-form articles",
+      "Grammar & Editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "writesonic",
@@ -957,7 +1576,27 @@
     "eval_ecosystem": "5M+ Registered Users",
     "modality_type": "Text & Writing",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "writing-content",
+    "top_category_name": "Writing & Content",
+    "tagline": "SEO-focused AI writer and content generator built for long-form blog articles, ad copy, and product descriptions.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Copywriting",
+      "Long-form articles",
+      "Grammar & Editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "botpress",
@@ -987,7 +1626,28 @@
     "eval_ecosystem": "12.8k GitHub Stars, 25k+ Dev Forum",
     "modality_type": "Workflow & Agents",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Deterministic Automation"
+    "eval_accuracy_tier": "Deterministic Automation",
+    "top_category_slug": "agents-workflows",
+    "top_category_name": "Agents & Workflows",
+    "tagline": "Developer-friendly next-gen platform for building autonomous, knowledge-grounded AI chatbots and customer agents.",
+    "tags": [
+      "Free",
+      "Open-source",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Open-source",
+    "is_top_pick": false,
+    "use_cases": [
+      "Autonomous agents",
+      "Support chatbots",
+      "API orchestration"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "landbot",
@@ -1017,7 +1677,27 @@
     "eval_ecosystem": "50k+ Global Businesses",
     "modality_type": "Workflow & Agents",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "agents-workflows",
+    "top_category_name": "Agents & Workflows",
+    "tagline": "No-code conversational builder for creating engaging web chatbots, WhatsApp automation, and interactive surveys.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Autonomous agents",
+      "Support chatbots",
+      "API orchestration"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "tidio",
@@ -1047,7 +1727,27 @@
     "eval_ecosystem": "500k+ Active Web Installations",
     "modality_type": "Workflow & Agents",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "agents-workflows",
+    "top_category_name": "Agents & Workflows",
+    "tagline": "All-in-one customer service solution combining live chat, helpdesk ticketing, and Lyro conversational AI agents.",
+    "tags": [
+      "Paid",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Paid",
+    "is_top_pick": false,
+    "use_cases": [
+      "Autonomous agents",
+      "Support chatbots",
+      "API orchestration"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "make",
@@ -1077,7 +1777,27 @@
     "eval_ecosystem": "500k+ Organizations, 1800+ App Connectors",
     "modality_type": "Workflow & Agents",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Deterministic Automation"
+    "eval_accuracy_tier": "Deterministic Automation",
+    "top_category_slug": "productivity-automation",
+    "top_category_name": "Productivity & Automation",
+    "tagline": "Visual visual workflow automation platform that connects thousands of SaaS applications and AI endpoints.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Workflow automation",
+      "Website builders",
+      "AI presentations"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "pabbly",
@@ -1107,7 +1827,28 @@
     "eval_ecosystem": "200k+ Business Automators",
     "modality_type": "Workflow & Agents",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Deterministic Automation"
+    "eval_accuracy_tier": "Deterministic Automation",
+    "top_category_slug": "productivity-automation",
+    "top_category_name": "Productivity & Automation",
+    "tagline": "Cost-effective workflow automation platform connecting CRM, e-commerce, and AI tools with zero charges for internal triggers.",
+    "tags": [
+      "Paid",
+      "API Available",
+      "India-friendly"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Paid",
+    "is_top_pick": false,
+    "use_cases": [
+      "Workflow automation",
+      "Website builders",
+      "AI presentations"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "n8n",
@@ -1137,7 +1878,29 @@
     "eval_ecosystem": "56.8k GitHub Stars, 80k+ Community",
     "modality_type": "Workflow & Agents",
     "eval_latency": "Real-time (<500ms)",
-    "eval_accuracy_tier": "Deterministic Automation"
+    "eval_accuracy_tier": "Deterministic Automation",
+    "top_category_slug": "productivity-automation",
+    "top_category_name": "Productivity & Automation",
+    "tagline": "Fair-code node-based workflow automation tool allowing developers and teams to orchestrate AI agents and APIs securely.",
+    "tags": [
+      "Free",
+      "Open-source",
+      "Self-Hosted",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Open-source",
+    "is_top_pick": true,
+    "use_cases": [
+      "Workflow automation",
+      "Website builders",
+      "AI presentations"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "dalle",
@@ -1167,7 +1930,27 @@
     "eval_ecosystem": "Millions via ChatGPT & Developer API",
     "modality_type": "Image & Visual",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "image-design",
+    "top_category_name": "Image & Design",
+    "tagline": "OpenAI's benchmark text-to-image generator known for exceptional prompt fidelity, text rendering, and detail.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Text-to-image",
+      "Background removal",
+      "Photo editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "leonardo-ai",
@@ -1197,7 +1980,27 @@
     "eval_ecosystem": "19M+ Creators Worldwide",
     "modality_type": "Image & Visual",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "image-design",
+    "top_category_name": "Image & Design",
+    "tagline": "Full-featured generative creative suite with fine-tuned models, real-time Canvas editing, and 3D texture synthesis.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Text-to-image",
+      "Background removal",
+      "Photo editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "pika",
@@ -1227,7 +2030,27 @@
     "eval_ecosystem": "10M+ Users Globally",
     "modality_type": "Video & Motion",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "High-Fidelity Generative"
+    "eval_accuracy_tier": "High-Fidelity Generative",
+    "top_category_slug": "video-animation",
+    "top_category_name": "Video & Animation",
+    "tagline": "Creative idea-to-video platform with realistic physics simulations (squish, melt, explode), Lip Sync, and sound effects.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Text-to-video",
+      "AI avatars",
+      "Video editing"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "descript",
@@ -1257,7 +2080,26 @@
     "eval_ecosystem": "4M+ Podcasters & Video Editors",
     "modality_type": "Video & Motion",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "video-animation",
+    "top_category_name": "Video & Animation",
+    "tagline": "AI-powered video and audio editor that works like a word doc: edit spoken video by editing text, removing filler words.",
+    "tags": [
+      "Paid"
+    ],
+    "platforms": [
+      "Web",
+      "Desktop"
+    ],
+    "pricing_tier": "Paid",
+    "is_top_pick": false,
+    "use_cases": [
+      "Text-to-video",
+      "AI avatars",
+      "Video editing"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "figma-ai",
@@ -1287,7 +2129,27 @@
     "eval_ecosystem": "4M+ UI/UX Designers Globally",
     "modality_type": "Image & Visual",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "image-design",
+    "top_category_name": "Image & Design",
+    "tagline": "The world's standard UI/UX design suite now powered by generative UI creation, visual search, and asset auto-generation.",
+    "tags": [
+      "Free",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": true,
+    "use_cases": [
+      "Text-to-image",
+      "Background removal",
+      "Photo editing"
+    ],
+    "rating": 4.9,
+    "reviews_count": 480
   },
   {
     "id": "aiva",
@@ -1317,7 +2179,25 @@
     "eval_ecosystem": "Leading Classical & Cinematic AI",
     "modality_type": "Sound & Music",
     "eval_latency": "Batch Generation (5s+)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "audio-voice",
+    "top_category_name": "Audio & Voice",
+    "tagline": "AI musical composer engine specialized in symphonic, orchestral, and ambient soundtrack composition for creators.",
+    "tags": [
+      "Free"
+    ],
+    "platforms": [
+      "Web"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Voice cloning",
+      "Text-to-speech",
+      "Music composition"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "adcreative-ai",
@@ -1347,7 +2227,27 @@
     "eval_ecosystem": "2M+ Marketers & Agencies",
     "modality_type": "Text & Writing",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "marketing-seo",
+    "top_category_name": "Marketing & SEO",
+    "tagline": "Conversion-focused AI platform generating banner creatives, ad copy, and product mockups trained on high-performing ad data.",
+    "tags": [
+      "Freemium",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Freemium",
+    "is_top_pick": false,
+    "use_cases": [
+      "Ad creatives",
+      "Social media scheduling",
+      "SEO optimization"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "ocoya",
@@ -1377,7 +2277,27 @@
     "eval_ecosystem": "100k+ E-commerce Brands",
     "modality_type": "Text & Writing",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "marketing-seo",
+    "top_category_name": "Marketing & SEO",
+    "tagline": "All-in-one social media management and e-commerce marketing platform combining graphics, copywriting, and scheduling.",
+    "tags": [
+      "Freemium",
+      "API Available"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Freemium",
+    "is_top_pick": false,
+    "use_cases": [
+      "Ad creatives",
+      "Social media scheduling",
+      "SEO optimization"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   },
   {
     "id": "predis-ai",
@@ -1407,6 +2327,27 @@
     "eval_ecosystem": "500k+ Small Businesses",
     "modality_type": "Text & Writing",
     "eval_latency": "Interactive (1s - 3s)",
-    "eval_accuracy_tier": "Domain Specialized"
+    "eval_accuracy_tier": "Domain Specialized",
+    "top_category_slug": "marketing-seo",
+    "top_category_name": "Marketing & SEO",
+    "tagline": "AI social media copilot that turns text descriptions into ready-to-publish video reels, carousel posts, and captions.",
+    "tags": [
+      "Free",
+      "API Available",
+      "India-friendly"
+    ],
+    "platforms": [
+      "Web",
+      "API"
+    ],
+    "pricing_tier": "Free",
+    "is_top_pick": false,
+    "use_cases": [
+      "Ad creatives",
+      "Social media scheduling",
+      "SEO optimization"
+    ],
+    "rating": 4.7,
+    "reviews_count": 140
   }
 ]

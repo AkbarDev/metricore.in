@@ -37,6 +37,26 @@ class AITool(BaseModel):
     eval_latency: Optional[str] = None           # "Real-time (<500ms)", "Interactive (1s-3s)", "Batch (5s+)"
     eval_accuracy_tier: Optional[str] = None     # "Frontier Reasoning", "Web Grounded with Citations", "High-Fidelity Generative"
 
+    # Category Page Architecture & Modern Taxonomy
+    top_category_slug: Optional[str] = None
+    top_category_name: Optional[str] = None
+    tagline: Optional[str] = None
+    tags: List[str] = []
+    platforms: List[str] = []
+    pricing_tier: Optional[str] = None           # "Free", "Freemium", "Paid", "Open-source"
+    use_cases: List[str] = []
+    is_top_pick: bool = False
+    rating: float = 4.8
+    reviews_count: int = 120
+
+class TopCategoryInfo(BaseModel):
+    slug: str
+    name: str
+    description: str
+    icon: str
+    use_cases: List[str] = []
+    count: int = 0
+
 class CategorySummary(BaseModel):
     name: str
     count: int

@@ -1,37 +1,50 @@
 {% extends "base.html" %}
 
+{% block title %}Metricore.in — All-in-One AI Platform & Tools Directory{% endblock %}
+
 {% block content %}
 <div class="relative w-full overflow-hidden">
 
-    <!-- Breathing Background Ambient Lights -->
-    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-600/15 rounded-full blur-[140px] pointer-events-none animate-breathe"></div>
-    <div class="absolute top-[400px] -left-40 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="absolute top-[700px] -right-40 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <!-- Breathing Ambient Aura -->
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-purple-600/15 rounded-full blur-[160px] pointer-events-none animate-breathe"></div>
+    <div class="absolute top-[500px] -left-40 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute top-[900px] -right-40 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[140px] pointer-events-none"></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16 relative z-10">
 
-        <!-- ================= HERO & PIPELINE STATUS ================= -->
-        <div class="text-center max-w-4xl mx-auto space-y-4">
+        <!-- ================= HERO & STATUS BANNER ================= -->
+        <div class="text-center max-w-4xl mx-auto space-y-5">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold backdrop-blur-md animate-breathe-glow">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span>Neural Pipeline Online</span>
                 <span class="text-slate-500">•</span>
-                <span class="text-slate-300">Logged in as Akbar (Admin)</span>
+                <span class="text-slate-300">Curated AI Platform Directory</span>
             </div>
 
             <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
-                All-in-One <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-300 bg-clip-text text-transparent">AI Platform & Tools</span> Directory
+                Discover & Benchmark the <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-300 bg-clip-text text-transparent">Top AI Tools</span> for Modern Work
             </h1>
 
             <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-                Explore the complete multi-node AI ecosystem. Benchmark paid industry leaders against high-performance free alternatives, and test every tool with official free-tier trial limits.
+                Reach every leading foundation model, creative engine, and open-source tool. Compare paid industry leaders against free alternatives with verified trial limits and production benchmarks.
             </p>
 
-            <!-- Live Neural System Metrics -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 max-w-2xl mx-auto">
+            <!-- Quick Direct CTAs -->
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <a href="/ai-tools/" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-xl shadow-purple-600/30 hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                    <span>Explore All 47 AI Tools</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+                <a href="/?category=AI+tool+eval+board" class="px-5 py-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-2">
+                    <span>📊 Open AI Tool Eval Board</span>
+                </a>
+            </div>
+
+            <!-- Live System Metrics -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 max-w-2xl mx-auto">
                 <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
-                    <div class="text-2xl font-black text-white">{{ categories|length }}</div>
-                    <div class="text-[10px] uppercase tracking-wider text-purple-400 font-bold">Category Nodes</div>
+                    <div class="text-2xl font-black text-white">12</div>
+                    <div class="text-[10px] uppercase tracking-wider text-purple-400 font-bold">Category Hubs</div>
                 </div>
                 <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
                     <div class="text-2xl font-black text-indigo-400">{{ all_tools|length }}</div>
@@ -43,249 +56,149 @@
                 </div>
                 <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
                     <div class="text-2xl font-black text-pink-400">0 ms</div>
-                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Instant Search</div>
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Instant Autosuggest</div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= INTERACTIVE WORKFLOW PIPELINE STUDIO ================= -->
-        <div class="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
-                        <h2 class="text-xl font-black text-white">Metricore Neural Pipeline Studio</h2>
+        {% if is_eval_board %}
+            <!-- ================= DEDICATED AI TOOL EVAL BOARD VIEW (IF TRIGGERED) ================= -->
+            <div class="mt-8">
+                {% include "components/eval_board.html" %}
+            </div>
+        {% else %}
+
+            <!-- ================= INTENT-DRIVEN CATEGORY HUBS GRID ================= -->
+            <div class="space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                            <span>📁</span>
+                            <span>Explore by What You Want to Do</span>
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Jump directly to intent-driven category pages with specialized filters and top pick benchmarks.</p>
                     </div>
-                    <p class="text-xs text-slate-400 mt-1">Multi-stage pipeline flow. Click any cluster node to instantly filter the tool directory.</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <a href="/login" class="px-3.5 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 text-xs font-bold transition-all flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                        Full Canvas Node Editor
+                    <a href="/ai-tools/" class="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1 transition-colors self-start sm:self-auto">
+                        <span>View all categories</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </a>
                 </div>
-            </div>
 
-            <!-- Dynamic Node Flow Grid (5 Interconnected Stages) -->
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
-                <!-- Node A: Ingress -->
-                <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 relative group hover:border-purple-500/50 transition-all hover:-translate-y-1 shadow-lg">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] font-mono text-emerald-400 font-bold uppercase">Stage 01</span>
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    </div>
-                    <div class="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">Visitor Ingress</div>
-                    <p class="text-[11px] text-slate-400 mt-1">HTTPS Inbound traffic routed through Akbar Admin session.</p>
-                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-500 font-mono flex justify-between">
-                        <span>Status: Live</span>
-                        <span class="text-emerald-400">99.9%</span>
-                    </div>
-                </div>
-
-                <!-- Node B: Auth & Gatekeeper -->
-                <div class="p-4 rounded-2xl bg-slate-950/80 border border-purple-500/40 relative group hover:border-purple-400 transition-all hover:-translate-y-1 shadow-lg shadow-purple-500/10">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] font-mono text-purple-400 font-bold uppercase">Stage 02</span>
-                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono">AUTH</span>
-                    </div>
-                    <div class="text-sm font-bold text-white group-hover:text-purple-300 transition-colors">Auth Gateway</div>
-                    <p class="text-[11px] text-slate-400 mt-1">Encrypted cookie handshake, unlock credentials verified.</p>
-                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-mono flex justify-between">
-                        <span>User: Akbar</span>
-                        <span class="text-purple-300">ADMIN</span>
-                    </div>
-                </div>
-
-                <!-- Node C: Neural Core -->
-                <div class="p-4 rounded-2xl bg-slate-950/80 border border-indigo-500/50 relative group hover:border-indigo-400 transition-all hover:-translate-y-1 shadow-lg shadow-indigo-500/10 animate-breathe-glow">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] font-mono text-indigo-400 font-bold uppercase">Stage 03</span>
-                        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
-                    </div>
-                    <div class="text-sm font-bold text-white group-hover:text-indigo-300 transition-colors">Neural Core Hub</div>
-                    <p class="text-[11px] text-slate-400 mt-1">Central dispatcher coordinating 12 parallel tool pipelines.</p>
-                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-mono flex justify-between">
-                        <span>Dispatched: 24 Tools</span>
-                        <span class="text-indigo-300">Active</span>
-                    </div>
-                </div>
-
-                <!-- Node D: Free-Tier Evaluator -->
-                <div class="p-4 rounded-2xl bg-slate-950/80 border border-emerald-500/40 relative group hover:border-emerald-400 transition-all hover:-translate-y-1 shadow-lg shadow-emerald-500/10">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] font-mono text-emerald-400 font-bold uppercase">Stage 04</span>
-                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">TRIAL</span>
-                    </div>
-                    <div class="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">Trial & Cost Guard</div>
-                    <p class="text-[11px] text-slate-400 mt-1">Tracks monthly allowances, free credits, and zero-cost trials.</p>
-                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-mono flex justify-between">
-                        <span>Savings: Max</span>
-                        <span class="text-emerald-400">Enabled</span>
-                    </div>
-                </div>
-
-                <!-- Node E: 12 Category Endpoints -->
-                <div class="p-4 rounded-2xl bg-slate-950/80 border border-pink-500/40 relative group hover:border-pink-400 transition-all hover:-translate-y-1 shadow-lg shadow-pink-500/10">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] font-mono text-pink-400 font-bold uppercase">Stage 05</span>
-                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 font-mono">ROUTER</span>
-                    </div>
-                    <div class="text-sm font-bold text-white group-hover:text-pink-300 transition-colors">12 Domain Pipelines</div>
-                    <p class="text-[11px] text-slate-400 mt-1">Creative, Coding, Voice, Music, Video, and Research endpoints.</p>
-                    <div class="mt-3 pt-2 border-t border-slate-800 text-[10px] text-slate-400 font-mono flex justify-between">
-                        <span>Endpoints: 12</span>
-                        <span class="text-pink-300">Ready</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= SEARCH & INTERACTIVE CONTROLS ================= -->
-        <div class="space-y-5 max-w-4xl mx-auto">
-            <!-- Search Bar with Live HTMX -->
-            <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-                    <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                </div>
-                <input 
-                    type="text" 
-                    name="q" 
-                    value="{{ search_query }}"
-                    placeholder="Search by tool name, topic, trial limit, or keywords (e.g., Midjourney, Voice, Video, Cursor)..." 
-                    class="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 text-sm shadow-2xl transition-all"
-                    hx-get="/api/search"
-                    hx-trigger="keyup changed delay:200ms, search"
-                    hx-target="#tools-grid"
-                >
-            </div>
-
-            <!-- ================= SMART NAV EVALUATION & ACCURACY FILTER BAR ================= -->
-            {% include "components/nav_filter_bar.html" %}
-
-            <!-- Category Pills & Pricing / View Toggle -->
-            <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
-                <!-- Category Pills (Including Dedicated AI Tool Eval Board Tab) -->
-                <div class="flex flex-wrap gap-1.5 items-center">
-                    <!-- Dedicated AI Tool Eval Board Tab (As Requested) -->
-                    <a href="/?category=AI+tool+eval+board" class="px-3.5 py-1.5 rounded-xl font-black transition-all flex items-center gap-1.5 {% if is_eval_board or active_category == 'AI tool eval board' %}bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 text-white shadow-lg shadow-purple-600/40 ring-2 ring-purple-400/40{% else %}bg-purple-950/50 text-purple-300 hover:text-white border border-purple-500/40 hover:bg-purple-900/40{% endif %}">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>📊 AI Tool Eval Board</span>
+                <!-- 12 Top-Level Category Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {% for cat in top_categories %}
+                    <a href="/ai-tools/{{ cat.slug }}/" class="group p-5 rounded-3xl bg-slate-900/60 hover:bg-slate-900/90 border border-slate-800/90 hover:border-purple-500/60 transition-all hover:-translate-y-1 shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 flex flex-col justify-between space-y-3">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl p-2 rounded-2xl bg-slate-950/80 border border-slate-800 group-hover:scale-110 transition-transform">{{ cat.icon }}</span>
+                                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                                    {{ cat.count }} tools
+                                </span>
+                            </div>
+                            <h3 class="text-base font-extrabold text-white group-hover:text-purple-300 transition-colors">
+                                {{ cat.name }}
+                            </h3>
+                            <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                                {{ cat.description }}
+                            </p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-purple-400 font-semibold">
+                            <span>Browse category</span>
+                            <span class="group-hover:translate-x-1 transition-transform">→</span>
+                        </div>
                     </a>
-
-                    <a href="/" class="px-3.5 py-1.5 rounded-xl font-bold transition-all {% if active_category == 'All' and not is_eval_board %}bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800{% endif %}">
-                        All ({{ total_count }})
-                    </a>
-                    {% for cat in categories %}
-                        <a href="/?category={{ cat }}" class="px-3 py-1.5 rounded-xl font-medium transition-all {% if active_category == cat and not is_eval_board %}bg-purple-600 text-white shadow-md shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700{% endif %}">
-                            {{ cat }}
-                        </a>
                     {% endfor %}
                 </div>
-
-                <!-- View & Pricing Filter -->
-                <div class="flex items-center gap-2">
-                    <!-- Mode Switcher -->
-                    <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800 shadow-md">
-                        <a href="/?category={{ active_category if (active_category != 'All' and not is_eval_board) else '' }}" class="px-2.5 py-1 rounded-lg font-bold transition-all flex items-center gap-1 {% if not is_eval_board %}bg-slate-800 text-white{% else %}text-slate-400 hover:text-white{% endif %}">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-                            <span>Cards</span>
-                        </a>
-                        <a href="/?category=AI+tool+eval+board" class="px-2.5 py-1 rounded-lg font-bold transition-all flex items-center gap-1 {% if is_eval_board %}bg-purple-600 text-white shadow-sm{% else %}text-slate-400 hover:text-white{% endif %}">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            <span>Eval Board</span>
-                        </a>
-                    </div>
-
-                    <!-- Pricing Filter (Shown on Cards View) -->
-                    {% if not is_eval_board %}
-                    <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800 shadow-md">
-                        <a href="/?category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'All' %}bg-slate-800 text-white{% else %}text-slate-400 hover:text-white{% endif %}">
-                            All
-                        </a>
-                        <a href="/?pricing=Paid&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'Paid' %}bg-rose-500/20 text-rose-300 border border-rose-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
-                            Paid
-                        </a>
-                        <a href="/?pricing=Free&category={{ active_category if active_category != 'All' else '' }}" class="px-3 py-1 rounded-lg font-bold transition-all {% if active_pricing == 'Free' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/30{% else %}text-slate-400 hover:text-white{% endif %}">
-                            Free
-                        </a>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        <!-- ================= DYNAMIC TOOLS VIEW (GRID CARDS OR TABULAR EVAL BOARD) ================= -->
-        <div id="directory-top" class="scroll-mt-28"></div>
-        <div id="tools-grid" class="transition-all duration-300">
-            {% if is_eval_board or active_category == 'AI tool eval board' %}
-                {% include "components/eval_board.html" %}
-            {% else %}
-                {% include "components/tool_grid.html" %}
-            {% endif %}
-        </div>
-
-        <!-- ================= SIDE-BY-SIDE CATEGORY BENCHMARK BREAKDOWN ================= -->
-        <div class="mt-20 pt-12 border-t border-slate-800/80 space-y-8">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-2xl font-black text-white">Side-by-Side Category Benchmarks</h2>
-                    <p class="text-xs sm:text-sm text-slate-400 mt-1">Directly compare each paid industry benchmark against its top free alternative with free-tier trial limits.</p>
-                </div>
-                <span class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-900 text-purple-300 border border-slate-800 self-start sm:self-auto">
-                    {{ category_pairs|length }} Topics • {{ all_tools|length }} Verified Tools
-                </span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {% for item in category_pairs %}
-                    <div class="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-5 space-y-4 hover:border-slate-700 transition-all hover:shadow-xl">
-                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-                            <span class="text-xs font-black uppercase tracking-wider text-purple-400 flex items-center gap-2">
-                                <span class="w-5 h-5 rounded-md bg-purple-500/20 text-purple-300 text-[10px] flex items-center justify-center font-bold">
-                                    {{ "%02d"|format(loop.index) }}
+            <!-- ================= FEATURED TRENDING AI TOOLS SPOTLIGHT (8 PLATFORMS) ================= -->
+            <div class="space-y-6 pt-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                            <span>🔥</span>
+                            <span>Featured & Trending AI Platforms</span>
+                        </h2>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Leading multi-modal engines evaluated for production reliability and free trial access.</p>
+                    </div>
+                    <a href="/ai-tools/" class="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1 transition-colors self-start sm:self-auto">
+                        <span>See all 47 tools</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+
+                <!-- 8 Featured Cards (4 per row x 2 rows) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {% for tool in featured_tools %}
+                        {% include "components/tool_card.html" %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- ================= SIDE-BY-SIDE CATEGORY BENCHMARKS (PAID VS FREE) ================= -->
+            <div class="mt-20 pt-12 border-t border-slate-800/80 space-y-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-black text-white">Side-by-Side Category Benchmarks</h2>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Directly compare paid industry benchmarks against top free alternatives with free-tier trial limits.</p>
+                    </div>
+                    <span class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-900 text-purple-300 border border-slate-800 self-start sm:self-auto">
+                        {{ category_pairs|length }} Topics • {{ all_tools|length }} Verified Tools
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for item in category_pairs %}
+                        <div class="rounded-3xl border border-slate-800/80 bg-slate-900/40 p-5 space-y-4 hover:border-slate-700 transition-all hover:shadow-xl">
+                            <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                                <span class="text-xs font-black uppercase tracking-wider text-purple-400 flex items-center gap-2">
+                                    <span class="w-5 h-5 rounded-md bg-purple-500/20 text-purple-300 text-[10px] flex items-center justify-center font-bold">
+                                        {{ "%02d"|format(loop.index) }}
+                                    </span>
+                                    {{ item.category }}
                                 </span>
-                                {{ item.category }}
-                            </span>
-                            <span class="text-[10px] text-slate-500 font-mono">PAIR #{{ loop.index }}</span>
-                        </div>
-
-                        <!-- Paid Tool Row with Image Thumbnail -->
-                        {% if item.paid %}
-                        <div class="p-3 rounded-2xl bg-slate-950/70 border border-rose-500/20 flex items-center justify-between gap-3 group hover:border-rose-500/40 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <img src="{{ item.paid.image_url }}" alt="{{ item.paid.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
-                                <div>
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">Paid</span>
-                                        <a href="/tool/{{ item.paid.id }}" class="text-xs font-bold text-white hover:text-purple-300">{{ item.paid.name }}</a>
-                                    </div>
-                                    <div class="text-[10px] text-slate-400 mt-0.5">{{ item.paid.free_tier_limit }}</div>
-                                </div>
+                                <span class="text-[10px] text-slate-500 font-mono">PAIR #{{ loop.index }}</span>
                             </div>
-                            <span class="text-xs font-black text-rose-400 font-mono">{{ item.paid.price_display }}</span>
-                        </div>
-                        {% endif %}
 
-                        <!-- Free Alternative Row with Image Thumbnail -->
-                        {% if item.free %}
-                        <div class="p-3 rounded-2xl bg-slate-950/70 border border-emerald-500/20 flex items-center justify-between gap-3 group hover:border-emerald-500/40 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <img src="{{ item.free.image_url }}" alt="{{ item.free.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
-                                <div>
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Free</span>
-                                        <a href="/tool/{{ item.free.id }}" class="text-xs font-bold text-white hover:text-emerald-300">{{ item.free.name }}</a>
+                            <!-- Paid Tool Row -->
+                            {% if item.paid %}
+                            <div class="p-3 rounded-2xl bg-slate-950/70 border border-rose-500/20 flex items-center justify-between gap-3 group hover:border-rose-500/40 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ item.paid.image_url }}" alt="{{ item.paid.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
+                                    <div>
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300">Paid</span>
+                                            <a href="/tool/{{ item.paid.id }}" class="text-xs font-bold text-white hover:text-purple-300">{{ item.paid.name }}</a>
+                                        </div>
+                                        <div class="text-[10px] text-slate-400 mt-0.5">{{ item.paid.free_tier_limit }}</div>
                                     </div>
-                                    <div class="text-[10px] text-slate-400 mt-0.5">{{ item.free.free_tier_limit }}</div>
                                 </div>
+                                <span class="text-xs font-black text-rose-400 font-mono">{{ item.paid.price_display }}</span>
                             </div>
-                            <span class="text-xs font-black text-emerald-400 font-mono">$0/mo</span>
+                            {% endif %}
+
+                            <!-- Free Alternative Row -->
+                            {% if item.free %}
+                            <div class="p-3 rounded-2xl bg-slate-950/70 border border-emerald-500/20 flex items-center justify-between gap-3 group hover:border-emerald-500/40 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <img src="{{ item.free.image_url }}" alt="{{ item.free.name }}" class="w-10 h-10 rounded-xl object-cover border border-slate-800">
+                                    <div>
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Free</span>
+                                            <a href="/tool/{{ item.free.id }}" class="text-xs font-bold text-white hover:text-emerald-300">{{ item.free.name }}</a>
+                                        </div>
+                                        <div class="text-[10px] text-slate-400 mt-0.5">{{ item.free.free_tier_limit }}</div>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-black text-emerald-400 font-mono">$0/mo</span>
+                            </div>
+                            {% endif %}
                         </div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
+
+        {% endif %}
 
     </div>
 </div>
