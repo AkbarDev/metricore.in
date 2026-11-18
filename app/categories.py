@@ -101,6 +101,38 @@ TOP_CATEGORIES: List[Dict] = [
         "description": "Autonomous multi-agent loops, chatbot orchestrators, computer-use agents, and background workers.",
         "use_cases": ["Autonomous agents", "Support chatbots", "API orchestration", "Computer-use loops"],
         "legacy_categories": ["Chatbot & Support", "Workflow Automation"]
+    },
+    {
+        "slug": "finance-accounting",
+        "name": "Finance & Accounting",
+        "icon": "💳",
+        "description": "AI financial modeling, autonomous invoice processing, scenario planning, and financial compliance reporting.",
+        "use_cases": ["Financial modeling", "Invoice processing", "Budget forecasting", "SEC reporting", "Spreadsheet formulas"],
+        "legacy_categories": ["Finance & Accounting"]
+    },
+    {
+        "slug": "hr-recruiting",
+        "name": "HR & Recruiting",
+        "icon": "👥",
+        "description": "Skills-based talent intelligence, automated video interviewing, inclusive job descriptions, and employee engagement.",
+        "use_cases": ["Candidate sourcing", "Video interviews", "Performance reviews", "Employee onboarding", "Job descriptions"],
+        "legacy_categories": ["HR & Recruiting"]
+    },
+    {
+        "slug": "legal-compliance",
+        "name": "Legal & Compliance",
+        "icon": "⚖️",
+        "description": "AI contract drafting and review, legal due diligence research, compliance audits, and regulatory analysis.",
+        "use_cases": ["Contract review", "Due diligence", "Legal research", "Regulatory compliance", "Contract drafting"],
+        "legacy_categories": ["Legal & Compliance"]
+    },
+    {
+        "slug": "customer-support",
+        "name": "Customer Support",
+        "icon": "🎧",
+        "description": "AI resolution chatbots, automated ticket routing, customer service copilots, and omnichannel customer communication.",
+        "use_cases": ["Support chatbots", "Ticket routing", "Agent assistance", "Helpdesk automation", "Sentiment analysis"],
+        "legacy_categories": ["Customer Support", "Chatbot & Support"]
     }
 ]
 
