@@ -35,9 +35,15 @@
                     <span>Explore All 47 AI Tools</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </a>
-                <a href="/?category=AI+tool+eval+board" class="px-5 py-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-2">
+                {% if is_eval_board %}
+                <a href="/" class="px-5 py-3 rounded-2xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-200 hover:text-white border border-purple-500/30 text-xs font-bold transition-all flex items-center gap-2 shadow-sm">
+                    <span>📁 Switch to Category Hub</span>
+                </a>
+                {% else %}
+                <a href="/eval-board/" class="px-5 py-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-2">
                     <span>📊 Open AI Tool Eval Board</span>
                 </a>
+                {% endif %}
             </div>
 
             <!-- Live System Metrics -->
