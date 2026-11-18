@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} — Metricore.in{% endblock %}
+
+{% block extra_head %}
+    <!-- SEO Canonical URL & Metadata -->
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta name="description" content="{{ page_description }}">
+    {% if is_filtered %}
+        <!-- Prevent duplicate indexation of deeply filtered variants -->
+        <meta name="robots" content="noindex, follow">
+    {% else %}
+        <meta name="robots" content="index, follow">
+    {% endif %}
+
+    <!-- Structured Data: BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://metricore.in/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "AI Tools",
+                "item": "https://metricore.in/ai-tools/"
+            }
+            {% if active_category %},
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "{{ active_category.name }}",
+                "item": "{{ canonical_url }}"
+            }
+            {% endif %}
+        ]
+    }
+    </script>
+
+    <!-- Structured Data: ItemList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+            {% for tool in tools %}
+            {
+                "@type": "ListItem",
+                "position": {{ loop.index }},
+                "name": "{{ tool.name }}",
+                "url": "https://metricore.in/tool/{{ tool.id }}"
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="relative w-full overflow-hidden">
+
+    <!-- Ambient Lights -->
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-600/15 rounded-full blur-[140px] pointer-events-none animate-breathe"></div>
+    <div class="absolute top-[400px] -left-40 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 relative z-10">
+
+        <!-- ================= BREADCRUMBS ================= -->
+        <nav aria-label="Breadcrumb" class="flex items-center space-x-2 text-xs text-slate-400">
+            <a href="/" class="hover:text-purple-300 transition-colors">Home</a>
+            <span>/</span>
+            <a href="/ai-tools/" class="hover:text-purple-300 transition-colors">AI Tools</a>
+            {% if active_category %}
+                <span>/</span>
+                <span class="text-white font-semibold">{{ active_category.name }}</span>
+            {% endif %}
+        </nav>
+
+        <!-- ================= CATEGORY HERO HEADER ================= -->
+        <div class="space-y-3 border-b border-slate-800/80 pb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-bold mb-2">
+                        <span>{{ active_category.icon if active_category else '⚡' }}</span>
+                        <span>{{ active_category.name if active_category else 'All AI Platforms' }}</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight flex items-center gap-3">
+                        <span>{{ active_category.name if active_category else 'All AI Tools & Platforms' }}</span>
+                        <span class="text-sm sm:text-base font-mono font-bold px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-purple-300 align-middle">
+                            {{ total_count }} tools
+                        </span>
+                    </h1>
+                    <p class="text-sm text-slate-300 mt-2 max-w-3xl leading-relaxed">
+                        {{ active_category.description if active_category else 'Browse, benchmark and test every leading AI model and open-source tool with verified free-tier limits.' }}
+                    </p>
+                </div>
+
+                <!-- Mobile Filter Drawer Trigger Button -->
+                <button 
+                    type="button" 
+                    onclick="openMobileFilters()"
+                    class="lg:hidden inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-slate-900 border border-purple-500/40 text-purple-300 text-xs font-bold shadow-lg"
+                >
+                    <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                    <span>Filters {% if active_filter_count %}({{ active_filter_count }}){% endif %}</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= 3-5 TOP PICKS SPOTLIGHT SHELF ================= -->
+        {% if top_picks and top_picks|length > 0 and not is_filtered %}
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-amber-400 font-bold text-sm">✦</span>
+                    <h2 class="text-sm font-black uppercase tracking-wider text-slate-300">Curated Top Picks</h2>
+                </div>
+                <span class="text-[11px] text-slate-500 font-medium">Industry benchmarks tested for 2026/2027</span>
+            </div>
+
+            <!-- Top Picks Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {% for tool in top_picks %}
+                <div class="group relative rounded-3xl border border-purple-500/40 bg-gradient-to-b from-purple-950/20 via-slate-900/60 to-slate-900/80 p-4 shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1 transition-all flex flex-col justify-between">
+                    <div>
+                        <!-- Top Badge Row -->
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-sm">
+                                <span>✦ Top Pick</span>
+                            </span>
+                            <span class="text-[10px] font-mono font-bold text-amber-400 flex items-center gap-0.5">
+                                ★ {{ tool.rating }}
+                            </span>
+                        </div>
+
+                        <!-- Tool Identity -->
+                        <div class="flex items-center gap-3 mb-2.5">
+                            <img src="{{ tool.image_url }}" alt="{{ tool.name }}" class="w-10 h-10 rounded-xl object-cover border border-purple-500/30 flex-shrink-0">
+                            <div>
+                                <h3 class="text-base font-extrabold text-white group-hover:text-purple-300 transition-colors">
+                                    <a href="/tool/{{ tool.id }}">{{ tool.name }}</a>
+                                </h3>
+                                <span class="text-[10px] font-mono text-purple-400 font-semibold">{{ tool.price_display }}</span>
+                            </div>
+                        </div>
+
+                        <!-- One-line Tagline -->
+                        <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                            {{ tool.tagline or tool.description }}
+                        </p>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="pt-3 mt-3 border-t border-slate-800/80 flex items-center justify-between gap-2 text-xs">
+                        <a href="/tool/{{ tool.id }}" class="text-purple-400 hover:text-purple-300 font-bold text-[11px]">
+                            Compare →
+                        </a>
+                        <a href="{{ tool.url }}" target="_blank" rel="noopener noreferrer" class="px-3 py-1 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-[11px] shadow-sm flex items-center gap-1">
+                            <span>Visit</span>
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- ================= MAIN TOOLS DIRECTORY GRID (4 Cards / Row) ================= -->
+        <div id="directory-top" class="scroll-mt-28"></div>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-base font-black text-white">
+                    {% if is_filtered %}Filtered Results{% else %}All {{ active_category.name if active_category else 'AI' }} Tools{% endif %}
+                </h2>
+                <span class="text-xs text-slate-400 font-mono">
+                    Showing {{ start_item }}–{{ end_item }} of {{ total_count }}
+                </span>
+            </div>
+
+            <!-- Squeezed 4-Column Grid (4 Columns x 5 Rows = 20 Cards) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {% for tool in tools %}
+                    {% include "components/tool_card.html" %}
+                {% else %}
+                    <div class="col-span-full py-16 text-center rounded-3xl border border-dashed border-slate-800 bg-slate-900/30 space-y-2">
+                        <div class="text-3xl">🔍</div>
+                        <h3 class="text-base font-bold text-slate-300">No matching AI tools found</h3>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto">Try clearing one or more active filters above to view available tools.</p>
+                        <a href="{{ current_clean_url }}" class="inline-block mt-2 px-4 py-1.5 rounded-xl bg-purple-600 text-white text-xs font-bold">
+                            Reset all filters
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination Bar -->
+            {% include "components/pagination.html" %}
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= MOBILE FILTERS BOTTOM SHEET DRAWER ================= -->
+<div id="mobile-filters-drawer" class="hidden fixed inset-0 z-50 flex items-end justify-center bg-slate-950/80 backdrop-blur-md">
+    <div class="w-full max-w-md rounded-t-3xl bg-slate-900 border-t border-purple-500/40 p-6 space-y-4 max-h-[85vh] overflow-y-auto">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-base font-black text-white flex items-center gap-2">
+                <span>⚙️</span>
+                <span>Filters & Sorting</span>
+            </h3>
+            <button type="button" onclick="closeMobileFilters()" class="text-slate-400 hover:text-white text-lg">✕</button>
+        </div>
+
+        <form method="GET" class="space-y-3.5 text-xs">
+            {% if search_query %}
+                <input type="hidden" name="q" value="{{ search_query }}">
+            {% endif %}
+
+            <div>
+                <label class="block text-slate-300 font-bold mb-1">Pricing Model</label>
+                <select name="pricing" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+                    <option value="">Pricing: All</option>
+                    <option value="Free" {% if selected_pricing == 'Free' %}selected{% endif %}>Free ({{ counts_pricing.get('Free', 0) }})</option>
+                    <option value="Freemium" {% if selected_pricing == 'Freemium' %}selected{% endif %}>Freemium ({{ counts_pricing.get('Freemium', 0) }})</option>
+                    <option value="Paid" {% if selected_pricing == 'Paid' %}selected{% endif %}>Paid ({{ counts_pricing.get('Paid', 0) }})</option>
+                    <option value="Open-source" {% if selected_pricing == 'Open-source' %}selected{% endif %}>Open-source ({{ counts_pricing.get('Open-source', 0) }})</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-slate-300 font-bold mb-1">Platform</label>
+                <select name="platform" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+                    <option value="">Platform: All</option>
+                    <option value="Web" {% if selected_platform == 'Web' %}selected{% endif %}>Web ({{ counts_platform.get('Web', 0) }})</option>
+                    <option value="API" {% if selected_platform == 'API' %}selected{% endif %}>API ({{ counts_platform.get('API', 0) }})</option>
+                    <option value="Desktop" {% if selected_platform == 'Desktop' %}selected{% endif %}>Desktop ({{ counts_platform.get('Desktop', 0) }})</option>
+                    <option value="Mobile" {% if selected_platform == 'Mobile' %}selected{% endif %}>Mobile ({{ counts_platform.get('Mobile', 0) }})</option>
+                    <option value="Browser extension" {% if selected_platform == 'Browser extension' %}selected{% endif %}>Browser extension ({{ counts_platform.get('Browser extension', 0) }})</option>
+                </select>
+            </div>
+
+            {% if category_use_cases and category_use_cases|length > 0 %}
+            <div>
+                <label class="block text-slate-300 font-bold mb-1">Use Case</label>
+                <select name="use_case" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+                    <option value="">Use Case: All</option>
+                    {% for uc in category_use_cases %}
+                        <option value="{{ uc }}" {% if selected_use_case == uc %}selected{% endif %}>{{ uc }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
+
+            <div>
+                <label class="block text-slate-300 font-bold mb-1">Sort By</label>
+                <select name="sort" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
+                    <option value="popular" {% if selected_sort == 'popular' or not selected_sort %}selected{% endif %}>Sort: Popular</option>
+                    <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Sort: Newest</option>
+                    <option value="top_rated" {% if selected_sort == 'top_rated' %}selected{% endif %}>Sort: Top Rated</option>
+                </select>
+            </div>
+
+            <div class="pt-3 flex gap-2">
+                <a href="{{ current_clean_url }}" class="flex-1 py-2.5 rounded-xl bg-slate-800 text-slate-300 font-bold text-center">Reset</a>
+                <button type="submit" class="flex-1 py-2.5 rounded-xl bg-purple-600 text-white font-bold shadow-lg shadow-purple-600/30">Apply Filters</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openMobileFilters() {
+        document.getElementById('mobile-filters-drawer')?.classList.remove('hidden');
+    }
+    function closeMobileFilters() {
+        document.getElementById('mobile-filters-drawer')?.classList.add('hidden');
+    }
+</script>
+{% endblock %}

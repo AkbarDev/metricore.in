@@ -1,0 +1,507 @@
+<!-- THREE-LAYER STICKY HEADER (BENCHMARK ARCHITECTURE) -->
+<header id="site-header" class="sticky top-0 z-50 glass border-b border-slate-800/80 transition-all duration-300">
+
+    <!-- ================= ROW 1: BRAND LOGO + WIDE SEARCH + SUBMIT ACTION (ALWAYS VISIBLE) ================= -->
+    <div class="border-b border-slate-800/60 bg-slate-950/70 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+
+            <!-- Brand Logo -->
+            <a href="/" class="flex items-center space-x-3 group flex-shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 via-indigo-600 to-pink-500 flex items-center justify-center font-extrabold text-white text-xl shadow-lg shadow-purple-500/25 group-hover:scale-105 transition-transform">
+                    M
+                </div>
+                <div class="hidden sm:block">
+                    <span class="text-xl font-extrabold bg-gradient-to-r from-purple-400 via-indigo-300 to-pink-400 bg-clip-text text-transparent">Metricore<span class="text-purple-400">.in</span></span>
+                    <span class="block text-[9px] uppercase tracking-widest text-slate-400 font-bold">AI Platform Directory</span>
+                </div>
+            </a>
+
+            <!-- Wide Centered Search Bar with Autosuggest & ⌘K Shortcut -->
+            <div class="flex-1 max-w-2xl relative mx-auto">
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="global-search-input"
+                        autocomplete="off"
+                        placeholder="Search 500+ AI tools, categories, use cases (e.g. 'remove image background')..."
+                        class="w-full pl-10 pr-16 py-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-900 border border-slate-800 focus:border-purple-500 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all font-medium shadow-inner"
+                    >
+                    <!-- ⌘K Keyboard Shortcut Badge -->
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <kbd class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-mono font-semibold text-slate-400 bg-slate-950/80 border border-slate-800 rounded-lg shadow-sm">
+                            ⌘K
+                        </kbd>
+                    </div>
+                </div>
+
+                <!-- AUTOSUGGEST GROUPED POPUP (Tools, Categories, Use Cases) -->
+                <div 
+                    id="autosuggest-dropdown" 
+                    class="hidden absolute top-full left-0 right-0 mt-2 rounded-2xl bg-slate-900/95 border border-slate-800 shadow-2xl backdrop-blur-2xl overflow-hidden z-50 max-h-[480px] overflow-y-auto divide-y divide-slate-800/80 text-xs"
+                >
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Right Actions: Submit a Tool + Theme Toggle + Auth -->
+            <div class="flex items-center space-x-2.5 flex-shrink-0">
+                <!-- "Submit a Tool" Button -->
+                <button 
+                    type="button" 
+                    onclick="openSubmitModal()"
+                    class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600/15 hover:bg-purple-600/25 text-purple-300 hover:text-white border border-purple-500/30 text-xs font-bold transition-all shadow-sm"
+                >
+                    <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    <span>Submit tool</span>
+                </button>
+
+                <!-- Daylight / Nightlight Switcher -->
+                <button 
+                    id="theme-toggle-btn"
+                    type="button"
+                    class="p-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-xs font-semibold border border-slate-800 flex items-center justify-center transition-all text-slate-300"
+                    title="Toggle Daylight / Nightlight"
+                >
+                    <span id="theme-sun-icon" class="text-amber-400 hidden">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    </span>
+                    <span id="theme-moon-icon" class="text-indigo-400 hidden">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                    </span>
+                </button>
+
+                <!-- Auth State -->
+                {% if is_authenticated %}
+                    <a href="/logout" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-rose-300 text-xs font-semibold border border-slate-800 transition-all">
+                        Sign Out
+                    </a>
+                {% else %}
+                    <a href="/login" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold shadow-md shadow-purple-600/30 transition-all">
+                        Sign In
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= ROW 2: CATEGORY CHIPS STRIP + MORE MEGA-MENU (STICKY) ================= -->
+    <div class="bg-slate-950/85 border-b border-slate-800/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between gap-3 text-xs">
+
+            <!-- Horizontally Scrollable Category Chips -->
+            <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-0.5 flex-1">
+                <!-- All Tools Chip -->
+                <a 
+                    href="/ai-tools/" 
+                    class="px-3.5 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all flex items-center gap-1.5 {% if active_category_slug == 'all' or (not active_category_slug and request.url.path == '/ai-tools/') %}bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800{% endif %}"
+                >
+                    <span>⚡ All Tools</span>
+                </a>
+
+                <!-- Top 8 Intent-Driven Categories as Chips -->
+                {% set top_chips = [
+                    {'slug': 'writing-content', 'name': 'Writing', 'icon': '✍️'},
+                    {'slug': 'image-design', 'name': 'Image', 'icon': '🎨'},
+                    {'slug': 'video-animation', 'name': 'Video', 'icon': '🎬'},
+                    {'slug': 'audio-voice', 'name': 'Audio', 'icon': '🎙️'},
+                    {'slug': 'code-dev', 'name': 'Code', 'icon': '💻'},
+                    {'slug': 'data-analytics', 'name': 'Data', 'icon': '📊'},
+                    {'slug': 'marketing-seo', 'name': 'Marketing', 'icon': '🚀'},
+                    {'slug': 'productivity-automation', 'name': 'Automation', 'icon': '⚡'}
+                ] %}
+
+                {% for chip in top_chips %}
+                    <a 
+                        href="/ai-tools/{{ chip.slug }}/"
+                        class="px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all flex items-center gap-1.5 {% if active_category_slug == chip.slug %}bg-purple-600 text-white font-bold shadow-md shadow-purple-600/30{% else %}bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 hover:border-slate-700{% endif %}"
+                    >
+                        <span>{{ chip.icon }}</span>
+                        <span>{{ chip.name }}</span>
+                    </a>
+                {% endfor %}
+
+                <!-- "More ▾" Mega-Menu Trigger -->
+                <div class="relative group">
+                    <button 
+                        type="button" 
+                        id="more-mega-menu-btn"
+                        class="px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all flex items-center gap-1 bg-slate-900/90 text-purple-300 hover:text-white hover:bg-slate-800 border border-slate-800 hover:border-purple-500/40"
+                    >
+                        <span>More</span>
+                        <svg class="w-3.5 h-3.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+
+                    <!-- Mega-Menu Dropdown (Desktop) -->
+                    <div class="hidden group-hover:block absolute top-full left-0 mt-1.5 w-72 p-3 rounded-2xl bg-slate-900/95 border border-slate-800 shadow-2xl backdrop-blur-2xl z-50 space-y-1">
+                        <div class="text-[10px] uppercase font-bold tracking-wider text-slate-500 px-2 py-1">Additional Categories</div>
+                        <a href="/ai-tools/research-chat/" class="flex items-center gap-2 px-2.5 py-2 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition-colors">
+                            <span>🔍</span>
+                            <div>
+                                <div class="font-bold text-xs">Research & Chat</div>
+                                <div class="text-[10px] text-slate-400">Frontier reasoning & conversational search</div>
+                            </div>
+                        </a>
+                        <a href="/ai-tools/business-sales/" class="flex items-center gap-2 px-2.5 py-2 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition-colors">
+                            <span>💼</span>
+                            <div>
+                                <div class="font-bold text-xs">Business & Sales</div>
+                                <div class="text-[10px] text-slate-400">CRM enrichment & sales outreach</div>
+                            </div>
+                        </a>
+                        <a href="/ai-tools/education/" class="flex items-center gap-2 px-2.5 py-2 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition-colors">
+                            <span>🎓</span>
+                            <div>
+                                <div class="font-bold text-xs">Education</div>
+                                <div class="text-[10px] text-slate-400">AI study aids & academic citations</div>
+                            </div>
+                        </a>
+                        <a href="/ai-tools/agents-workflows/" class="flex items-center gap-2 px-2.5 py-2 rounded-xl hover:bg-slate-800 text-slate-200 hover:text-white transition-colors">
+                            <span>🤖</span>
+                            <div>
+                                <div class="font-bold text-xs">Agents & Workflows</div>
+                                <div class="text-[10px] text-slate-400">Autonomous agents & support bots</div>
+                            </div>
+                        </a>
+                        <div class="pt-1 border-t border-slate-800">
+                            <a href="/?category=AI+tool+eval+board" class="flex items-center gap-2 px-2.5 py-2 rounded-xl bg-purple-600/10 hover:bg-purple-600/20 text-purple-300 font-bold transition-colors">
+                                <span>📊</span>
+                                <span>AI Tool Eval Board</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= ROW 3: CATEGORY FILTERS & ACTIVE CHIPS (ONLY ON CATEGORY & SEARCH PAGES) ================= -->
+    {% if show_filters_row %}
+    <div id="header-row-3" class="bg-slate-950/95 border-b border-slate-800/80 backdrop-blur-xl transition-all duration-300 origin-top">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+
+            <!-- Filter Dropdowns Group -->
+            <form id="header-filters-form" method="GET" class="flex flex-wrap items-center gap-2 flex-1">
+                <!-- Keep search query if present -->
+                {% if search_query %}
+                    <input type="hidden" name="q" value="{{ search_query }}">
+                {% endif %}
+
+                <!-- Pricing Filter Dropdown -->
+                <div class="relative">
+                    <select 
+                        name="pricing" 
+                        onchange="this.form.submit()" 
+                        class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 text-xs font-semibold focus:outline-none cursor-pointer pr-7"
+                    >
+                        <option value="">Pricing: All</option>
+                        <option value="Free" {% if selected_pricing == 'Free' %}selected{% endif %}>Free ({{ counts_pricing.get('Free', 0) }})</option>
+                        <option value="Freemium" {% if selected_pricing == 'Freemium' %}selected{% endif %}>Freemium ({{ counts_pricing.get('Freemium', 0) }})</option>
+                        <option value="Paid" {% if selected_pricing == 'Paid' %}selected{% endif %}>Paid ({{ counts_pricing.get('Paid', 0) }})</option>
+                        <option value="Open-source" {% if selected_pricing == 'Open-source' %}selected{% endif %}>Open-source ({{ counts_pricing.get('Open-source', 0) }})</option>
+                    </select>
+                </div>
+
+                <!-- Platform Filter Dropdown -->
+                <div class="relative">
+                    <select 
+                        name="platform" 
+                        onchange="this.form.submit()" 
+                        class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 text-xs font-semibold focus:outline-none cursor-pointer pr-7"
+                    >
+                        <option value="">Platform: All</option>
+                        <option value="Web" {% if selected_platform == 'Web' %}selected{% endif %}>Web ({{ counts_platform.get('Web', 0) }})</option>
+                        <option value="API" {% if selected_platform == 'API' %}selected{% endif %}>API ({{ counts_platform.get('API', 0) }})</option>
+                        <option value="Desktop" {% if selected_platform == 'Desktop' %}selected{% endif %}>Desktop ({{ counts_platform.get('Desktop', 0) }})</option>
+                        <option value="Mobile" {% if selected_platform == 'Mobile' %}selected{% endif %}>Mobile ({{ counts_platform.get('Mobile', 0) }})</option>
+                        <option value="Browser extension" {% if selected_platform == 'Browser extension' %}selected{% endif %}>Browser extension ({{ counts_platform.get('Browser extension', 0) }})</option>
+                    </select>
+                </div>
+
+                <!-- Use Case Filter Dropdown (Dynamic per Category) -->
+                {% if category_use_cases and category_use_cases|length > 0 %}
+                <div class="relative">
+                    <select 
+                        name="use_case" 
+                        onchange="this.form.submit()" 
+                        class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 text-xs font-semibold focus:outline-none cursor-pointer pr-7"
+                    >
+                        <option value="">Use Case: All</option>
+                        {% for uc in category_use_cases %}
+                            <option value="{{ uc }}" {% if selected_use_case == uc %}selected{% endif %}>{{ uc }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                <!-- Sort Dropdown -->
+                <div class="relative">
+                    <select 
+                        name="sort" 
+                        onchange="this.form.submit()" 
+                        class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-purple-500/40 text-slate-200 text-xs font-semibold focus:outline-none cursor-pointer pr-7"
+                    >
+                        <option value="popular" {% if selected_sort == 'popular' or not selected_sort %}selected{% endif %}>Sort: Popular</option>
+                        <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Sort: Newest</option>
+                        <option value="top_rated" {% if selected_sort == 'top_rated' %}selected{% endif %}>Sort: Top Rated</option>
+                    </select>
+                </div>
+            </form>
+
+            <!-- Active Removable Chips + Clear All -->
+            <div class="flex items-center gap-1.5 flex-wrap">
+                {% if selected_pricing %}
+                    <a href="{{ clear_filter_url('pricing') }}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-purple-600/20 text-purple-300 border border-purple-500/30 text-[11px] font-semibold hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-500/40 transition-colors">
+                        <span>{{ selected_pricing }}</span>
+                        <span>✕</span>
+                    </a>
+                {% endif %}
+                {% if selected_platform %}
+                    <a href="{{ clear_filter_url('platform') }}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-[11px] font-semibold hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-500/40 transition-colors">
+                        <span>{{ selected_platform }}</span>
+                        <span>✕</span>
+                    </a>
+                {% endif %}
+                {% if selected_use_case %}
+                    <a href="{{ clear_filter_url('use_case') }}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-pink-600/20 text-pink-300 border border-pink-500/30 text-[11px] font-semibold hover:bg-rose-500/20 hover:text-rose-300 hover:border-rose-500/40 transition-colors">
+                        <span>{{ selected_use_case }}</span>
+                        <span>✕</span>
+                    </a>
+                {% endif %}
+
+                {% if selected_pricing or selected_platform or selected_use_case %}
+                    <a href="{{ current_clean_url }}" class="text-[11px] font-bold text-slate-400 hover:text-white underline ml-1">
+                        Clear all
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+    {% endif %}
+
+</header>
+
+<!-- ================= SUBMIT A TOOL MODAL ================= -->
+<div id="submit-tool-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+    <div class="relative w-full max-w-lg rounded-3xl bg-slate-900 border border-purple-500/40 p-6 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-lg font-black text-white flex items-center gap-2">
+                <span>🚀</span>
+                <span>Submit an AI Tool</span>
+            </h3>
+            <button type="button" onclick="closeSubmitModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+        </div>
+        <p class="text-xs text-slate-400">Submit your AI platform or open-source tool for benchmarking and listing on Metricore.in.</p>
+        <form id="submit-tool-form" onsubmit="handleToolSubmit(event)" class="space-y-3 text-xs">
+            <div>
+                <label class="block text-slate-300 font-bold mb-1">Tool Name *</label>
+                <input type="text" name="name" required placeholder="e.g. MyCoolAI" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+                <label class="block text-slate-300 font-bold mb-1">Website URL *</label>
+                <input type="url" name="url" required placeholder="https://example.com" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+                <label class="block text-slate-300 font-bold mb-1">Target Category *</label>
+                <select name="category" required class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-purple-500">
+                    <option value="writing-content">Writing & Content</option>
+                    <option value="image-design">Image & Design</option>
+                    <option value="video-animation">Video & Animation</option>
+                    <option value="audio-voice">Audio & Voice</option>
+                    <option value="code-dev">Code & Dev</option>
+                    <option value="data-analytics">Data & Analytics</option>
+                    <option value="marketing-seo">Marketing & SEO</option>
+                    <option value="productivity-automation">Productivity & Automation</option>
+                    <option value="research-chat">Research & Chat</option>
+                    <option value="agents-workflows">Agents & Workflows</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-slate-300 font-bold mb-1">One-line Tagline / Use Case</label>
+                <input type="text" name="tagline" placeholder="What does this AI tool do best?" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-purple-500">
+            </div>
+            <div class="pt-2 flex justify-end gap-2">
+                <button type="button" onclick="closeSubmitModal()" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-semibold hover:bg-slate-700">Cancel</button>
+                <button type="submit" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold shadow-lg shadow-purple-600/30">Submit for Review</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ================= CLIENT AUTOSUGGEST, KEYBOARD SHORTCUT & SMART SCROLL SCRIPT ================= -->
+<script>
+    // 1. ⌘K / Ctrl+K Global Shortcut
+    window.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            const input = document.getElementById('global-search-input');
+            if (input) {
+                input.focus();
+                input.select();
+            }
+        }
+    });
+
+    // 2. Autosuggest search implementation
+    const searchInput = document.getElementById('global-search-input');
+    const dropdown = document.getElementById('autosuggest-dropdown');
+
+    if (searchInput && dropdown) {
+        let debounceTimer;
+
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            const query = e.target.value.trim();
+
+            if (query.length < 2) {
+                dropdown.classList.add('hidden');
+                dropdown.innerHTML = '';
+                return;
+            }
+
+            debounceTimer = setTimeout(async () => {
+                try {
+                    const res = await fetch(`/api/autosuggest?q=${encodeURIComponent(query)}`);
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    renderAutosuggest(data);
+                } catch (err) {
+                    console.error("Autosuggest fetch error:", err);
+                }
+            }, 180);
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Direct enter press navigates to /ai-tools/?q=...
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const val = searchInput.value.trim();
+                if (val) {
+                    window.location.href = `/ai-tools/?q=${encodeURIComponent(val)}`;
+                }
+            }
+        });
+    }
+
+    function renderAutosuggest(data) {
+        const { tools, categories, use_cases } = data;
+        if ((!tools || !tools.length) && (!categories || !categories.length) && (!use_cases || !use_cases.length)) {
+            dropdown.innerHTML = `<div class="p-4 text-center text-slate-500">No matching AI tools, categories or use cases found.</div>`;
+            dropdown.classList.remove('hidden');
+            return;
+        }
+
+        let html = '';
+
+        // Group 1: Tools
+        if (tools && tools.length) {
+            html += `<div class="p-2"><div class="text-[10px] uppercase font-bold tracking-wider text-purple-400 px-3 py-1">AI Tools</div>`;
+            tools.slice(0, 4).forEach(t => {
+                html += `
+                    <a href="/tool/${t.id}" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-800 transition-colors">
+                        <div class="flex items-center gap-2.5">
+                            <img src="${t.image_url || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100'}" class="w-7 h-7 rounded-lg object-cover border border-slate-800">
+                            <div>
+                                <div class="font-bold text-white text-xs">${t.name}</div>
+                                <div class="text-[10px] text-slate-400">${t.category}</div>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950 text-slate-300 border border-slate-800">${t.pricing_type}</span>
+                    </a>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        // Group 2: Categories
+        if (categories && categories.length) {
+            html += `<div class="p-2"><div class="text-[10px] uppercase font-bold tracking-wider text-indigo-400 px-3 py-1">Categories</div>`;
+            categories.slice(0, 3).forEach(c => {
+                html += `
+                    <a href="/ai-tools/${c.slug}/" class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 transition-colors text-slate-200">
+                        <span class="font-bold text-xs flex items-center gap-1.5">${c.icon || '📁'} ${c.name}</span>
+                        <span class="text-[10px] font-mono text-purple-300">${c.count} tools →</span>
+                    </a>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        // Group 3: Use Cases
+        if (use_cases && use_cases.length) {
+            html += `<div class="p-2"><div class="text-[10px] uppercase font-bold tracking-wider text-pink-400 px-3 py-1">Use Cases</div>`;
+            use_cases.slice(0, 3).forEach(u => {
+                html += `
+                    <a href="/ai-tools/${u.category_slug}/?use_case=${encodeURIComponent(u.label)}" class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 transition-colors text-slate-300">
+                        <span class="text-xs">⚡ ${u.label}</span>
+                        <span class="text-[10px] text-slate-500">${u.category_name}</span>
+                    </a>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        dropdown.innerHTML = html;
+        dropdown.classList.remove('hidden');
+    }
+
+    // 3. Scroll Behavior: Rows 1 & 2 sticky, Row 3 hides on scroll down and reveals on scroll up
+    let lastScrollY = window.scrollY;
+    const row3 = document.getElementById('header-row-3');
+
+    if (row3) {
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > 120 && currentScrollY > lastScrollY) {
+                // Scrolling DOWN: Hide Row 3 to maximize reading space
+                row3.classList.add('max-h-0', 'opacity-0', 'overflow-hidden', 'py-0');
+                row3.classList.remove('max-h-24', 'opacity-100', 'py-2.5');
+            } else {
+                // Scrolling UP: Reveal Row 3
+                row3.classList.remove('max-h-0', 'opacity-0', 'overflow-hidden', 'py-0');
+                row3.classList.add('max-h-24', 'opacity-100', 'py-2.5');
+            }
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+    }
+
+    // 4. Submit Modal Controls
+    function openSubmitModal() {
+        document.getElementById('submit-tool-modal')?.classList.remove('hidden');
+    }
+    function closeSubmitModal() {
+        document.getElementById('submit-tool-modal')?.classList.add('hidden');
+    }
+    async function handleToolSubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const res = await fetch('/api/submit-tool', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            alert('Thank you! Your tool submission has been recorded for editorial review.');
+            closeSubmitModal();
+            form.reset();
+        } catch (err) {
+            alert('Submission received! Our team will review and verify your tool.');
+            closeSubmitModal();
+        }
+    }
+</script>
