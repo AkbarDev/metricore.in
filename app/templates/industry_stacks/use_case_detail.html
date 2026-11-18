@@ -68,28 +68,74 @@
         <section class="space-y-3">
             <h2 class="text-lg font-black text-white flex items-center gap-2">
                 <span class="text-emerald-400">02.</span>
-                <span>Tools Used</span>
+                <span>Tools Used in This Workflow</span>
             </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {% for tool in tools_used %}
-                <div class="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800/90 space-y-1.5 flex flex-col justify-between">
-                    <div>
-                        <div class="text-[9px] font-mono uppercase text-purple-400 font-bold tracking-wider">
-                            {{ tool.category }}
+                <div class="rounded-2xl border border-slate-800/90 bg-slate-900/60 overflow-hidden flex flex-col justify-between hover:border-emerald-500/50 transition-colors shadow-lg">
+                    <!-- Tool Visual Banner / Logo -->
+                    <div class="relative h-24 w-full overflow-hidden bg-slate-950">
+                        {% if tool.image_url %}
+                        <img src="{{ tool.image_url }}" alt="{{ tool.name }}" class="w-full h-full object-cover object-center filter brightness-90">
+                        {% else %}
+                        <div class="w-full h-full bg-slate-900 flex items-center justify-center font-bold text-slate-600 text-xl">
+                            {{ tool.name[0] }}
                         </div>
-                        <!-- Tool name: Plain text only -->
-                        <div class="text-sm font-bold text-white pt-0.5">
-                            {{ tool.name }}
+                        {% endif %}
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+                        <div class="absolute top-2 left-2 right-2 flex items-center justify-between">
+                            <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-950/80 text-emerald-300 border border-emerald-500/30 backdrop-blur-md">
+                                {{ tool.category }}
+                            </span>
+                            <span class="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 backdrop-blur-md">
+                                {{ tool.level }}
+                            </span>
                         </div>
-                        <p class="text-[11px] text-slate-300 leading-normal mt-1">
-                            {{ tool.purpose }}
-                        </p>
+                        <div class="absolute bottom-1.5 left-2">
+                            <span class="text-xs font-black text-white px-2 py-0.5 rounded-lg bg-slate-950/90 border border-slate-800">
+                                {{ tool.name }}
+                            </span>
+                        </div>
                     </div>
-                    <div class="pt-2 border-t border-slate-800/60 text-right">
-                        <a href="{{ tool.official_url }}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold text-slate-400 hover:text-emerald-300 transition-colors inline-flex items-center gap-0.5">
-                            <span>Official site</span>
-                            <span>↗</span>
-                        </a>
+
+                    <!-- Tool Details & Provenance Metrics -->
+                    <div class="p-3.5 space-y-2.5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <p class="text-[11px] text-slate-300 leading-relaxed">
+                                {{ tool.purpose }}
+                            </p>
+                        </div>
+
+                        <!-- Provenance Box (Est, Country, Founders, Stars) -->
+                        <div class="p-2 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-1 text-[10px]">
+                            <div class="flex items-center justify-between">
+                                <span class="flex items-center gap-1 font-semibold text-slate-200">
+                                    <span>{{ tool.country_flag or '🌐' }}</span>
+                                    <span>{{ tool.country_name or 'Global' }}</span>
+                                </span>
+                                {% if tool.founded_year %}
+                                <span class="font-mono text-purple-300 font-bold">
+                                    Est. {{ tool.founded_year }}
+                                </span>
+                                {% endif %}
+                            </div>
+                            <div class="flex items-center justify-between pt-1 border-t border-slate-800/60 text-slate-400">
+                                <span class="truncate max-w-[130px]">By: {{ tool.founders or 'Founding Team' }}</span>
+                                {% if tool.github_stars and tool.github_stars != 'N/A' %}
+                                <span class="text-amber-400 font-mono font-bold">★ {{ tool.github_stars }}</span>
+                                {% else %}
+                                <span class="text-slate-400">{{ tool.operational_status or 'Active' }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Outbound link -->
+                        <div class="pt-2 border-t border-slate-800/60 text-right">
+                            <a href="{{ tool.official_url }}" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold text-slate-400 hover:text-emerald-300 transition-colors inline-flex items-center gap-0.5">
+                                <span>Official site</span>
+                                <span>↗</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -248,3 +294,4 @@
 }
 </script>
 {% endblock %}
+
