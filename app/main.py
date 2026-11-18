@@ -232,17 +232,23 @@ async def home(
         name="index.html",
         context={
             "all_tools": all_tools,
+            "tools": all_tools,
+            "all_filtered_tools": all_tools,
             "top_categories": top_categories,
             "featured_tools": featured_tools,
             "category_pairs": category_pairs,
             "is_eval_board": is_eval_board,
             "show_filters_row": False,  # Row 3 is hidden on homepage to keep it clean!
-            "active_category_slug": "home",
+            "active_category_slug": "eval-board" if is_eval_board else "home",
             "is_authenticated": True,
             "username": get_current_user_name(request),
             "role": get_current_role(request),
         },
     )
+
+@app.get("/eval-board/", response_class=HTMLResponse)
+async def eval_board_view(request: Request):
+    return await home(request=request, category="AI tool eval board", view="eval-board")
 
 def make_filter_helpers(request: Request):
     def clear_filter_url(param: str) -> str:
