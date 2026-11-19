@@ -108,31 +108,125 @@ def is_preview_enabled(request: Request) -> bool:
         return preview in ("true", "1")
     return False
 
-# ================= IN-MEMORY RATE LIMITER =================
-class InMemoryRateLimiter:
-    def __init__(self):
-        self._requests = defaultdict(list)
+# ================= IN-MEMORY RATE LIMITER & CLIENT IP LOGIC =================
+import ipaddress
+from collections import OrderedDict, deque
 
-    def is_allowed(self, key: str, max_requests: int, window_seconds: int) -> bool:
+class InMemoryRateLimiter:
+    """
+    In-memory rate limiter using sliding-window deques, LRU key eviction, and periodic expiration.
+    NOTE: Rate limits are in-memory and tracked per process.
+    """
+    def __init__(
+        self,
+        max_keys: int = 10000,
+        cleanup_interval_seconds: int = 60,
+        cleanup_call_frequency: int = 100
+    ):
+        self._requests: OrderedDict[str, deque] = OrderedDict()
+        self.max_keys = max_keys
+        self.cleanup_interval_seconds = cleanup_interval_seconds
+        self.cleanup_call_frequency = cleanup_call_frequency
+        self._call_counter = 0
+        self._last_cleanup = time.time()
+
+    def check_and_record(self, key: str, max_requests: int, window_seconds: int) -> tuple[bool, int]:
+        """
+        Check rate limit and record timestamp only if allowed.
+        Returns: (is_allowed, retry_after_seconds)
+        """
         now = time.time()
+        self._call_counter += 1
+
+        # Periodic cleanup of expired entries
+        if self._call_counter >= self.cleanup_call_frequency or (now - self._last_cleanup >= self.cleanup_interval_seconds):
+            self.cleanup(now, window_seconds)
+
         cutoff = now - window_seconds
-        records = [ts for ts in self._requests[key] if ts > cutoff]
-        if len(records) >= max_requests:
-            self._requests[key] = records
-            return False
-        records.append(now)
-        self._requests[key] = records
-        return True
+        q = self._requests.get(key)
+        if q is not None:
+            # Purge timestamps outside the sliding window
+            while q and q[0] <= cutoff:
+                q.popleft()
+            self._requests.move_to_end(key)
+        else:
+            # Enforce max tracked keys cap by evicting oldest key
+            while len(self._requests) >= self.max_keys:
+                self._requests.popitem(last=False)
+            q = deque()
+            self._requests[key] = q
+
+        if len(q) >= max_requests:
+            # Request is BLOCKED: do NOT append timestamp. Compute retry-after.
+            oldest_ts = q[0]
+            retry_after = max(1, math.ceil((oldest_ts + window_seconds) - now))
+            return False, retry_after
+
+        # Request is ALLOWED: record current timestamp
+        q.append(now)
+        return True, 0
+
+    def cleanup(self, now: Optional[float] = None, default_window: int = 3600):
+        """Removes expired entries and deletes empty keys across all tracked entries."""
+        if now is None:
+            now = time.time()
+        self._last_cleanup = now
+        self._call_counter = 0
+
+        cutoff = now - default_window
+        empty_keys = []
+        for k, q in list(self._requests.items()):
+            while q and q[0] <= cutoff:
+                q.popleft()
+            if not q:
+                empty_keys.append(k)
+
+        for k in empty_keys:
+            self._requests.pop(k, None)
 
 rate_limiter = InMemoryRateLimiter()
 
+def is_trusted_peer(host: Optional[str]) -> bool:
+    """Returns True if host is loopback, private or link-local address."""
+    if not host:
+        return False
+    try:
+        ip = ipaddress.ip_address(host)
+        return ip.is_loopback or ip.is_private or ip.is_link_local
+    except ValueError:
+        return False
+
 def get_client_ip(request: Request) -> str:
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    if request.client and request.client.host:
-        return request.client.host
-    return "127.0.0.1"
+    """
+    Determines client IP address safely:
+    - Default: request.client.host (direct connecting address)
+    - Trusts X-Forwarded-For ONLY when request.client.host is loopback, private or link-local (a proxy)
+    - In that case, uses rightmost address in X-Forwarded-For (respecting optional METRICORE_TRUSTED_PROXY_HOPS)
+    - Validates with ipaddress.ip_address(); if invalid, falls back to request.client.host
+    """
+    peer_host = request.client.host if request.client and request.client.host else "127.0.0.1"
+
+    if is_trusted_peer(peer_host):
+        forwarded = request.headers.get("x-forwarded-for")
+        if forwarded:
+            ips = [p.strip() for p in forwarded.split(",") if p.strip()]
+            if ips:
+                try:
+                    hops = int(os.environ.get("METRICORE_TRUSTED_PROXY_HOPS", "1"))
+                except ValueError:
+                    hops = 1
+                if hops < 1:
+                    hops = 1
+
+                index = -hops if len(ips) >= hops else 0
+                candidate = ips[index]
+                try:
+                    valid_ip = ipaddress.ip_address(candidate)
+                    return str(valid_ip)
+                except ValueError:
+                    pass
+
+    return peer_host
 
 # ================= SECURITY HEADERS & HEAD REQUEST MIDDLEWARE =================
 @app.middleware("http")
@@ -152,11 +246,13 @@ async def security_headers_middleware(request: Request, call_next):
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
     response.headers["X-Frame-Options"] = "DENY"
 
-    # Strict-Transport-Security: only when request arrived over HTTPS
-    is_https = (
-        request.url.scheme == "https"
-        or request.headers.get("x-forwarded-proto", "").lower() == "https"
-    )
+    # Strict-Transport-Security: trust x-forwarded-proto ONLY when direct peer is a trusted proxy
+    peer_host = request.client.host if request.client and request.client.host else "127.0.0.1"
+    is_https = request.url.scheme == "https"
+    if is_trusted_peer(peer_host):
+        if request.headers.get("x-forwarded-proto", "").lower() == "https":
+            is_https = True
+
     if is_https:
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
 
@@ -520,10 +616,24 @@ async def autosuggest(
     cat: Optional[str] = "all",
     type: Optional[str] = "tools"
 ):
-    # Rate limit check
+    # Global route-group backstop (600 req/min across all callers)
+    allowed, retry_after = rate_limiter.check_and_record("global:search_group", max_requests=600, window_seconds=60)
+    if not allowed:
+        return JSONResponse(
+            status_code=429,
+            content={"detail": "Service busy. Please retry shortly."},
+            headers={"Retry-After": str(retry_after)}
+        )
+
+    # Per-IP rate limit (60 req/min per client IP)
     client_ip = get_client_ip(request)
-    if not rate_limiter.is_allowed(f"search:{client_ip}", max_requests=60, window_seconds=60):
-        return JSONResponse(status_code=429, content={"detail": "Too many requests. Please wait a minute."})
+    allowed, retry_after = rate_limiter.check_and_record(f"search_ip:{client_ip}", max_requests=60, window_seconds=60)
+    if not allowed:
+        return JSONResponse(
+            status_code=429,
+            content={"detail": "Too many requests. Please wait a minute."},
+            headers={"Retry-After": str(retry_after)}
+        )
 
     query = validate_q(q).lower()
     cat_slug = (cat or "all").strip()
@@ -744,9 +854,24 @@ async def submit_tool(request: Request, payload: SubmitToolRequest):
     if content_length and int(content_length) > 10240:
         raise HTTPException(status_code=413, detail="Payload too large. Maximum size is 10KB.")
 
+    # Global route-group backstop (60 submissions/hour across all callers)
+    allowed, retry_after = rate_limiter.check_and_record("global:submit_group", max_requests=60, window_seconds=3600)
+    if not allowed:
+        return JSONResponse(
+            status_code=429,
+            content={"detail": "Submission queue busy. Please retry later."},
+            headers={"Retry-After": str(retry_after)}
+        )
+
+    # Per-IP rate limit (5 submissions/hour per client IP)
     client_ip = get_client_ip(request)
-    if not rate_limiter.is_allowed(f"submit:{client_ip}", max_requests=5, window_seconds=3600):
-        return JSONResponse(status_code=429, content={"detail": "Too many submissions. Please try again later."})
+    allowed, retry_after = rate_limiter.check_and_record(f"submit_ip:{client_ip}", max_requests=5, window_seconds=3600)
+    if not allowed:
+        return JSONResponse(
+            status_code=429,
+            content={"detail": "Too many submissions. Please try again later."},
+            headers={"Retry-After": str(retry_after)}
+        )
 
     # Bot honeypot check
     if payload.honeypot:
@@ -888,9 +1013,24 @@ async def live_search(
     pricing: Optional[str] = None,
     page: int = 1,
 ):
+    # Global route-group backstop (600 req/min across all callers)
+    allowed, retry_after = rate_limiter.check_and_record("global:search_group", max_requests=600, window_seconds=60)
+    if not allowed:
+        return HTMLResponse(
+            status_code=429,
+            content=f"<div class='p-4 text-rose-400'>Service busy. Please retry in {retry_after} seconds.</div>",
+            headers={"Retry-After": str(retry_after)}
+        )
+
+    # Per-IP rate limit (60 req/min per client IP)
     client_ip = get_client_ip(request)
-    if not rate_limiter.is_allowed(f"search:{client_ip}", max_requests=60, window_seconds=60):
-        return HTMLResponse(status_code=429, content="<div class='p-4 text-rose-400'>Too many requests. Please wait a minute.</div>")
+    allowed, retry_after = rate_limiter.check_and_record(f"search_ip:{client_ip}", max_requests=60, window_seconds=60)
+    if not allowed:
+        return HTMLResponse(
+            status_code=429,
+            content=f"<div class='p-4 text-rose-400'>Too many requests. Please retry in {retry_after} seconds.</div>",
+            headers={"Retry-After": str(retry_after)}
+        )
 
     query_str = validate_q(q)
     page_num = validate_page(page)
