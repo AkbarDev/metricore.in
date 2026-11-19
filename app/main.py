@@ -11,7 +11,13 @@ from fastapi.templating import Jinja2Templates
 
 from app.models import AITool, TopCategoryInfo
 from app.auth import verify_credentials, register_user, get_user_by_username
-from app.categories import TOP_CATEGORIES, get_top_category_by_slug, get_all_top_categories
+from app.categories import (
+    TOP_CATEGORIES,
+    get_top_category_by_slug,
+    get_all_top_categories,
+    get_shared_categories,
+    get_grouped_shared_categories,
+)
 from app.industry_stacks import (
     get_all_stacks,
     get_stack_by_slug,
@@ -47,6 +53,8 @@ app = FastAPI(
 # Static and Templates
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
+templates.env.globals["get_grouped_categories"] = get_grouped_shared_categories
+templates.env.globals["get_shared_categories"] = get_shared_categories
 
 # Data Loader
 DATA_FILE = BASE_DIR / "data" / "tools.json"
@@ -499,55 +507,242 @@ async def ai_tools_category(
         },
     )
 
-# ================= AUTOSUGGEST API (GROUPED TOOLS, CATEGORIES, USE CASES) =================
+# ================= SHARED CATEGORIES API =================
+@app.get("/api/categories")
+async def get_categories_api():
+    grouped = get_grouped_shared_categories(refresh=False)
+    return JSONResponse(grouped)
+
+# ================= AUTOSUGGEST API (GROUPED TOOLS, CATEGORIES, USE CASES - MAX 5 EACH) =================
 @app.get("/api/autosuggest")
-async def autosuggest(q: str = Query("", min_length=1)):
-    all_tools = load_tools()
+async def autosuggest(
+    q: str = Query("", min_length=1),
+    cat: Optional[str] = "all",
+    type: Optional[str] = "tools"
+):
     query = q.lower().strip()
 
-    # Group 1: Tools
+    if type == "stacks":
+        from app.industry_stacks import get_all_stacks, get_all_use_cases
+        stacks = get_all_stacks()
+        use_cases = get_all_use_cases(include_unreviewed=False)
+
+        # Match Stacks
+        matched_stacks = []
+        for s in stacks:
+            if query in s["name"].lower() or query in s["summary"].lower() or query in s["function"].lower():
+                matched_stacks.append({
+                    "id": s["slug"],
+                    "name": s["name"],
+                    "category": s["function"],
+                    "pricing_type": f"{len(s['tool_ids'])} Tools",
+                    "url": f"/industry-tool-stacks/{s['slug']}/"
+                })
+        matched_stacks = matched_stacks[:5]
+
+        # Match Use Cases
+        matched_ucs = []
+        for uc in use_cases:
+            if query in uc["title"].lower() or query in uc["situation"].lower() or query in uc["role"].lower():
+                matched_ucs.append({
+                    "label": uc["title"],
+                    "category_slug": uc["stack_slug"],
+                    "category_name": uc["role"],
+                    "url": f"/industry-tool-stacks/{uc['stack_slug']}/{uc['slug']}/"
+                })
+        matched_ucs = matched_ucs[:5]
+
+        # Departments / Categories
+        matched_cats = []
+        for s in stacks:
+            if query in s["function"].lower():
+                matched_cats.append({
+                    "slug": s["slug"],
+                    "name": s["function"],
+                    "icon": s.get("icon", "💼"),
+                    "count": len(s["tool_ids"]),
+                    "url": f"/industry-tool-stacks/{s['slug']}/"
+                })
+        matched_cats = matched_cats[:5]
+
+        return JSONResponse({
+            "tools": matched_stacks,
+            "categories": matched_cats,
+            "use_cases": matched_ucs
+        })
+
+    # Default: Tools Mode
+    all_tools = load_tools()
+
+    # Scope by category if specified and not 'all'
+    candidate_tools = all_tools
+    if cat and cat != "all":
+        candidate_tools = [
+            t for t in all_tools 
+            if t.top_category_slug == cat or cat.lower() in (t.category or "").lower()
+        ]
+
+    # Group 1: Tools (max 5)
     matched_tools = []
-    for t in all_tools:
-        if query in t.name.lower() or query in t.description.lower() or (t.tagline and query in t.tagline.lower()):
+    for t in candidate_tools:
+        if (
+            query in t.name.lower() 
+            or query in t.description.lower() 
+            or (t.tagline and query in t.tagline.lower())
+            or (t.founders and query in t.founders.lower())
+        ):
             matched_tools.append({
                 "id": t.id,
                 "name": t.name,
                 "category": t.top_category_name or t.category,
                 "pricing_type": t.pricing_tier or t.pricing_type,
-                "image_url": t.image_url
+                "image_url": t.image_url,
+                "url": f"/tool/{t.id}"
             })
-    matched_tools = matched_tools[:4]
+    matched_tools = matched_tools[:5]
 
-    # Group 2: Categories
+    # Group 2: Categories (max 5)
     matched_cats = []
-    for cat in TOP_CATEGORIES:
-        count = sum(1 for t in all_tools if t.top_category_slug == cat["slug"])
-        if query in cat["name"].lower() or query in cat["slug"]:
+    shared_cats = get_shared_categories()
+    for c in shared_cats:
+        if query in c["label"].lower() or query in c["slug"]:
             matched_cats.append({
-                "slug": cat["slug"],
-                "name": cat["name"],
-                "icon": cat["icon"],
-                "count": count
+                "slug": c["slug"],
+                "name": c["label"],
+                "icon": c["icon"],
+                "count": c["tool_count"],
+                "url": f"/ai-tools/{c['slug']}/"
             })
-    matched_cats = matched_cats[:3]
+    matched_cats = matched_cats[:5]
 
-    # Group 3: Use Cases
+    # Group 3: Use Cases (max 5)
     matched_use_cases = []
-    for cat in TOP_CATEGORIES:
-        for uc in cat.get("use_cases", []):
+    for c in shared_cats:
+        for uc in c.get("use_cases", []):
             if query in uc.lower():
                 matched_use_cases.append({
                     "label": uc,
-                    "category_slug": cat["slug"],
-                    "category_name": cat["name"]
+                    "category_slug": c["slug"],
+                    "category_name": c["label"],
+                    "url": f"/search?q={urllib.parse.quote(uc)}&cat={c['slug']}&type=tools"
                 })
-    matched_use_cases = matched_use_cases[:3]
+    matched_use_cases = matched_use_cases[:5]
 
     return JSONResponse({
         "tools": matched_tools,
         "categories": matched_cats,
         "use_cases": matched_use_cases
     })
+
+# ================= SCOPED SEARCH ROUTE (/search?q=...&cat=...&type=...) =================
+@app.get("/search", response_class=HTMLResponse)
+async def search_page(
+    request: Request,
+    q: Optional[str] = "",
+    cat: Optional[str] = "all",
+    type: Optional[str] = "tools"
+):
+    query_str = (q or "").strip()
+    cat_slug = (cat or "all").strip()
+    search_type = "stacks" if type == "stacks" else "tools"
+
+    # Resolve active category info
+    active_category = {"slug": "all", "label": "All categories", "icon": "⚡"}
+    if cat_slug and cat_slug != "all":
+        shared_cats = get_shared_categories()
+        match = next((c for c in shared_cats if c["slug"] == cat_slug), None)
+        if match:
+            active_category = match
+        else:
+            active_category = {"slug": cat_slug, "label": cat_slug.replace("-", " ").title(), "icon": "📁"}
+
+    if search_type == "stacks":
+        from app.industry_stacks import get_all_stacks, get_all_use_cases
+        all_stacks = get_all_stacks()
+        all_ucs = get_all_use_cases(include_unreviewed=is_authenticated(request))
+
+        matched_stacks = all_stacks
+        matched_ucs = all_ucs
+
+        if cat_slug and cat_slug != "all":
+            matched_stacks = [s for s in matched_stacks if s["slug"] == cat_slug or s.get("function", "").lower() == active_category["label"].lower()]
+            matched_ucs = [u for u in matched_ucs if u["stack_slug"] == cat_slug or (matched_stacks and u["stack_slug"] == matched_stacks[0]["slug"])]
+
+        if query_str:
+            q_lower = query_str.lower()
+            matched_stacks = [
+                s for s in matched_stacks
+                if q_lower in s["name"].lower()
+                or q_lower in s["summary"].lower()
+                or q_lower in s.get("description", "").lower()
+                or any(q_lower in tid for tid in s.get("tool_ids", []))
+            ]
+            matched_ucs = [
+                u for u in matched_ucs
+                if q_lower in u["title"].lower()
+                or q_lower in u["situation"].lower()
+                or q_lower in u.get("role", "").lower()
+                or any(q_lower in tid for tid in u.get("tool_ids", []))
+            ]
+
+        total_results = len(matched_stacks) + len(matched_ucs)
+        return templates.TemplateResponse(
+            request=request,
+            name="search_results.html",
+            context={
+                "query": query_str,
+                "active_category": active_category,
+                "search_type": "stacks",
+                "stacks": matched_stacks,
+                "use_cases": matched_ucs,
+                "total_results": total_results,
+                "is_authenticated": is_authenticated(request),
+                "username": get_current_user_name(request),
+                "role": get_current_role(request),
+            }
+        )
+
+    # Search Type: AI Tools
+    all_tools = load_tools()
+    filtered = all_tools
+
+    # Scoped category filter
+    if cat_slug and cat_slug != "all":
+        filtered = [
+            t for t in filtered
+            if t.top_category_slug == cat_slug or cat_slug.lower() in (t.category or "").lower()
+        ]
+
+    # Query filter
+    if query_str:
+        q_lower = query_str.lower()
+        filtered = [
+            t for t in filtered
+            if q_lower in t.name.lower()
+            or q_lower in t.description.lower()
+            or (t.tagline and q_lower in t.tagline.lower())
+            or (t.founders and q_lower in t.founders.lower())
+            or (t.country_name and q_lower in t.country_name.lower())
+            or any(q_lower in u.lower() for u in (t.use_cases or []))
+            or any(q_lower in tag.lower() for tag in (t.tags or []))
+        ]
+
+    total_results = len(filtered)
+
+    return templates.TemplateResponse(
+        request=request,
+        name="search_results.html",
+        context={
+            "query": query_str,
+            "active_category": active_category,
+            "search_type": "tools",
+            "tools": filtered,
+            "total_results": total_results,
+            "is_authenticated": is_authenticated(request),
+            "username": get_current_user_name(request),
+            "role": get_current_role(request),
+        }
+    )
 
 # ================= SUBMIT A TOOL API =================
 @app.post("/api/submit-tool")
