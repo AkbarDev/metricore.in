@@ -300,7 +300,21 @@
                 hasActive = true;
                 const chip = document.createElement('span');
                 chip.className = 'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-purple-600/20 text-purple-300 border border-purple-500/30 text-[10px] font-semibold';
-                chip.innerHTML = `<span>${key}: <strong>${val}</strong></span><button type="button" onclick="clearSpecificFilter('${key}')" class="hover:text-white ml-0.5">✕</button>`;
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = key + ': ';
+                const strongVal = document.createElement('strong');
+                strongVal.textContent = val;
+                textSpan.appendChild(strongVal);
+
+                const closeBtn = document.createElement('button');
+                closeBtn.type = 'button';
+                closeBtn.className = 'hover:text-white ml-0.5';
+                closeBtn.textContent = '✕';
+                closeBtn.onclick = function() { clearSpecificFilter(key); };
+
+                chip.appendChild(textSpan);
+                chip.appendChild(closeBtn);
                 container.appendChild(chip);
             }
         }

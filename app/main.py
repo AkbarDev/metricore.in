@@ -1,16 +1,18 @@
 import json
 import os
 import math
+import time
 import urllib.parse
+from collections import defaultdict
 from pathlib import Path
-from typing import Optional, List, Dict
-from fastapi import FastAPI, Request, Query, HTTPException, Form, Response, Body
-from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
+from typing import Optional, List, Dict, Set
+from fastapi import FastAPI, Request, Query, HTTPException, Body
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel, Field, HttpUrl
 
 from app.models import AITool, TopCategoryInfo
-from app.auth import verify_credentials, register_user, get_user_by_username
 from app.categories import (
     TOP_CATEGORIES,
     get_top_category_by_slug,
@@ -31,28 +33,20 @@ from app.industry_stacks import (
 
 BASE_DIR = Path(__file__).resolve().parent
 
-AUTH_COOKIE_NAME = "metricore_auth"
-USER_COOKIE_NAME = "metricore_user"
-ROLE_COOKIE_NAME = "metricore_role"
-
-def is_authenticated(request: Request) -> bool:
-    return request.cookies.get(AUTH_COOKIE_NAME) == "authenticated"
-
-def get_current_user_name(request: Request) -> str:
-    return request.cookies.get(USER_COOKIE_NAME) or "Member"
-
-def get_current_role(request: Request) -> str:
-    return request.cookies.get(ROLE_COOKIE_NAME) or "user"
-
+# ================= FASTAPI APP INITIALIZATION =================
 app = FastAPI(
     title="Metricore.in - AI Tool Finder",
     description="Curated AI Tool Finder with Paid vs Free alternatives and free-tier testing limits.",
     version="1.0.0",
+    debug=False,
 )
 
-# Static and Templates
+# Static files (Mounted strictly to app/static)
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+
+# Templates with autoescaping
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
+templates.env.autoescape = True
 templates.env.globals["get_grouped_categories"] = get_grouped_shared_categories
 templates.env.globals["get_shared_categories"] = get_shared_categories
 
@@ -73,137 +67,161 @@ def get_categories(tools: List[AITool]) -> List[str]:
             seen.append(tool.category)
     return seen
 
-# Web Routes
-@app.get("/login", response_class=HTMLResponse)
-async def login_page(
-    request: Request,
-    error: Optional[str] = None,
-    success: Optional[str] = None,
-    tab: Optional[str] = "login"
-):
-    return templates.TemplateResponse(
-        request=request,
-        name="login.html",
-        context={
-            "error": error,
-            "success": success,
-            "is_authenticated": is_authenticated(request),
-            "username": get_current_user_name(request),
-            "active_tab": tab or "login",
-        },
+# ================= ALLOWLISTS & VALIDATION CONSTANTS =================
+ALLOWED_SORTS: Set[str] = {"popular", "newest", "top_rated"}
+ALLOWED_PRICINGS: Set[str] = {"", "Free", "Freemium", "Paid", "Open-source"}
+ALLOWED_PLATFORMS: Set[str] = {"", "Web", "API", "Desktop", "Mobile", "Browser extension"}
+ALLOWED_SEARCH_TYPES: Set[str] = {"tools", "stacks"}
+
+def get_allowed_category_slugs() -> Set[str]:
+    cats = get_shared_categories()
+    slugs = {c["slug"] for c in cats}
+    slugs.add("all")
+    return slugs
+
+def validate_q(q: Optional[str]) -> str:
+    if not q:
+        return ""
+    q_clean = q.strip()
+    if len(q_clean) > 100:
+        raise HTTPException(status_code=400, detail="Search query must be 100 characters or fewer.")
+    return q_clean
+
+def validate_page(page: int) -> int:
+    if page < 1 or page > 1000:
+        raise HTTPException(status_code=400, detail="Page parameter must be between 1 and 1000.")
+    return page
+
+# ================= DRAFT / UNREVIEWED CONTENT PREVIEW CONTROL =================
+def is_preview_enabled(request: Request) -> bool:
+    """
+    Draft / unreviewed content preview:
+    Only enabled locally when METRICORE_PREVIEW=1 is set in the environment
+    AND ?preview=true or ?preview=1 is passed in query parameters.
+    Without METRICORE_PREVIEW=1, ?preview=true does nothing and unreviewed items are never visible.
+
+    HOW TO APPROVE CONTENT FOR PRODUCTION:
+    Set `"needs_human_review": false` in `app/data/industry_stacks.json` (or tools.json) and commit.
+    """
+    if os.environ.get("METRICORE_PREVIEW") == "1":
+        preview = request.query_params.get("preview", "").lower()
+        return preview in ("true", "1")
+    return False
+
+# ================= IN-MEMORY RATE LIMITER =================
+class InMemoryRateLimiter:
+    def __init__(self):
+        self._requests = defaultdict(list)
+
+    def is_allowed(self, key: str, max_requests: int, window_seconds: int) -> bool:
+        now = time.time()
+        cutoff = now - window_seconds
+        records = [ts for ts in self._requests[key] if ts > cutoff]
+        if len(records) >= max_requests:
+            self._requests[key] = records
+            return False
+        records.append(now)
+        self._requests[key] = records
+        return True
+
+rate_limiter = InMemoryRateLimiter()
+
+def get_client_ip(request: Request) -> str:
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    if request.client and request.client.host:
+        return request.client.host
+    return "127.0.0.1"
+
+# ================= SECURITY HEADERS MIDDLEWARE =================
+@app.middleware("http")
+async def security_headers_middleware(request: Request, call_next):
+    response = await call_next(request)
+
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    response.headers["X-Frame-Options"] = "DENY"
+
+    # Strict-Transport-Security: only when request arrived over HTTPS
+    is_https = (
+        request.url.scheme == "https"
+        or request.headers.get("x-forwarded-proto", "").lower() == "https"
     )
+    if is_https:
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
 
-@app.post("/login", response_class=HTMLResponse)
-async def handle_login(
-    request: Request,
-    username: str = Form(...),
-    password: str = Form(...),
-):
-    user = verify_credentials(username, password)
-    if user:
-        response = RedirectResponse(url="/", status_code=303)
-        response.set_cookie(
-            key=AUTH_COOKIE_NAME,
-            value="authenticated",
-            max_age=60 * 60 * 24 * 7,  # 7 days
-            httponly=True,
-            samesite="lax",
-        )
-        response.set_cookie(
-            key=USER_COOKIE_NAME,
-            value=user["username"],
-            max_age=60 * 60 * 24 * 7,
-            httponly=True,
-            samesite="lax",
-        )
-        response.set_cookie(
-            key=ROLE_COOKIE_NAME,
-            value=user.get("role", "user"),
-            max_age=60 * 60 * 24 * 7,
-            httponly=True,
-            samesite="lax",
-        )
-        return response
+    # Content-Security-Policy matching required CDNs (Tailwind, HTMX, Google Fonts, Unsplash)
+    csp_directives = [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com",
+        "font-src 'self' https://fonts.gstatic.com",
+        "img-src 'self' data: https:",
+        "connect-src 'self'",
+        "frame-ancestors 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+    ]
+    response.headers["Content-Security-Policy"] = "; ".join(csp_directives)
 
-    return templates.TemplateResponse(
-        request=request,
-        name="login.html",
-        context={
-            "error": "Invalid username or password. Don't have an account? Click 'Create an Account' below to register.",
-            "is_authenticated": False,
-            "entered_username": username,
-            "active_tab": "login",
-        },
-        status_code=401,
-    )
-
-@app.get("/register", response_class=HTMLResponse)
-async def register_page(request: Request):
-    return templates.TemplateResponse(
-        request=request,
-        name="login.html",
-        context={
-            "is_authenticated": is_authenticated(request),
-            "username": get_current_user_name(request),
-            "active_tab": "register",
-        },
-    )
-
-@app.post("/register", response_class=HTMLResponse)
-async def handle_register(
-    request: Request,
-    username: str = Form(...),
-    email: str = Form(...),
-    password: str = Form(...),
-):
-    success, msg = register_user(username=username, email=email, password=password)
-    if success:
-        # Automatic login after successful registration
-        response = RedirectResponse(url="/", status_code=303)
-        response.set_cookie(
-            key=AUTH_COOKIE_NAME,
-            value="authenticated",
-            max_age=60 * 60 * 24 * 7,
-            httponly=True,
-            samesite="lax",
-        )
-        response.set_cookie(
-            key=USER_COOKIE_NAME,
-            value=username.strip(),
-            max_age=60 * 60 * 24 * 7,
-            httponly=True,
-            samesite="lax",
-        )
-        response.set_cookie(
-            key=ROLE_COOKIE_NAME,
-            value="user",
-            max_age=60 * 60 * 24 * 7,
-            httponly=True,
-            samesite="lax",
-        )
-        return response
-
-    return templates.TemplateResponse(
-        request=request,
-        name="login.html",
-        context={
-            "error": msg,
-            "is_authenticated": False,
-            "entered_username": username,
-            "entered_email": email,
-            "active_tab": "register",
-        },
-        status_code=400,
-    )
-
-@app.get("/logout")
-async def logout():
-    response = RedirectResponse(url="/login", status_code=302)
-    response.delete_cookie(key=AUTH_COOKIE_NAME)
-    response.delete_cookie(key=USER_COOKIE_NAME)
-    response.delete_cookie(key=ROLE_COOKIE_NAME)
     return response
 
+# ================= CUSTOM ERROR HANDLERS (404, 500) =================
+@app.exception_handler(404)
+async def custom_404_handler(request: Request, exc):
+    return templates.TemplateResponse(
+        request=request,
+        name="404.html",
+        status_code=404,
+        context={"request": request},
+    )
+
+@app.exception_handler(500)
+async def custom_500_handler(request: Request, exc):
+    return templates.TemplateResponse(
+        request=request,
+        name="500.html",
+        status_code=500,
+        context={"request": request},
+    )
+
+# ================= PYDANTIC SUBMIT-TOOL MODEL =================
+class SubmitToolRequest(BaseModel):
+    name: str = Field(..., min_length=1, max_length=100)
+    website_url: HttpUrl
+    category: str = Field(..., min_length=1, max_length=50)
+    description: str = Field(..., min_length=1, max_length=500)
+    pricing_type: Optional[str] = Field("Free", max_length=30)
+    honeypot: Optional[str] = Field(None, max_length=50)
+
+# ================= HELPER FUNCTIONS =================
+def make_filter_helpers(request: Request):
+    def clear_filter_url(param: str) -> str:
+        params = dict(request.query_params)
+        params.pop(param, None)
+        params.pop("page", None)
+        q_str = urllib.parse.urlencode(params)
+        return f"{request.url.path}?{q_str}" if q_str else request.url.path
+
+    return clear_filter_url, request.url.path
+
+def compute_filter_counts(tools_subset):
+    counts_pricing = {"Free": 0, "Freemium": 0, "Paid": 0, "Open-source": 0}
+    counts_platform = {"Web": 0, "API": 0, "Desktop": 0, "Mobile": 0, "Browser extension": 0}
+    for t in tools_subset:
+        tier = t.pricing_tier or "Paid"
+        if tier in counts_pricing:
+            counts_pricing[tier] += 1
+        for p in (t.platforms or []):
+            if p in counts_platform:
+                counts_platform[p] += 1
+    return counts_pricing, counts_platform
+
+# ================= WEB ROUTES =================
+
+# 1. HOME PAGE (Public, no login redirect)
 @app.get("/", response_class=HTMLResponse)
 async def home(
     request: Request,
@@ -212,8 +230,9 @@ async def home(
     q: Optional[str] = None,
     view: Optional[str] = None,
 ):
-    if not is_authenticated(request):
-        return RedirectResponse(url="/login", status_code=302)
+    query_str = validate_q(q)
+    if pricing and pricing not in ALLOWED_PRICINGS:
+        raise HTTPException(status_code=400, detail="Invalid pricing filter value.")
 
     all_tools = load_tools()
     categories = get_categories(all_tools)
@@ -228,7 +247,7 @@ async def home(
         count = sum(1 for t in all_tools if t.top_category_slug == cat["slug"])
         top_categories.append({**cat, "count": count})
 
-    # Featured tools (8 top picks for the homepage showcase)
+    # Featured tools (8 top picks for homepage showcase)
     featured_tools = [t for t in all_tools if t.is_top_pick][:8]
     if len(featured_tools) < 8:
         featured_tools = all_tools[:8]
@@ -256,11 +275,8 @@ async def home(
             "featured_tools": featured_tools,
             "category_pairs": category_pairs,
             "is_eval_board": is_eval_board,
-            "show_filters_row": False,  # Row 3 is hidden on homepage to keep it clean!
+            "show_filters_row": False,
             "active_category_slug": "eval-board" if is_eval_board else "home",
-            "is_authenticated": True,
-            "username": get_current_user_name(request),
-            "role": get_current_role(request),
         },
     )
 
@@ -268,29 +284,7 @@ async def home(
 async def eval_board_view(request: Request):
     return await home(request=request, category="AI tool eval board", view="eval-board")
 
-def make_filter_helpers(request: Request):
-    def clear_filter_url(param: str) -> str:
-        params = dict(request.query_params)
-        params.pop(param, None)
-        params.pop("page", None)
-        q_str = urllib.parse.urlencode(params)
-        return f"{request.url.path}?{q_str}" if q_str else request.url.path
-
-    return clear_filter_url, request.url.path
-
-def compute_filter_counts(tools_subset):
-    counts_pricing = {"Free": 0, "Freemium": 0, "Paid": 0, "Open-source": 0}
-    counts_platform = {"Web": 0, "API": 0, "Desktop": 0, "Mobile": 0, "Browser extension": 0}
-    for t in tools_subset:
-        tier = t.pricing_tier or "Paid"
-        if tier in counts_pricing:
-            counts_pricing[tier] += 1
-        for p in (t.platforms or []):
-            if p in counts_platform:
-                counts_platform[p] += 1
-    return counts_pricing, counts_platform
-
-# ================= ALL AI TOOLS DIRECTORY PAGE =================
+# 2. ALL AI TOOLS DIRECTORY PAGE (Public)
 @app.get("/ai-tools/", response_class=HTMLResponse)
 async def ai_tools_all(
     request: Request,
@@ -299,29 +293,37 @@ async def ai_tools_all(
     use_case: Optional[str] = None,
     sort: Optional[str] = "popular",
     q: Optional[str] = None,
-    page: int = Query(1, ge=1),
+    page: int = Query(1),
 ):
-    if not is_authenticated(request):
-        return RedirectResponse(url="/login", status_code=302)
+    query_str = validate_q(q)
+    page_num = validate_page(page)
+
+    if pricing and pricing not in ALLOWED_PRICINGS:
+        raise HTTPException(status_code=400, detail="Invalid pricing filter value.")
+    if platform and platform not in ALLOWED_PLATFORMS:
+        raise HTTPException(status_code=400, detail="Invalid platform filter value.")
+    if sort and sort not in ALLOWED_SORTS:
+        raise HTTPException(status_code=400, detail="Invalid sort parameter.")
+    if use_case and len(use_case) > 100:
+        raise HTTPException(status_code=400, detail="Use case parameter too long.")
 
     all_tools = load_tools()
     filtered = all_tools
 
-    # Sub-filtering
     if pricing:
         filtered = [t for t in filtered if (t.pricing_tier == pricing or t.pricing_type == pricing)]
     if platform:
         filtered = [t for t in filtered if platform in (t.platforms or [])]
     if use_case:
         filtered = [t for t in filtered if use_case.lower() in [u.lower() for u in (t.use_cases or [])]]
-    if q:
-        query_str = q.lower().strip()
+    if query_str:
+        q_lower = query_str.lower()
         filtered = [
             t for t in filtered
-            if query_str in t.name.lower()
-            or query_str in t.description.lower()
-            or (t.tagline and query_str in t.tagline.lower())
-            or (t.founders and query_str in t.founders.lower())
+            if q_lower in t.name.lower()
+            or q_lower in t.description.lower()
+            or (t.tagline and q_lower in t.tagline.lower())
+            or (t.founders and q_lower in t.founders.lower())
         ]
 
     # Sorting
@@ -332,17 +334,13 @@ async def ai_tools_all(
     else:  # popular
         filtered = sorted(filtered, key=lambda x: (x.is_top_pick, x.reviews_count or 0), reverse=True)
 
-    # Counts
     counts_pricing, counts_platform = compute_filter_counts(all_tools)
-
-    # Top Picks
     top_picks = [t for t in all_tools if t.is_top_pick][:4]
 
-    # Squeezed Pagination (4 cards/row x 5 rows = 20 cards per page)
     total_tools = len(filtered)
     page_size = 20
     total_pages = max(1, math.ceil(total_tools / page_size))
-    current_page = max(1, min(page, total_pages))
+    current_page = max(1, min(page_num, total_pages))
 
     start_idx = (current_page - 1) * page_size
     end_idx = min(start_idx + page_size, total_tools)
@@ -351,10 +349,9 @@ async def ai_tools_all(
     end_item = end_idx
 
     clear_filter_url, current_clean_url = make_filter_helpers(request)
-    is_filtered = bool(pricing or platform or use_case or q)
+    is_filtered = bool(pricing or platform or use_case or query_str)
     active_filter_count = sum(1 for v in [pricing, platform, use_case] if v)
 
-    # General use cases
     all_use_cases = []
     for cat in TOP_CATEGORIES:
         all_use_cases.extend(cat.get("use_cases", []))
@@ -373,7 +370,7 @@ async def ai_tools_all(
             "page_title": "All AI Tools Directory",
             "page_description": "Explore 500+ curated AI tools, foundation models, and open-source stacks with free-tier trial benchmarks.",
             "canonical_url": "https://metricore.in/ai-tools/",
-            "show_filters_row": True,  # Row 3 visible on category & search pages!
+            "show_filters_row": True,
             "counts_pricing": counts_pricing,
             "counts_platform": counts_platform,
             "category_use_cases": unique_use_cases,
@@ -381,7 +378,7 @@ async def ai_tools_all(
             "selected_platform": platform or "",
             "selected_use_case": use_case or "",
             "selected_sort": sort or "popular",
-            "search_query": q or "",
+            "search_query": query_str,
             "is_filtered": is_filtered,
             "active_filter_count": active_filter_count,
             "clear_filter_url": clear_filter_url,
@@ -391,13 +388,10 @@ async def ai_tools_all(
             "page_size": page_size,
             "start_item": start_item,
             "end_item": end_item,
-            "is_authenticated": True,
-            "username": get_current_user_name(request),
-            "role": get_current_role(request),
         },
     )
 
-# ================= SPECIFIC CATEGORY PAGE =================
+# 3. SPECIFIC CATEGORY PAGE (Public)
 @app.get("/ai-tools/{category_slug}/", response_class=HTMLResponse)
 async def ai_tools_category(
     request: Request,
@@ -407,58 +401,58 @@ async def ai_tools_category(
     use_case: Optional[str] = None,
     sort: Optional[str] = "popular",
     q: Optional[str] = None,
-    page: int = Query(1, ge=1),
+    page: int = Query(1),
 ):
-    if not is_authenticated(request):
-        return RedirectResponse(url="/login", status_code=302)
+    query_str = validate_q(q)
+    page_num = validate_page(page)
 
     cat_info = get_top_category_by_slug(category_slug)
     if not cat_info:
         raise HTTPException(status_code=404, detail="Category not found")
 
+    if pricing and pricing not in ALLOWED_PRICINGS:
+        raise HTTPException(status_code=400, detail="Invalid pricing filter value.")
+    if platform and platform not in ALLOWED_PLATFORMS:
+        raise HTTPException(status_code=400, detail="Invalid platform filter value.")
+    if sort and sort not in ALLOWED_SORTS:
+        raise HTTPException(status_code=400, detail="Invalid sort parameter.")
+
     all_tools = load_tools()
-    # Filter tools matching this category slug
     category_tools = [t for t in all_tools if t.top_category_slug == category_slug]
     filtered = category_tools
 
-    # Sub-filtering
     if pricing:
         filtered = [t for t in filtered if (t.pricing_tier == pricing or t.pricing_type == pricing)]
     if platform:
         filtered = [t for t in filtered if platform in (t.platforms or [])]
     if use_case:
         filtered = [t for t in filtered if use_case.lower() in [u.lower() for u in (t.use_cases or [])]]
-    if q:
-        query_str = q.lower().strip()
+    if query_str:
+        q_lower = query_str.lower()
         filtered = [
             t for t in filtered
-            if query_str in t.name.lower()
-            or query_str in t.description.lower()
-            or (t.tagline and query_str in t.tagline.lower())
-            or (t.founders and query_str in t.founders.lower())
+            if q_lower in t.name.lower()
+            or q_lower in t.description.lower()
+            or (t.tagline and q_lower in t.tagline.lower())
+            or (t.founders and q_lower in t.founders.lower())
         ]
 
-    # Sorting
     if sort == "newest":
         filtered = sorted(filtered, key=lambda x: x.founded_year or 0, reverse=True)
     elif sort == "top_rated":
         filtered = sorted(filtered, key=lambda x: x.rating or 0, reverse=True)
-    else:  # popular
+    else:
         filtered = sorted(filtered, key=lambda x: (x.is_top_pick, x.reviews_count or 0), reverse=True)
 
-    # Dynamic counts for this category
     counts_pricing, counts_platform = compute_filter_counts(category_tools)
-
-    # 3-5 Top Picks for this category
     top_picks = [t for t in category_tools if t.is_top_pick][:4]
     if len(top_picks) < 3 and len(category_tools) >= 3:
         top_picks = category_tools[:3]
 
-    # Squeezed Pagination (20 cards per page)
     total_tools = len(filtered)
     page_size = 20
     total_pages = max(1, math.ceil(total_tools / page_size))
-    current_page = max(1, min(page, total_pages))
+    current_page = max(1, min(page_num, total_pages))
 
     start_idx = (current_page - 1) * page_size
     end_idx = min(start_idx + page_size, total_tools)
@@ -467,7 +461,7 @@ async def ai_tools_category(
     end_item = end_idx
 
     clear_filter_url, current_clean_url = make_filter_helpers(request)
-    is_filtered = bool(pricing or platform or use_case or q)
+    is_filtered = bool(pricing or platform or use_case or query_str)
     active_filter_count = sum(1 for v in [pricing, platform, use_case] if v)
 
     return templates.TemplateResponse(
@@ -483,7 +477,7 @@ async def ai_tools_category(
             "page_title": f"{cat_info['name']} AI Tools",
             "page_description": cat_info["description"],
             "canonical_url": f"https://metricore.in/ai-tools/{category_slug}/",
-            "show_filters_row": True,  # Row 3 visible!
+            "show_filters_row": True,
             "counts_pricing": counts_pricing,
             "counts_platform": counts_platform,
             "category_use_cases": cat_info.get("use_cases", []),
@@ -491,7 +485,7 @@ async def ai_tools_category(
             "selected_platform": platform or "",
             "selected_use_case": use_case or "",
             "selected_sort": sort or "popular",
-            "search_query": q or "",
+            "search_query": query_str,
             "is_filtered": is_filtered,
             "active_filter_count": active_filter_count,
             "clear_filter_url": clear_filter_url,
@@ -501,33 +495,36 @@ async def ai_tools_category(
             "page_size": page_size,
             "start_item": start_item,
             "end_item": end_item,
-            "is_authenticated": True,
-            "username": get_current_user_name(request),
-            "role": get_current_role(request),
         },
     )
 
-# ================= SHARED CATEGORIES API =================
+# 4. SHARED CATEGORIES API
 @app.get("/api/categories")
 async def get_categories_api():
     grouped = get_grouped_shared_categories(refresh=False)
     return JSONResponse(grouped)
 
-# ================= AUTOSUGGEST API (GROUPED TOOLS, CATEGORIES, USE CASES - MAX 5 EACH) =================
+# 5. AUTOSUGGEST API (Rate limited: 60 req/min per IP, max 100 char query)
 @app.get("/api/autosuggest")
 async def autosuggest(
-    q: str = Query("", min_length=1),
+    request: Request,
+    q: str = Query("", max_length=100),
     cat: Optional[str] = "all",
     type: Optional[str] = "tools"
 ):
-    query = q.lower().strip()
+    # Rate limit check
+    client_ip = get_client_ip(request)
+    if not rate_limiter.is_allowed(f"search:{client_ip}", max_requests=60, window_seconds=60):
+        return JSONResponse(status_code=429, content={"detail": "Too many requests. Please wait a minute."})
 
-    if type == "stacks":
-        from app.industry_stacks import get_all_stacks, get_all_use_cases
+    query = validate_q(q).lower()
+    cat_slug = (cat or "all").strip()
+    search_type = type if type in ALLOWED_SEARCH_TYPES else "tools"
+
+    if search_type == "stacks":
         stacks = get_all_stacks()
-        use_cases = get_all_use_cases(include_unreviewed=False)
+        use_cases = get_all_use_cases(include_unreviewed=is_preview_enabled(request))
 
-        # Match Stacks
         matched_stacks = []
         for s in stacks:
             if query in s["name"].lower() or query in s["summary"].lower() or query in s["function"].lower():
@@ -540,7 +537,6 @@ async def autosuggest(
                 })
         matched_stacks = matched_stacks[:5]
 
-        # Match Use Cases
         matched_ucs = []
         for uc in use_cases:
             if query in uc["title"].lower() or query in uc["situation"].lower() or query in uc["role"].lower():
@@ -552,7 +548,6 @@ async def autosuggest(
                 })
         matched_ucs = matched_ucs[:5]
 
-        # Departments / Categories
         matched_cats = []
         for s in stacks:
             if query in s["function"].lower():
@@ -571,23 +566,20 @@ async def autosuggest(
             "use_cases": matched_ucs
         })
 
-    # Default: Tools Mode
+    # Default Tools Mode
     all_tools = load_tools()
-
-    # Scope by category if specified and not 'all'
     candidate_tools = all_tools
-    if cat and cat != "all":
+    if cat_slug and cat_slug != "all":
         candidate_tools = [
-            t for t in all_tools 
-            if t.top_category_slug == cat or cat.lower() in (t.category or "").lower()
+            t for t in all_tools
+            if t.top_category_slug == cat_slug or cat_slug.lower() in (t.category or "").lower()
         ]
 
-    # Group 1: Tools (max 5)
     matched_tools = []
     for t in candidate_tools:
         if (
-            query in t.name.lower() 
-            or query in t.description.lower() 
+            query in t.name.lower()
+            or query in t.description.lower()
             or (t.tagline and query in t.tagline.lower())
             or (t.founders and query in t.founders.lower())
         ):
@@ -601,7 +593,6 @@ async def autosuggest(
             })
     matched_tools = matched_tools[:5]
 
-    # Group 2: Categories (max 5)
     matched_cats = []
     shared_cats = get_shared_categories()
     for c in shared_cats:
@@ -615,7 +606,6 @@ async def autosuggest(
             })
     matched_cats = matched_cats[:5]
 
-    # Group 3: Use Cases (max 5)
     matched_use_cases = []
     for c in shared_cats:
         for uc in c.get("use_cases", []):
@@ -634,7 +624,7 @@ async def autosuggest(
         "use_cases": matched_use_cases
     })
 
-# ================= SCOPED SEARCH ROUTE (/search?q=...&cat=...&type=...) =================
+# 6. SCOPED SEARCH ROUTE (/search?q=...&cat=...&type=...)
 @app.get("/search", response_class=HTMLResponse)
 async def search_page(
     request: Request,
@@ -642,9 +632,14 @@ async def search_page(
     cat: Optional[str] = "all",
     type: Optional[str] = "tools"
 ):
-    query_str = (q or "").strip()
+    query_str = validate_q(q)
     cat_slug = (cat or "all").strip()
     search_type = "stacks" if type == "stacks" else "tools"
+
+    # Category validation against allowlist
+    allowed_slugs = get_allowed_category_slugs()
+    if cat_slug not in allowed_slugs and cat_slug != "all":
+        cat_slug = "all"
 
     # Resolve active category info
     active_category = {"slug": "all", "label": "All categories", "icon": "⚡"}
@@ -657,9 +652,8 @@ async def search_page(
             active_category = {"slug": cat_slug, "label": cat_slug.replace("-", " ").title(), "icon": "📁"}
 
     if search_type == "stacks":
-        from app.industry_stacks import get_all_stacks, get_all_use_cases
         all_stacks = get_all_stacks()
-        all_ucs = get_all_use_cases(include_unreviewed=is_authenticated(request))
+        all_ucs = get_all_use_cases(include_unreviewed=is_preview_enabled(request))
 
         matched_stacks = all_stacks
         matched_ucs = all_ucs
@@ -696,9 +690,6 @@ async def search_page(
                 "stacks": matched_stacks,
                 "use_cases": matched_ucs,
                 "total_results": total_results,
-                "is_authenticated": is_authenticated(request),
-                "username": get_current_user_name(request),
-                "role": get_current_role(request),
             }
         )
 
@@ -706,14 +697,12 @@ async def search_page(
     all_tools = load_tools()
     filtered = all_tools
 
-    # Scoped category filter
     if cat_slug and cat_slug != "all":
         filtered = [
             t for t in filtered
             if t.top_category_slug == cat_slug or cat_slug.lower() in (t.category or "").lower()
         ]
 
-    # Query filter
     if query_str:
         q_lower = query_str.lower()
         filtered = [
@@ -728,7 +717,6 @@ async def search_page(
         ]
 
     total_results = len(filtered)
-
     return templates.TemplateResponse(
         request=request,
         name="search_results.html",
@@ -738,28 +726,37 @@ async def search_page(
             "search_type": "tools",
             "tools": filtered,
             "total_results": total_results,
-            "is_authenticated": is_authenticated(request),
-            "username": get_current_user_name(request),
-            "role": get_current_role(request),
         }
     )
 
-# ================= SUBMIT A TOOL API =================
+# 7. SUBMIT A TOOL API (Pydantic model, 10KB cap, honeypot, rate limited 5/hr)
 @app.post("/api/submit-tool")
-async def submit_tool(payload: Dict = Body(...)):
+async def submit_tool(request: Request, payload: SubmitToolRequest):
+    content_length = request.headers.get("content-length")
+    if content_length and int(content_length) > 10240:
+        raise HTTPException(status_code=413, detail="Payload too large. Maximum size is 10KB.")
+
+    client_ip = get_client_ip(request)
+    if not rate_limiter.is_allowed(f"submit:{client_ip}", max_requests=5, window_seconds=3600):
+        return JSONResponse(status_code=429, content={"detail": "Too many submissions. Please try again later."})
+
+    # Bot honeypot check
+    if payload.honeypot:
+        return JSONResponse(status_code=400, content={"detail": "Invalid submission."})
+
     # Record submission for editorial review
     return JSONResponse({
         "status": "success",
         "message": "Tool submission received for editorial review."
     })
 
-# ================= INDUSTRY TOOL STACKS ROUTES =================
+# 8. INDUSTRY TOOL STACKS ROUTES (Public)
 @app.get("/industry-tool-stacks/", response_class=HTMLResponse)
 async def industry_tool_stacks_overview(
     request: Request,
     preview: Optional[str] = None,
 ):
-    is_preview = (preview == "true" or preview == "1") or is_authenticated(request)
+    is_preview = is_preview_enabled(request)
     all_stacks = get_all_stacks()
     stacks_with_counts = []
     for s in all_stacks:
@@ -785,9 +782,6 @@ async def industry_tool_stacks_overview(
             "is_preview": is_preview,
             "show_filters_row": False,
             "active_category_slug": "industry-tool-stacks",
-            "is_authenticated": is_authenticated(request),
-            "username": get_current_user_name(request),
-            "role": get_current_role(request),
         },
     )
 
@@ -797,7 +791,7 @@ async def industry_stack_detail(
     stack_slug: str,
     preview: Optional[str] = None,
 ):
-    is_preview = (preview == "true" or preview == "1") or is_authenticated(request)
+    is_preview = is_preview_enabled(request)
     stack = get_stack_by_slug(stack_slug)
     if not stack:
         raise HTTPException(status_code=404, detail="Industry stack not found")
@@ -817,9 +811,6 @@ async def industry_stack_detail(
             "is_preview": is_preview,
             "show_filters_row": False,
             "active_category_slug": "industry-tool-stacks",
-            "is_authenticated": is_authenticated(request),
-            "username": get_current_user_name(request),
-            "role": get_current_role(request),
         },
     )
 
@@ -830,16 +821,13 @@ async def industry_use_case_detail(
     use_case_slug: str,
     preview: Optional[str] = None,
 ):
-    is_preview = (preview == "true" or preview == "1") or is_authenticated(request)
+    is_preview = is_preview_enabled(request)
     stack = get_stack_by_slug(stack_slug)
     if not stack:
         raise HTTPException(status_code=404, detail="Industry stack not found")
 
     use_case = get_use_case_by_slug(stack_slug, use_case_slug, include_unreviewed=is_preview)
     if not use_case:
-        unreviewed = get_use_case_by_slug(stack_slug, use_case_slug, include_unreviewed=True)
-        if unreviewed and not is_preview:
-            raise HTTPException(status_code=403, detail="This use case is currently pending editorial human review. Add ?preview=true to view in preview mode.")
         raise HTTPException(status_code=404, detail="Use case not found")
 
     tools_used = get_tools_for_stack(use_case.get("tool_ids", []))
@@ -856,18 +844,16 @@ async def industry_use_case_detail(
             "is_preview": is_preview,
             "show_filters_row": False,
             "active_category_slug": "industry-tool-stacks",
-            "is_authenticated": is_authenticated(request),
-            "username": get_current_user_name(request),
-            "role": get_current_role(request),
         },
     )
 
+# 9. TOOL DETAIL PAGE (Public)
 @app.get("/tool/{tool_id}", response_class=HTMLResponse)
 async def tool_detail(request: Request, tool_id: str):
     all_tools = load_tools()
     tool = next((t for t in all_tools if t.id == tool_id), None)
     if not tool:
-        raise HTTPException(status_code=44, detail="Tool not found")
+        raise HTTPException(status_code=404, detail="Tool not found")
 
     alternative = None
     if tool.alternative_id:
@@ -885,7 +871,7 @@ async def tool_detail(request: Request, tool_id: str):
         },
     )
 
-# HTMX Live Search Endpoint (Returns partial HTML of cards with pagination support)
+# 10. HTMX LIVE SEARCH ENDPOINT (Rate limited: 60 req/min)
 @app.get("/api/search", response_class=HTMLResponse)
 async def live_search(
     request: Request,
@@ -894,29 +880,36 @@ async def live_search(
     pricing: Optional[str] = None,
     page: int = 1,
 ):
+    client_ip = get_client_ip(request)
+    if not rate_limiter.is_allowed(f"search:{client_ip}", max_requests=60, window_seconds=60):
+        return HTMLResponse(status_code=429, content="<div class='p-4 text-rose-400'>Too many requests. Please wait a minute.</div>")
+
+    query_str = validate_q(q)
+    page_num = validate_page(page)
+
     all_tools = load_tools()
     filtered = all_tools
 
     if category and category != "All" and category != "AI tool eval board":
         filtered = [t for t in filtered if t.category.lower() == category.lower()]
-    if pricing and pricing != "All":
+    if pricing and pricing != "All" and pricing in ALLOWED_PRICINGS:
         filtered = [t for t in filtered if t.pricing_type.lower() == pricing.lower()]
-    if q:
-        query_str = q.lower()
+    if query_str:
+        q_lower = query_str.lower()
         filtered = [
             t for t in filtered
-            if query_str in t.name.lower()
-            or query_str in t.description.lower()
-            or query_str in t.category.lower()
-            or query_str in t.free_tier_limit.lower()
-            or (t.founders and query_str in t.founders.lower())
-            or (t.country_name and query_str in t.country_name.lower())
+            if q_lower in t.name.lower()
+            or q_lower in t.description.lower()
+            or q_lower in t.category.lower()
+            or q_lower in t.free_tier_limit.lower()
+            or (t.founders and q_lower in t.founders.lower())
+            or (t.country_name and q_lower in t.country_name.lower())
         ]
 
     total_tools = len(filtered)
     page_size = 20
     total_pages = max(1, math.ceil(total_tools / page_size))
-    current_page = max(1, min(page, total_pages))
+    current_page = max(1, min(page_num, total_pages))
 
     start_idx = (current_page - 1) * page_size
     end_idx = min(start_idx + page_size, total_tools)
@@ -937,34 +930,29 @@ async def live_search(
             "end_item": end_item,
             "active_category": category or "All",
             "active_pricing": pricing or "All",
-            "search_query": q or "",
+            "search_query": query_str,
         },
     )
 
-# REST API Endpoints
+# 11. REST API TOOLS ENDPOINT
 @app.get("/api/tools", response_model=List[AITool])
 async def get_tools_api(
     category: Optional[str] = None,
     pricing: Optional[str] = None,
     q: Optional[str] = None,
 ):
+    query_str = validate_q(q)
     tools = load_tools()
     if category:
         tools = [t for t in tools if t.category.lower() == category.lower()]
-    if pricing:
+    if pricing and pricing in ALLOWED_PRICINGS:
         tools = [t for t in tools if t.pricing_type.lower() == pricing.lower()]
-    if q:
-        query_str = q.lower()
+    if query_str:
+        q_lower = query_str.lower()
         tools = [
             t for t in tools
-            if query_str in t.name.lower()
-            or query_str in t.description.lower()
-            or query_str in t.category.lower()
+            if q_lower in t.name.lower()
+            or q_lower in t.description.lower()
+            or q_lower in t.category.lower()
         ]
     return tools
-
-@app.get("/api/categories")
-async def get_categories_api():
-    tools = load_tools()
-    return get_categories(tools)
-

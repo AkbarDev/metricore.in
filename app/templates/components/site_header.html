@@ -207,17 +207,6 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
                 </span>
             </button>
-
-            <!-- Auth State -->
-            {% if is_authenticated %}
-                <a href="/logout" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-rose-300 text-xs font-semibold border border-slate-800 transition-all min-h-[44px] inline-flex items-center">
-                    Sign Out
-                </a>
-            {% else %}
-                <a href="/login" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-bold shadow-md shadow-purple-600/30 transition-all min-h-[44px] inline-flex items-center">
-                    Sign In
-                </a>
-            {% endif %}
         </div>
 
         <!-- ================= 4. MOBILE CONTROLS (Below 768px): Search Icon + Menu Icon ================= -->
@@ -397,12 +386,6 @@
                 <span>🌓</span>
                 <span>Toggle Daylight / Nightlight</span>
             </button>
-
-            {% if is_authenticated %}
-                <a href="/logout" class="text-xs font-bold text-rose-400 hover:underline">Sign Out</a>
-            {% else %}
-                <a href="/login" class="text-xs font-bold text-purple-400 hover:underline">Sign In</a>
-            {% endif %}
         </div>
     </div>
 </header>
@@ -763,93 +746,195 @@
         });
     }
 
+    // HTML Escape Helper to prevent XSS
+    function escapeHtml(str) {
+        if (str === null || str === undefined) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
     function renderRecentSearches(dropdown) {
         if (!recentSearches.length) return;
-        let html = `
-            <div class="p-2.5">
-                <div class="flex items-center justify-between text-[10px] uppercase font-bold tracking-wider text-slate-400 px-2 py-1">
-                    <span>Recent Searches</span>
-                    <button type="button" onclick="clearRecentSearches()" class="text-rose-400 hover:underline">Clear</button>
-                </div>
-                <div class="space-y-1 mt-1">
-        `;
+        dropdown.innerHTML = '';
+        
+        const outer = document.createElement('div');
+        outer.className = 'p-2.5';
+        
+        const header = document.createElement('div');
+        header.className = 'flex items-center justify-between text-[10px] uppercase font-bold tracking-wider text-slate-400 px-2 py-1';
+        
+        const titleSpan = document.createElement('span');
+        titleSpan.textContent = 'Recent Searches';
+        header.appendChild(titleSpan);
+        
+        const clearBtn = document.createElement('button');
+        clearBtn.type = 'button';
+        clearBtn.className = 'text-rose-400 hover:underline';
+        clearBtn.textContent = 'Clear';
+        clearBtn.onclick = clearRecentSearches;
+        header.appendChild(clearBtn);
+        outer.appendChild(header);
+
+        const list = document.createElement('div');
+        list.className = 'space-y-1 mt-1';
+
         recentSearches.slice(0, 5).forEach(term => {
-            html += `
-                <div 
-                    class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 cursor-pointer text-slate-200"
-                    onclick="submitSearchTerm('${term.replace(/'/g, "\\'")}')"
-                >
-                    <span class="flex items-center gap-2">
-                        <span class="text-slate-500">🕒</span>
-                        <span>${term}</span>
-                    </span>
-                    <span class="text-[10px] text-slate-500">Search →</span>
-                </div>
-            `;
+            const row = document.createElement('div');
+            row.className = 'flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 cursor-pointer text-slate-200';
+            row.onclick = () => submitSearchTerm(term);
+
+            const left = document.createElement('span');
+            left.className = 'flex items-center gap-2 truncate';
+            const icon = document.createElement('span');
+            icon.className = 'text-slate-500';
+            icon.textContent = '🕒';
+            const text = document.createElement('span');
+            text.className = 'truncate';
+            text.textContent = term;
+            left.appendChild(icon);
+            left.appendChild(text);
+
+            const right = document.createElement('span');
+            right.className = 'text-[10px] text-slate-500 flex-shrink-0';
+            right.textContent = 'Search →';
+
+            row.appendChild(left);
+            row.appendChild(right);
+            list.appendChild(row);
         });
-        html += `</div></div>`;
-        dropdown.innerHTML = html;
+
+        outer.appendChild(list);
+        dropdown.appendChild(outer);
         dropdown.classList.remove('hidden');
     }
 
     function renderAutosuggest(data, dropdown) {
         const { tools, categories, use_cases } = data;
+        dropdown.innerHTML = '';
         if ((!tools || !tools.length) && (!categories || !categories.length) && (!use_cases || !use_cases.length)) {
-            dropdown.innerHTML = `<div class="p-4 text-center text-slate-500">No matching results found.</div>`;
+            const empty = document.createElement('div');
+            empty.className = 'p-4 text-center text-slate-500 text-xs';
+            empty.textContent = 'No matching results found.';
+            dropdown.appendChild(empty);
             dropdown.classList.remove('hidden');
             return;
         }
 
-        let html = '';
         // Group 1: Tools / Stacks (max 5)
         if (tools && tools.length) {
-            html += `<div class="p-2"><div class="text-[10px] uppercase font-bold tracking-wider text-purple-400 px-3 py-1">${currentMode === 'stacks' ? 'Corporate Stacks' : 'AI Tools'}</div>`;
+            const g = document.createElement('div');
+            g.className = 'p-2';
+            const gTitle = document.createElement('div');
+            gTitle.className = 'text-[10px] uppercase font-bold tracking-wider text-purple-400 px-3 py-1';
+            gTitle.textContent = currentMode === 'stacks' ? 'Corporate Stacks' : 'AI Tools';
+            g.appendChild(gTitle);
+
             tools.slice(0, 5).forEach(t => {
-                html += `
-                    <a href="${t.url || ('/tool/' + t.id)}" class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 transition-colors">
-                        <div class="flex items-center gap-2 truncate">
-                            ${t.image_url ? `<img src="${t.image_url}" class="w-6 h-6 rounded-lg object-cover flex-shrink-0">` : `<span class="text-base flex-shrink-0">💼</span>`}
-                            <div class="truncate">
-                                <div class="font-bold text-white text-xs truncate">${t.name}</div>
-                                <div class="text-[10px] text-slate-400 truncate">${t.category}</div>
-                            </div>
-                        </div>
-                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950 text-slate-300 border border-slate-800 flex-shrink-0">${t.pricing_type}</span>
-                    </a>
-                `;
+                const a = document.createElement('a');
+                a.href = t.url || ('/tool/' + encodeURIComponent(t.id));
+                a.className = 'flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 transition-colors';
+
+                const left = document.createElement('div');
+                left.className = 'flex items-center gap-2 truncate';
+
+                if (t.image_url && (t.image_url.startsWith('https://') || t.image_url.startsWith('/'))) {
+                    const img = document.createElement('img');
+                    img.src = t.image_url;
+                    img.className = 'w-6 h-6 rounded-lg object-cover flex-shrink-0';
+                    img.alt = t.name || '';
+                    left.appendChild(img);
+                } else {
+                    const icon = document.createElement('span');
+                    icon.className = 'text-base flex-shrink-0';
+                    icon.textContent = currentMode === 'stacks' ? '💼' : '⚡';
+                    left.appendChild(icon);
+                }
+
+                const info = document.createElement('div');
+                info.className = 'truncate';
+                const name = document.createElement('div');
+                name.className = 'font-bold text-white text-xs truncate';
+                name.textContent = t.name;
+                const cat = document.createElement('div');
+                cat.className = 'text-[10px] text-slate-400 truncate';
+                cat.textContent = t.category || '';
+                info.appendChild(name);
+                info.appendChild(cat);
+                left.appendChild(info);
+
+                const pricing = document.createElement('span');
+                pricing.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950 text-slate-300 border border-slate-800 flex-shrink-0';
+                pricing.textContent = t.pricing_type || '';
+
+                a.appendChild(left);
+                a.appendChild(pricing);
+                g.appendChild(a);
             });
-            html += `</div>`;
+            dropdown.appendChild(g);
         }
 
         // Group 2: Categories (max 5)
         if (categories && categories.length) {
-            html += `<div class="p-2"><div class="text-[10px] uppercase font-bold tracking-wider text-indigo-400 px-3 py-1">Categories</div>`;
+            const g = document.createElement('div');
+            g.className = 'p-2';
+            const gTitle = document.createElement('div');
+            gTitle.className = 'text-[10px] uppercase font-bold tracking-wider text-indigo-400 px-3 py-1';
+            gTitle.textContent = 'Categories';
+            g.appendChild(gTitle);
+
             categories.slice(0, 5).forEach(c => {
-                html += `
-                    <a href="${c.url || ('/ai-tools/' + c.slug + '/')}" class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 transition-colors text-slate-200">
-                        <span class="font-bold text-xs flex items-center gap-1.5 truncate">${c.icon || '📁'} ${c.name}</span>
-                        <span class="text-[10px] font-mono text-purple-300 flex-shrink-0">${c.count} tools →</span>
-                    </a>
-                `;
+                const a = document.createElement('a');
+                a.href = c.url || ('/ai-tools/' + encodeURIComponent(c.slug) + '/');
+                a.className = 'flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 transition-colors text-slate-200';
+
+                const left = document.createElement('span');
+                left.className = 'font-bold text-xs flex items-center gap-1.5 truncate';
+                left.textContent = (c.icon || '📁') + ' ' + c.name;
+
+                const right = document.createElement('span');
+                right.className = 'text-[10px] font-mono text-purple-300 flex-shrink-0';
+                right.textContent = (c.count || 0) + ' tools →';
+
+                a.appendChild(left);
+                a.appendChild(right);
+                g.appendChild(a);
             });
-            html += `</div>`;
+            dropdown.appendChild(g);
         }
 
         // Group 3: Use Cases (max 5)
         if (use_cases && use_cases.length) {
-            html += `<div class="p-2"><div class="text-[10px] uppercase font-bold tracking-wider text-pink-400 px-3 py-1">Use Cases</div>`;
+            const g = document.createElement('div');
+            g.className = 'p-2';
+            const gTitle = document.createElement('div');
+            gTitle.className = 'text-[10px] uppercase font-bold tracking-wider text-pink-400 px-3 py-1';
+            gTitle.textContent = 'Use Cases';
+            g.appendChild(gTitle);
+
             use_cases.slice(0, 5).forEach(u => {
-                html += `
-                    <a href="${u.url || ('/search?q=' + encodeURIComponent(u.label) + '&cat=' + u.category_slug)}" class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 transition-colors text-slate-300">
-                        <span class="text-xs truncate">⚡ ${u.label}</span>
-                        <span class="text-[10px] text-slate-500 flex-shrink-0">${u.category_name}</span>
-                    </a>
-                `;
+                const a = document.createElement('a');
+                a.href = u.url || ('/search?q=' + encodeURIComponent(u.label) + '&cat=' + encodeURIComponent(u.category_slug));
+                a.className = 'flex items-center justify-between p-2 rounded-xl hover:bg-slate-800 transition-colors text-slate-300';
+
+                const left = document.createElement('span');
+                left.className = 'text-xs truncate';
+                left.textContent = '⚡ ' + u.label;
+
+                const right = document.createElement('span');
+                right.className = 'text-[10px] text-slate-500 flex-shrink-0';
+                right.textContent = u.category_name || '';
+
+                a.appendChild(left);
+                a.appendChild(right);
+                g.appendChild(a);
             });
-            html += `</div>`;
+            dropdown.appendChild(g);
         }
 
-        dropdown.innerHTML = html;
         dropdown.classList.remove('hidden');
     }
 
