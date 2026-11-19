@@ -25,37 +25,16 @@
         })();
     </script>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- HTMX for Instant Dynamic Search & Swapping -->
-    <script src="https://unpkg.com/htmx.org@1.9.11"></script>
+    <!-- Built Static Tailwind CSS -->
+    <link rel="stylesheet" href="/static/css/tailwind.css">
     <!-- Custom Style with Day/Night Mode -->
     <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Self-Hosted HTMX (Verified SHA-256) -->
+    <script src="/static/js/htmx.min.js"></script>
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                            700: '#6d28d9',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-purple-500 selection:text-white">
     <!-- Three-Layer Header (Sticky Row 1 + Sticky Row 2 + Scroll-Aware Filter Row 3) -->

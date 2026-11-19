@@ -256,11 +256,13 @@ async def security_headers_middleware(request: Request, call_next):
     if is_https:
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
 
-    # Content-Security-Policy matching required CDNs (Tailwind, HTMX, Google Fonts, Unsplash)
+    # Content-Security-Policy: tightened to self-hosted assets with external script CDNs removed.
+    # Note: 'unsafe-inline' is retained for scripts because inline application scripts exist in templates.
+    # Future improvement: implement cryptographic request nonces (e.g. 'nonce-{random}') to replace 'unsafe-inline'.
     csp_directives = [
         "default-src 'self'",
-        "script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com",
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com",
+        "script-src 'self' 'unsafe-inline'",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
         "font-src 'self' https://fonts.gstatic.com",
         "img-src 'self' data: https:",
         "connect-src 'self'",
