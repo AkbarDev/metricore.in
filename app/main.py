@@ -6,7 +6,7 @@ import urllib.parse
 from collections import defaultdict
 from pathlib import Path
 from typing import Optional, List, Dict, Set
-from fastapi import FastAPI, Request, Query, HTTPException, Body
+from fastapi import FastAPI, Request, Query, HTTPException, Body, Response
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -134,7 +134,15 @@ def get_client_ip(request: Request) -> str:
         return request.client.host
     return "127.0.0.1"
 
-# ================= SECURITY HEADERS MIDDLEWARE =================
+# ================= SECURITY HEADERS & HEAD REQUEST MIDDLEWARE =================
+@app.middleware("http")
+async def head_request_middleware(request: Request, call_next):
+    if request.method == "HEAD":
+        request.scope["method"] = "GET"
+        response = await call_next(request)
+        return Response(status_code=response.status_code, headers=dict(response.headers))
+    return await call_next(request)
+
 @app.middleware("http")
 async def security_headers_middleware(request: Request, call_next):
     response = await call_next(request)
