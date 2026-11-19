@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Corrections & Removals — Metricore.in{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center text-xs text-slate-400 space-x-2">
+        <a href="/" class="hover:text-white transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-slate-200 font-semibold">Corrections & Removals</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="space-y-3 border-b border-slate-800 pb-6">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-bold">
+            <span>✏️</span>
+            <span>Editorial Accuracy</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Corrections & Removal Policy</h1>
+        <p class="text-sm text-slate-400">Committed to fair, factual, and prompt updates</p>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="space-y-8 text-sm text-slate-300 leading-relaxed">
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>1. Commitment to Factual Accuracy</span>
+            </h2>
+            <p>
+                Metricore is committed to maintaining factual, objective, and neutral reference listings. We do not publish promotional vendor claims, subjective ratings, or disparaging comparisons. Because tool pricing, free allowances, and capabilities change frequently, we actively invite corrections from software creators, makers, and our readers.
+            </p>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>2. How to Request a Correction or Update</span>
+            </h2>
+            <p>
+                If you are a tool owner, developer, or user and notice an inaccurate price, outdated free-tier limit, incorrect description, or broken link, please notify us. We review and update entries promptly upon receipt of verifiable official documentation.
+            </p>
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                <div class="font-bold text-white text-xs uppercase tracking-wider text-purple-400">Preferred Method: GitHub Issues</div>
+                <p class="text-xs text-slate-400">
+                    Submit an issue titled <code>[Correction]: &lt;Tool Name&gt;</code> with links to the official documentation or pricing page.
+                </p>
+                <a href="https://github.com/AkbarDev/metricore.in/issues/new" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-colors shadow-sm">
+                    <span>Submit Correction on GitHub →</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>3. Tool Removal Requests</span>
+            </h2>
+            <p>
+                If you are the authorized creator, owner, or legal representative of an AI product listed on Metricore and wish for your tool's entry to be removed from this non-commercial directory, we will respect your request.
+            </p>
+            <p>
+                Please open an issue on GitHub or contact us with proof of domain or project ownership. Removal requests are processed promptly without dispute or delay.
+            </p>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>4. Direct Inquiries</span>
+            </h2>
+            <p>
+                For questions regarding editorial policies, removals, or data corrections:
+            </p>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-purple-300">
+                GitHub Issues: <a href="https://github.com/AkbarDev/metricore.in/issues" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">https://github.com/AkbarDev/metricore.in/issues</a>
+                <br>
+                Contact: &lt;contact email, optional&gt;
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -97,7 +97,7 @@
                         </span>
                     </h1>
                     <p class="text-sm text-slate-300 mt-2 max-w-3xl leading-relaxed">
-                        {{ active_category.description if active_category else 'Browse, benchmark and test every leading AI model and open-source tool with verified free-tier limits.' }}
+                        {{ active_category.description if active_category else 'Browse and compare AI models and open-source tools with documented free-tier limits.' }}
                     </p>
                 </div>
 
@@ -121,7 +121,7 @@
                     <span class="text-amber-400 font-bold text-sm">✦</span>
                     <h2 class="text-sm font-black uppercase tracking-wider text-slate-300">Curated Top Picks</h2>
                 </div>
-                <span class="text-[11px] text-slate-500 font-medium">Verified Industry Benchmarks</span>
+                <span class="text-[11px] text-slate-500 font-medium">Selected Reference Tools</span>
             </div>
 
             <!-- Top Picks Cards Grid -->
@@ -132,16 +132,13 @@
                         <!-- Top Badge Row -->
                         <div class="flex items-center justify-between mb-3">
                             <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-sm">
-                                <span>✦ Top Pick</span>
-                            </span>
-                            <span class="text-[10px] font-mono font-bold text-amber-400 flex items-center gap-0.5">
-                                ★ {{ tool.rating }}
+                                <span>✦ Featured</span>
                             </span>
                         </div>
 
                         <!-- Tool Identity -->
                         <div class="flex items-center gap-3 mb-2.5">
-                            <img src="{{ tool.image_url }}" alt="{{ tool.name }}" class="w-10 h-10 rounded-xl object-cover border border-purple-500/30 flex-shrink-0">
+                            <img src="{{ tool.image_url }}" alt="{{ tool.image_alt or (tool.name ~ ' preview') }}" class="w-10 h-10 rounded-xl object-cover border border-purple-500/30 flex-shrink-0">
                             <div>
                                 <h3 class="text-base font-extrabold text-white group-hover:text-purple-300 transition-colors">
                                     <a href="/tool/{{ tool.id }}">{{ tool.name }}</a>
@@ -261,9 +258,9 @@
             <div>
                 <label class="block text-slate-300 font-bold mb-1">Sort By</label>
                 <select name="sort" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white">
-                    <option value="popular" {% if selected_sort == 'popular' or not selected_sort %}selected{% endif %}>Sort: Popular</option>
+                    <option value="popular" {% if selected_sort == 'popular' or not selected_sort %}selected{% endif %}>Sort: Default</option>
                     <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Sort: Newest</option>
-                    <option value="top_rated" {% if selected_sort == 'top_rated' %}selected{% endif %}>Sort: Top Rated</option>
+                    <option value="name_asc" {% if selected_sort == 'name_asc' or selected_sort == 'top_rated' %}selected{% endif %}>Sort: Name A-Z</option>
                 </select>
             </div>
 

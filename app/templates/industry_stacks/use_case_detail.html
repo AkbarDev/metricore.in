@@ -106,12 +106,13 @@
                             </p>
                         </div>
 
-                        <!-- Provenance Box (Est, Country, Founders, Stars) -->
+                        <!-- Sourced Provenance (Only when facts_source_url is present) -->
+                        {% if tool.facts_source_url %}
                         <div class="p-2 rounded-xl bg-slate-950/80 border border-slate-800/80 space-y-1 text-[10px]">
                             <div class="flex items-center justify-between">
                                 <span class="flex items-center gap-1 font-semibold text-slate-200">
                                     <span>{{ tool.country_flag or '🌐' }}</span>
-                                    <span>{{ tool.country_name or 'Global' }}</span>
+                                    <span>{{ tool.country_name }}</span>
                                 </span>
                                 {% if tool.founded_year %}
                                 <span class="font-mono text-purple-300 font-bold">
@@ -119,15 +120,13 @@
                                 </span>
                                 {% endif %}
                             </div>
-                            <div class="flex items-center justify-between pt-1 border-t border-slate-800/60 text-slate-400">
-                                <span class="truncate max-w-[130px]">By: {{ tool.founders or 'Founding Team' }}</span>
-                                {% if tool.github_stars and tool.github_stars != 'N/A' %}
-                                <span class="text-amber-400 font-mono font-bold">★ {{ tool.github_stars }}</span>
-                                {% else %}
-                                <span class="text-slate-400">{{ tool.operational_status or 'Active' }}</span>
-                                {% endif %}
+                            {% if tool.founders %}
+                            <div class="pt-1 border-t border-slate-800/60 text-slate-400">
+                                <span class="truncate max-w-[130px]">By: {{ tool.founders }}</span>
                             </div>
+                            {% endif %}
                         </div>
+                        {% endif %}
 
                         <!-- Outbound link -->
                         <div class="pt-2 border-t border-slate-800/60 text-right">
@@ -214,7 +213,7 @@
                     {% endfor %}
                     <li class="flex items-start gap-2">
                         <span class="text-amber-400 font-bold">•</span>
-                        <span>Never submit unanonymized corporate financials, confidential client identifiers, or personal customer data into any public AI tool without verified organizational policies and data processing agreements.</span>
+                        <span>Never submit unanonymized corporate financials, confidential client identifiers, or personal customer data into any public AI tool without confirmed organizational policies and data processing agreements.</span>
                     </li>
                 </ul>
             </div>

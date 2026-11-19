@@ -13,6 +13,9 @@
                         <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
                         Production Relevancy Matrix
                     </span>
+                    <a href="/methodology" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 hover:text-white border border-purple-500/30 text-xs font-semibold transition-colors">
+                        <span>Methodology →</span>
+                    </a>
                     <a href="/" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-semibold transition-colors">
                         <span>← Return to Home Hub</span>
                     </a>
@@ -21,7 +24,10 @@
                     AI Tool Eval Board
                 </h2>
                 <p class="text-xs sm:text-sm text-slate-400 mt-1.5 max-w-2xl leading-relaxed">
-                    Compare foundation platforms and creative engines across provenance, financial backing, API readiness, self-hostability, enterprise data privacy (ZDR), and production scalability.
+                    Compare developer platforms, foundation models, and generative tools across API readiness, scalability parameters, update recency, and ecosystem integration.
+                </p>
+                <p class="text-xs text-amber-300/90 mt-2 font-medium">
+                    Editorial opinion, not a rating by the tool's maker or any third party. Not legal, security or compliance advice.
                 </p>
             </div>
 
@@ -29,18 +35,18 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-center flex-shrink-0">
                 <div class="p-2.5 px-3 rounded-2xl bg-slate-950/70 border border-slate-800">
                     <div class="text-lg font-black text-white">{{ (all_filtered_tools or tools)|length }}</div>
-                    <div class="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Evaluated Tools</div>
+                    <div class="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Listed Tools</div>
                 </div>
                 <div class="p-2.5 px-3 rounded-2xl bg-slate-950/70 border border-slate-800">
                     <div class="text-lg font-black text-emerald-400">100%</div>
-                    <div class="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Free Tiers Tested</div>
+                    <div class="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Free Tiers Documented</div>
                 </div>
                 <div class="p-2.5 px-3 rounded-2xl bg-slate-950/70 border border-slate-800">
                     <div class="text-lg font-black text-indigo-400">Tier 1 & 2</div>
                     <div class="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Relevancy Stack</div>
                 </div>
                 <div class="p-2.5 px-3 rounded-2xl bg-slate-950/70 border border-slate-800">
-                    <div class="text-lg font-black text-pink-400">6 Evals</div>
+                    <div class="text-lg font-black text-pink-400">4 Evals</div>
                     <div class="text-[9px] uppercase font-bold text-slate-400 tracking-wider">Per Platform</div>
                 </div>
             </div>
@@ -56,7 +62,7 @@
                     type="text" 
                     id="eval-search-input"
                     oninput="filterEvalTable()"
-                    placeholder="Filter by tool, founder, country, API, open-source, or ZDR..."
+                    placeholder="Filter by tool name, category, API, or modality..."
                     class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950/90 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 font-medium"
                 >
             </div>
@@ -67,19 +73,13 @@
                     All ({{ (all_filtered_tools or tools)|length }})
                 </button>
                 <button type="button" onclick="setEvalFilter('tier1')" class="eval-filter-tag px-3 py-1.5 rounded-xl font-medium bg-slate-950/80 text-slate-300 hover:text-white border border-slate-800">
-                    ✦ Tier 1 Essential
-                </button>
-                <button type="button" onclick="setEvalFilter('opensource')" class="eval-filter-tag px-3 py-1.5 rounded-xl font-medium bg-slate-950/80 text-slate-300 hover:text-white border border-slate-800">
-                    🔓 Open Weights / Self-Hosted
-                </button>
-                <button type="button" onclick="setEvalFilter('zdr')" class="eval-filter-tag px-3 py-1.5 rounded-xl font-medium bg-slate-950/80 text-slate-300 hover:text-white border border-slate-800">
-                    🛡️ ZDR & High Privacy
+                    ✦ Tier 1
                 </button>
                 <button type="button" onclick="setEvalFilter('api')" class="eval-filter-tag px-3 py-1.5 rounded-xl font-medium bg-slate-950/80 text-slate-300 hover:text-white border border-slate-800">
-                    ⚡ REST API & SDK
+                    ⚡ REST API / SDK
                 </button>
-                <button type="button" onclick="setEvalFilter('stars')" class="eval-filter-tag px-3 py-1.5 rounded-xl font-medium bg-slate-950/80 text-slate-300 hover:text-white border border-slate-800">
-                    ★ Top GitHub Stars
+                <button type="button" onclick="setEvalFilter('interactive')" class="eval-filter-tag px-3 py-1.5 rounded-xl font-medium bg-slate-950/80 text-slate-300 hover:text-white border border-slate-800">
+                    ⚡ Real-time / Interactive
                 </button>
             </div>
         </div>
@@ -93,17 +93,13 @@
                 <thead class="sticky top-0 z-20 bg-slate-950/95 border-b border-slate-800 backdrop-blur-md shadow-sm">
                     <tr class="text-[10px] uppercase font-bold tracking-wider text-slate-400">
                         <th class="py-4 px-4 sticky left-0 z-30 bg-slate-950/95 min-w-[220px]">Tool & Platform</th>
-                        <th class="py-4 px-4 min-w-[170px]">Provenance & Founders</th>
-                        <th class="py-4 px-4 min-w-[150px]">Funding & Status</th>
-                        <th class="py-4 px-4 min-w-[160px]">Relevancy</th>
-                        <th class="py-4 px-4 min-w-[190px]">1. API & Headless</th>
-                        <th class="py-4 px-4 min-w-[180px]">2. License & Risk</th>
-                        <th class="py-4 px-4 min-w-[180px]">3. Privacy & Compliance</th>
-                        <th class="py-4 px-4 min-w-[170px]">4. Scalability Limits</th>
-                        <th class="py-4 px-4 min-w-[180px]">5. Model Recency</th>
-                        <th class="py-4 px-4 min-w-[160px]">6. Community & Stars</th>
+                        <th class="py-4 px-4 min-w-[130px]">Relevancy</th>
+                        <th class="py-4 px-4 min-w-[180px]">1. API & Access</th>
+                        <th class="py-4 px-4 min-w-[170px]">2. Scalability Limits</th>
+                        <th class="py-4 px-4 min-w-[150px]">3. Model Recency</th>
+                        <th class="py-4 px-4 min-w-[180px]">4. Ecosystem Integration</th>
                         <th class="py-4 px-4 min-w-[200px]">Free-Tier Trial Limit</th>
-                        <th class="py-4 px-4 min-w-[100px] text-right">Actions</th>
+                        <th class="py-4 px-4 min-w-[90px] text-right">Actions</th>
                     </tr>
                 </thead>
 
@@ -114,12 +110,7 @@
                         data-name="{{ tool.name|lower }}"
                         data-category="{{ tool.category|lower }}"
                         data-modality="{{ (tool.modality_type or '')|lower }}"
-                        data-stars="{{ tool.github_stars or '' }}"
-                        data-founders="{{ (tool.founders or '')|lower }}"
-                        data-country="{{ (tool.country_name or '')|lower }}"
                         data-relevancy="{{ (tool.relevancy_2026 or '')|lower }}"
-                        data-license="{{ (tool.eval_license_risk or '')|lower }}"
-                        data-compliance="{{ (tool.eval_compliance or '')|lower }}"
                         data-latency="{{ (tool.eval_latency or '')|lower }}"
                         data-accuracy="{{ (tool.eval_accuracy_tier or '')|lower }}"
                         data-api="{{ (tool.eval_api_readiness or '')|lower }}"
@@ -128,7 +119,7 @@
                         <td class="py-3.5 px-4 sticky left-0 z-10 bg-slate-950/90 group-hover:bg-slate-900/90 backdrop-blur-md border-r border-slate-800/60">
                             <div class="flex items-center gap-3">
                                 {% if tool.image_url %}
-                                    <img src="{{ tool.image_url }}" alt="{{ tool.name }}" class="w-9 h-9 rounded-xl object-cover border border-slate-800 flex-shrink-0">
+                                    <img src="{{ tool.image_url }}" alt="{{ tool.image_alt or (tool.name ~ ' preview') }}" class="w-9 h-9 rounded-xl object-cover border border-slate-800 flex-shrink-0">
                                 {% else %}
                                     <div class="w-9 h-9 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center font-bold text-purple-300">
                                         {{ tool.name[0] }}
@@ -151,51 +142,20 @@
                             </div>
                         </td>
 
-                        <!-- Column 2: Provenance & Founders -->
-                        <td class="py-3.5 px-4">
-                            <div class="space-y-1">
-                                <div class="flex items-center gap-1.5 font-medium text-slate-200">
-                                    <span class="text-sm leading-none">{{ tool.country_flag or '🌐' }}</span>
-                                    <span>{{ tool.country_name or 'Global' }}</span>
-                                    {% if tool.founded_year %}
-                                        <span class="text-[10px] font-mono text-purple-300 bg-purple-500/10 px-1.5 py-0.2 rounded ml-1">
-                                            {{ tool.founded_year }}
-                                        </span>
-                                    {% endif %}
-                                </div>
-                                <div class="text-[10px] text-slate-400 truncate max-w-[160px]" title="{{ tool.founders }}">
-                                    <span class="text-slate-500">By:</span> {{ tool.founders or 'Founding Team' }}
-                                </div>
-                            </div>
-                        </td>
-
-                        <!-- Column 3: Funding & Status -->
-                        <td class="py-3.5 px-4">
-                            <div class="space-y-1">
-                                <div class="font-bold text-white font-mono text-[11px]">
-                                    {{ tool.total_funding or 'Private / Bootstrapped' }}
-                                </div>
-                                <div class="flex items-center gap-1 text-[10px]">
-                                    <span class="w-1.5 h-1.5 rounded-full {% if tool.operational_status == 'High Velocity' %}bg-emerald-400 animate-ping{% else %}bg-indigo-400{% endif %}"></span>
-                                    <span class="text-slate-300 font-medium">{{ tool.operational_status or 'Active' }}</span>
-                                </div>
-                            </div>
-                        </td>
-
-                        <!-- Column 4: 2026/27 Relevancy -->
+                        <!-- Column 2: Relevancy -->
                         <td class="py-3.5 px-4">
                             {% if 'Tier 1' in (tool.relevancy_2026 or '') %}
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 border border-purple-500/30 text-purple-300 text-[10px] font-bold">
-                                    <span class="text-amber-300">✦</span> Tier 1 Essential
+                                    <span class="text-amber-300">✦</span> Tier 1
                                 </span>
                             {% else %}
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-800/80 border border-slate-700/80 text-slate-300 text-[10px] font-semibold">
-                                    {{ tool.relevancy_2026 or 'Tier 2 Specialized' }}
+                                    {{ tool.relevancy_2026 or 'Tier 2' }}
                                 </span>
                             {% endif %}
                         </td>
 
-                        <!-- Column 5: 1. API Readiness -->
+                        <!-- Column 3: 1. API Readiness -->
                         <td class="py-3.5 px-4 text-[11px] text-slate-300">
                             <div class="flex items-center gap-1.5">
                                 <svg class="w-3.5 h-3.5 text-indigo-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
@@ -203,58 +163,26 @@
                             </div>
                         </td>
 
-                        <!-- Column 6: 2. License & Risk -->
-                        <td class="py-3.5 px-4 text-[11px]">
-                            {% if 'Open' in (tool.eval_license_risk or '') or 'Fair-Code' in (tool.eval_license_risk or '') %}
-                                <span class="inline-flex items-center gap-1 text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">
-                                    🔓 {{ tool.eval_license_risk }}
-                                </span>
-                            {% else %}
-                                <span class="text-slate-300 font-medium">
-                                    {{ tool.eval_license_risk or 'Proprietary Cloud' }}
-                                </span>
-                            {% endif %}
-                        </td>
-
-                        <!-- Column 7: 3. Privacy & Compliance -->
-                        <td class="py-3.5 px-4 text-[11px]">
-                            {% if 'Zero' in (tool.eval_compliance or '') or 'ZDR' in (tool.eval_compliance or '') or 'Self-Hosted' in (tool.eval_compliance or '') %}
-                                <span class="text-emerald-300 font-medium flex items-center gap-1">
-                                    <span class="text-xs">🛡️</span> {{ tool.eval_compliance }}
-                                </span>
-                            {% else %}
-                                <span class="text-slate-300">
-                                    {{ tool.eval_compliance or 'Standard SaaS' }}
-                                </span>
-                            {% endif %}
-                        </td>
-
-                        <!-- Column 8: 4. Scalability Limits -->
+                        <!-- Column 4: 2. Scalability Limits -->
                         <td class="py-3.5 px-4 text-[11px] text-slate-300">
                             {{ tool.eval_scalability or 'Subscription Seats' }}
                         </td>
 
-                        <!-- Column 9: 5. Model Recency -->
+                        <!-- Column 5: 3. Model Recency -->
                         <td class="py-3.5 px-4 text-[11px]">
                             <span class="text-purple-300 font-medium">
-                                {{ tool.eval_recency or 'Updated 2026' }}
+                                {{ tool.eval_recency or 'Documented 2026' }}
                             </span>
                         </td>
 
-                        <!-- Column 10: 6. Community & Stars -->
+                        <!-- Column 6: 4. Ecosystem Integration -->
                         <td class="py-3.5 px-4 text-[11px]">
-                            {% if tool.github_stars and tool.github_stars != 'N/A' %}
-                                <span class="inline-flex items-center gap-1 text-amber-400 font-bold font-mono">
-                                    ★ {{ tool.github_stars }}
-                                </span>
-                            {% else %}
-                                <span class="text-slate-400 font-mono text-[10px]">
-                                    {{ tool.eval_ecosystem or 'Community Forum' }}
-                                </span>
-                            {% endif %}
+                            <span class="text-slate-300 font-mono text-[10px]">
+                                {{ tool.eval_ecosystem or 'Community Forum' }}
+                            </span>
                         </td>
 
-                        <!-- Column 11: Free-Tier Trial Limit -->
+                        <!-- Column 7: Free-Tier Trial Limit -->
                         <td class="py-3.5 px-4">
                             <div class="text-[11px] font-semibold text-emerald-400">
                                 {{ tool.free_tier_limit }}
@@ -264,10 +192,10 @@
                             </div>
                         </td>
 
-                        <!-- Column 12: Actions -->
+                        <!-- Column 8: Actions -->
                         <td class="py-3.5 px-4 text-right">
                             <a href="{{ tool.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-[10px] shadow-sm transition-all">
-                                <span>Try</span>
+                                <span>Visit</span>
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                             </a>
                         </td>
@@ -302,35 +230,25 @@
         rows.forEach(row => {
             const name = row.getAttribute('data-name') || '';
             const category = row.getAttribute('data-category') || '';
-            const founders = row.getAttribute('data-founders') || '';
-            const country = row.getAttribute('data-country') || '';
+            const modality = row.getAttribute('data-modality') || '';
             const relevancy = row.getAttribute('data-relevancy') || '';
-            const license = row.getAttribute('data-license') || '';
-            const compliance = row.getAttribute('data-compliance') || '';
             const api = row.getAttribute('data-api') || '';
+            const latency = row.getAttribute('data-latency') || '';
 
             const matchesText = !query || 
                 name.includes(query) || 
                 category.includes(query) || 
-                founders.includes(query) || 
-                country.includes(query) || 
+                modality.includes(query) || 
                 relevancy.includes(query) || 
-                license.includes(query) || 
-                compliance.includes(query) || 
                 api.includes(query);
 
             let matchesTag = true;
             if (activeTag === 'tier1') {
                 matchesTag = relevancy.includes('tier 1');
-            } else if (activeTag === 'opensource') {
-                matchesTag = license.includes('open') || license.includes('fair-code') || license.includes('self-hosted');
-            } else if (activeTag === 'zdr') {
-                matchesTag = compliance.includes('zero') || compliance.includes('zdr') || compliance.includes('self-hosted');
             } else if (activeTag === 'api') {
                 matchesTag = api.includes('rest') || api.includes('graphql') || api.includes('sdk') || api.includes('python');
-            } else if (activeTag === 'stars') {
-                const stars = row.getAttribute('data-stars') || '';
-                matchesTag = Boolean(stars && stars !== 'N/A' && stars !== '');
+            } else if (activeTag === 'interactive') {
+                matchesTag = latency.includes('real-time') || latency.includes('interactive') || latency.includes('<500ms');
             }
 
             if (matchesText && matchesTag) {

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy — Metricore.in{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center text-xs text-slate-400 space-x-2">
+        <a href="/" class="hover:text-white transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-slate-200 font-semibold">Privacy Policy</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="space-y-3 border-b border-slate-800 pb-6">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-bold">
+            <span>🛡️</span>
+            <span>Transparency & Privacy</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Privacy Policy</h1>
+        <p class="text-sm text-slate-400">Effective Date: November 2026</p>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="space-y-8 text-sm text-slate-300 leading-relaxed">
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>1. Overview & Non-Commercial Nature</span>
+            </h2>
+            <p>
+                Metricore.in is an open-source, non-commercial reference directory designed to catalog artificial intelligence tools and their free-tier alternatives. We respect visitor privacy and operate under a minimal-data philosophy.
+            </p>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>2. No User Accounts or Authentication</span>
+            </h2>
+            <p>
+                Metricore does not have user accounts, user registration, passwords, or personal profiles. All areas of the reference directory are publicly accessible without authentication.
+            </p>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>3. No Cookies & No Tracking Analytics</span>
+            </h2>
+            <p>
+                Metricore sets no HTTP cookies (`Set-Cookie` headers are never transmitted). We do not embed third-party analytics trackers, advertising pixels, or telemetry scripts (such as Google Analytics or Meta Pixel).
+            </p>
+            <p>
+                Theme preferences (Daylight vs. Nightlight mode) are stored strictly within your browser's local storage (`localStorage`) and are never transmitted to our servers.
+            </p>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>4. Web Server Logs & Rate Limiting</span>
+            </h2>
+            <p>
+                Like all web servers and hosting providers, standard network access logs (including client IP address, HTTP request method, requested path, user agent string, and timestamp) may be temporarily processed by the application and hosting infrastructure to prevent abuse, enforce DDoS mitigation, and operate rate limiters. These logs are ephemeral and are not linked to personal identities.
+            </p>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>5. Tool Submission Form Data</span>
+            </h2>
+            <p>
+                The public tool-submission form on Metricore enforces strict request payload limits and rate limits to block automated abuse. Submitted payloads are handled ephemerally for editorial evaluation and are <strong>not stored</strong> in any database, disk file, or persistent storage.
+            </p>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>6. External Links & Third-Party Sites</span>
+            </h2>
+            <p>
+                Metricore links to external third-party software websites. When you click an outbound link to visit a third party, that third party’s own privacy policy and terms apply. Metricore does not use affiliate referral parameters or tracking identifiers in outbound links.
+            </p>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>7. Contact & Privacy Inquiries</span>
+            </h2>
+            <p>
+                If you have questions regarding this privacy policy or our open-source codebase, please submit an inquiry via our public issue tracker:
+            </p>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-purple-300">
+                GitHub Issues: <a href="https://github.com/AkbarDev/metricore.in/issues" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">https://github.com/AkbarDev/metricore.in/issues</a>
+                <br>
+                Direct Contact: &lt;contact email, optional&gt;
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -17,7 +17,7 @@
     <div class="rounded-3xl border border-slate-800 bg-slate-900/60 overflow-hidden shadow-2xl">
         {% if tool.image_url %}
             <div class="relative h-64 w-full overflow-hidden bg-slate-950">
-                <img src="{{ tool.image_url }}" alt="{{ tool.name }}" class="w-full h-full object-cover">
+                <img src="{{ tool.image_url }}" alt="{{ tool.image_alt or (tool.name ~ ' interface preview') }}" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
             </div>
         {% endif %}
@@ -70,14 +70,66 @@
             </p>
         </div>
 
+        <!-- Pricing & Limit Notice -->
+        <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs text-slate-400 space-y-1">
+            <div class="flex items-center gap-1.5 font-bold text-slate-300">
+                <span>ℹ️</span>
+                <span>Reference Notice</span>
+            </div>
+            <p class="text-slate-300">
+                Pricing and limits change often. Check the official site.{% if tool.price_last_checked %} Last checked: {{ tool.price_last_checked }}{% endif %}
+            </p>
+            {% if tool.price_source_url %}
+            <p class="text-[11px] text-purple-400 pt-1">
+                <a href="{{ tool.price_source_url }}" target="_blank" rel="noopener noreferrer" class="underline hover:text-purple-300">Official Pricing Source →</a>
+            </p>
+            {% endif %}
+        </div>
+
+        <!-- Sourced Company Facts (Shown only when facts_source_url is provided) -->
+        {% if tool.facts_source_url %}
+        <div class="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-2">
+            <div class="font-bold text-white text-xs uppercase tracking-wider text-purple-400">Sourced Company Information</div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                {% if tool.country_name %}
+                <div>
+                    <span class="text-slate-500 block text-[10px]">Origin</span>
+                    <span class="font-semibold text-slate-200">{{ tool.country_flag or '' }} {{ tool.country_name }}</span>
+                </div>
+                {% endif %}
+                {% if tool.founded_year %}
+                <div>
+                    <span class="text-slate-500 block text-[10px]">Founded</span>
+                    <span class="font-semibold text-slate-200">{{ tool.founded_year }}</span>
+                </div>
+                {% endif %}
+                {% if tool.founders %}
+                <div>
+                    <span class="text-slate-500 block text-[10px]">Founders</span>
+                    <span class="font-semibold text-slate-200">{{ tool.founders }}</span>
+                </div>
+                {% endif %}
+                {% if tool.github_stars and tool.github_stars != 'N/A' %}
+                <div>
+                    <span class="text-slate-500 block text-[10px]">GitHub Stars</span>
+                    <span class="font-semibold text-amber-400">★ {{ tool.github_stars }}</span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="pt-1 text-[11px]">
+                <a href="{{ tool.facts_source_url }}" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 underline">Verified Facts Source →</a>
+            </div>
+        </div>
+        {% endif %}
+
         <!-- Alternative Comparison Card -->
         {% if alternative %}
             <div class="pt-6 border-t border-slate-800/80">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
                     {% if tool.pricing_type == "Paid" %}
-                        Recommended Free Alternative
+                        Free Alternative
                     {% else %}
-                        Paid Industry Benchmark
+                        Paid Alternative
                     {% endif %}
                 </h3>
                 <div class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between">

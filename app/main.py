@@ -12,7 +12,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field, HttpUrl
 
-from app.models import AITool, TopCategoryInfo
+from app.models import AITool, PublicAITool, TopCategoryInfo
 from app.categories import (
     TOP_CATEGORIES,
     get_top_category_by_slug,
@@ -53,12 +53,31 @@ templates.env.globals["get_shared_categories"] = get_shared_categories
 # Data Loader
 DATA_FILE = BASE_DIR / "data" / "tools.json"
 
+def sanitize_tool_for_public(tool: AITool) -> AITool:
+    """Mask fields not permitted on the public site per editorial & non-commercial policy."""
+    # 2. Hide rating and reviews_count everywhere on the public site
+    tool.rating = None
+    tool.reviews_count = None
+    # 4. Hide eval_compliance and eval_license_risk from the public site for now
+    tool.eval_compliance = None
+    tool.eval_license_risk = None
+    # 5. Hide founders and total_funding everywhere unless facts_source_url exists
+    # Apply the same rule to founded_year, country_name, and github_stars: show only when sourced
+    if not tool.facts_source_url:
+        tool.founders = None
+        tool.total_funding = None
+        tool.founded_year = None
+        tool.country_name = None
+        tool.country_flag = None
+        tool.github_stars = None
+    return tool
+
 def load_tools() -> List[AITool]:
     if not DATA_FILE.exists():
         return []
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
-        return [AITool(**item) for item in data]
+        return [sanitize_tool_for_public(AITool(**item)) for item in data]
 
 def get_categories(tools: List[AITool]) -> List[str]:
     seen = []
@@ -68,7 +87,7 @@ def get_categories(tools: List[AITool]) -> List[str]:
     return seen
 
 # ================= ALLOWLISTS & VALIDATION CONSTANTS =================
-ALLOWED_SORTS: Set[str] = {"popular", "newest", "top_rated"}
+ALLOWED_SORTS: Set[str] = {"popular", "newest", "name_asc", "top_rated"}
 ALLOWED_PRICINGS: Set[str] = {"", "Free", "Freemium", "Paid", "Open-source"}
 ALLOWED_PLATFORMS: Set[str] = {"", "Web", "API", "Desktop", "Mobile", "Browser extension"}
 ALLOWED_SEARCH_TYPES: Set[str] = {"tools", "stacks"}
@@ -432,13 +451,13 @@ async def ai_tools_all(
             or (t.founders and q_lower in t.founders.lower())
         ]
 
-    # Sorting
+    # Sorting (Neutral options; rating and reviews_count hidden)
     if sort == "newest":
-        filtered = sorted(filtered, key=lambda x: x.founded_year or 0, reverse=True)
-    elif sort == "top_rated":
-        filtered = sorted(filtered, key=lambda x: x.rating or 0, reverse=True)
-    else:  # popular
-        filtered = sorted(filtered, key=lambda x: (x.is_top_pick, x.reviews_count or 0), reverse=True)
+        filtered = sorted(filtered, key=lambda x: (x.founded_year or 0, (x.name or "").lower()), reverse=True)
+    elif sort == "name_asc" or sort == "top_rated":
+        filtered = sorted(filtered, key=lambda x: (x.name or "").lower())
+    else:  # popular / default
+        filtered = sorted(filtered, key=lambda x: (not x.is_top_pick, (x.name or "").lower()))
 
     counts_pricing, counts_platform = compute_filter_counts(all_tools)
     top_picks = [t for t in all_tools if t.is_top_pick][:4]
@@ -544,11 +563,11 @@ async def ai_tools_category(
         ]
 
     if sort == "newest":
-        filtered = sorted(filtered, key=lambda x: x.founded_year or 0, reverse=True)
-    elif sort == "top_rated":
-        filtered = sorted(filtered, key=lambda x: x.rating or 0, reverse=True)
-    else:
-        filtered = sorted(filtered, key=lambda x: (x.is_top_pick, x.reviews_count or 0), reverse=True)
+        filtered = sorted(filtered, key=lambda x: (x.founded_year or 0, (x.name or "").lower()), reverse=True)
+    elif sort == "name_asc" or sort == "top_rated":
+        filtered = sorted(filtered, key=lambda x: (x.name or "").lower())
+    else:  # popular / default
+        filtered = sorted(filtered, key=lambda x: (not x.is_top_pick, (x.name or "").lower()))
 
     counts_pricing, counts_platform = compute_filter_counts(category_tools)
     top_picks = [t for t in category_tools if t.is_top_pick][:4]
@@ -1084,8 +1103,8 @@ async def live_search(
         },
     )
 
-# 11. REST API TOOLS ENDPOINT
-@app.get("/api/tools", response_model=List[AITool])
+# 11. REST API TOOLS ENDPOINT (Public schema strictly omitting hidden fields)
+@app.get("/api/tools", response_model=List[PublicAITool])
 async def get_tools_api(
     category: Optional[str] = None,
     pricing: Optional[str] = None,
@@ -1106,3 +1125,21 @@ async def get_tools_api(
             or q_lower in t.category.lower()
         ]
     return tools
+
+# 12. TRANSPARENCY, POLICY & METHODOLOGY ROUTES (Public)
+@app.get("/privacy", response_class=HTMLResponse)
+async def privacy_page(request: Request):
+    return templates.TemplateResponse(request=request, name="privacy.html")
+
+@app.get("/terms", response_class=HTMLResponse)
+async def terms_page(request: Request):
+    return templates.TemplateResponse(request=request, name="terms.html")
+
+@app.get("/corrections", response_class=HTMLResponse)
+async def corrections_page(request: Request):
+    return templates.TemplateResponse(request=request, name="corrections.html")
+
+@app.get("/methodology", response_class=HTMLResponse)
+async def methodology_page(request: Request):
+    return templates.TemplateResponse(request=request, name="methodology.html")
+

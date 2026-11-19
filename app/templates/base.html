@@ -47,13 +47,12 @@
 
     <!-- Footer -->
     <footer class="border-t border-slate-900 bg-slate-950/80 py-10 text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 text-center">
-            <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5 text-center">
+            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-semibold">
                 <a href="/ai-tools/" class="text-slate-400 hover:text-white transition-colors">AI Tools Directory</a>
                 <span class="text-slate-700">•</span>
                 <a 
                     href="/industry-tool-stacks/"
-                    onclick="trackEvent('stacks_link_clicked', {placement: 'footer'})"
                     class="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1 font-bold"
                 >
                     <span>💼</span>
@@ -62,10 +61,26 @@
                 <span class="text-slate-700">•</span>
                 <a href="/eval-board/" class="text-slate-400 hover:text-white transition-colors">AI Tool Eval Board</a>
                 <span class="text-slate-700">•</span>
+                <a href="/methodology" class="text-slate-400 hover:text-white transition-colors">Methodology</a>
+                <span class="text-slate-700">•</span>
+                <a href="/privacy" class="text-slate-400 hover:text-white transition-colors">Privacy</a>
+                <span class="text-slate-700">•</span>
+                <a href="/terms" class="text-slate-400 hover:text-white transition-colors">Terms</a>
+                <span class="text-slate-700">•</span>
+                <a href="/corrections" class="text-slate-400 hover:text-white transition-colors">Corrections</a>
+                <span class="text-slate-700">•</span>
                 <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
             </div>
-            <p>© 2026 Metricore.in — AI Tool Finder & Benchmark Platform.</p>
-            <p class="text-slate-600">Built with FastAPI, Jinja2 & Tailwind CSS. Continuous integration synced with GitHub.</p>
+
+            <!-- Site-wide Disclaimer -->
+            <div class="max-w-4xl mx-auto pt-3 border-t border-slate-900/80 text-[11px] text-slate-500 leading-relaxed text-center space-y-2">
+                <p>
+                    Metricore is an open-source, non-commercial reference site. It is not affiliated with, sponsored by or endorsed by any tool or company listed. All product and company names are trademarks of their respective owners. Information may be incomplete or out of date; always check each tool's official site. Content is for general information, not professional advice.
+                </p>
+                <p class="text-[10px] text-slate-600">
+                    © 2026 Metricore.in — Open-source reference directory of AI tools and alternatives.
+                </p>
+            </div>
         </div>
     </footer>
 

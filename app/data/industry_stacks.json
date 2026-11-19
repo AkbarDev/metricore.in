@@ -72,7 +72,7 @@
       "function": "Data & Analytics",
       "icon": "📊",
       "summary": "Enterprise data aggregation, SQL modeling, dashboard visualization, and automated stakeholder reporting stack.",
-      "description": "How corporate analysts and business intelligence teams connect relational data warehouses, cloud dashboards, and AI assistants to deliver verified reports.",
+      "description": "How corporate analysts and business intelligence teams connect relational data warehouses, cloud dashboards, and AI assistants to deliver reproducible analytics reports.",
       "tool_ids": [
         "tableau-ai",
         "power-bi-ai",
@@ -1519,7 +1519,7 @@
       "name": "Apollo.io",
       "layer": "Sales platforms and CRM",
       "category": "B2B Lead Database & Sequencing",
-      "purpose": "Discovers verified prospect contact details, enriches corporate lead records, and automates structured multi-step email sequences.",
+      "purpose": "Discovers prospect contact details, enriches corporate lead records, and automates structured multi-step email sequences.",
       "level": "Beginner",
       "official_url": "https://www.apollo.io",
       "last_checked_date": "2026-11-19",
@@ -1941,13 +1941,13 @@
         "Extract public search metrics and top traffic drivers for the prospect's website using Semrush.",
         "Feed public website copy and recent company announcements into Gemini to identify their stated target audience and positioning tone.",
         "Draft three specific discussion topics where digital execution could be strengthened.",
-        "Assemble the verified notes into a clean, one-page tear-sheet using a standard Canva template.",
+        "Assemble the compiled notes into a clean, one-page tear-sheet using a standard Canva template.",
         "Review the notes before the call and use them to guide the client discovery conversation."
       ],
       "result": "Consultant arrives prepared with tailored talking points that immediately demonstrate understanding of the client's business.",
       "freelance_angle": "Use this workflow as standard pre-call preparation to elevate close rates on discovery calls.",
       "guardrails": [
-        "Rely only on verified public information; do not present speculative assertions as facts.",
+        "Rely only on confirmed public information; do not present speculative assertions as facts.",
         "Keep the focus on asking perceptive questions rather than declaring premature solutions."
       ],
       "practice_skills": [
@@ -1984,7 +1984,7 @@
       "freelance_angle": "Offer clients a turnkey \"Interactive Email Lead Generation & Survey\" setup service.",
       "guardrails": [
         "Send test emails to internal team members to verify rendering across multiple email providers before broad broadcast.",
-        "Ensure all recipient addresses have verified opt-in consent and conform to data protection regulations before syncing with third-party tools."
+        "Ensure all recipient addresses have confirmed opt-in consent and conform to data protection regulations before syncing with third-party tools."
       ],
       "practice_skills": [
         "Designing AMP email templates with fallback HTML",
@@ -2187,7 +2187,7 @@
         "Review existing job description drafts in Textio to detect gendered language and exclusionary phrasing.",
         "Use ChatGPT to brainstorm skill-based requirement alternatives focused on core outcomes rather than rigid credentials.",
         "Publish the optimized role specification across career portals using Workable.",
-        "Utilize Eightfold AI to surface qualified passive candidates based on verified skills matching.",
+        "Utilize Eightfold AI to surface qualified passive candidates based on validated skills matching.",
         "Human recruiters review shortlists and conduct initial phone screens before scheduling hiring manager interviews."
       ],
       "result": "Broader, more qualified applicant pools with objective competency evaluation criteria.",
@@ -2219,7 +2219,7 @@
         "chatgpt"
       ],
       "workflow_steps": [
-        "Index verified product help docs and API guides with Kapa.ai and Intercom Fin.",
+        "Index product documentation and API guides with Kapa.ai and Intercom Fin.",
         "Deploy automated conversation flows that answer routine billing and navigation questions immediately.",
         "Configure Zendesk AI sentiment detection to automatically prioritize and escalate frustrated or VIP accounts.",
         "Use ChatGPT to suggest empathetic macro responses for human agents handling tier-2 escalations.",
@@ -2258,7 +2258,7 @@
         "Review recent corporate press releases and quarterly priorities using ChatGPT to find timely outreach angles.",
         "Draft a concise, focused email message addressing the prospect's operational challenge.",
         "Score the draft in Lavender to optimize subject length, reading grade level, and mobile preview readability.",
-        "Sync verified contact records and outreach stages into Salesforce Einstein for pipeline visibility.",
+        "Sync updated contact records and outreach stages into Salesforce Einstein for pipeline visibility.",
         "Manually inspect the email before sending to ensure tone and accuracy."
       ],
       "result": "Higher reply rates and more relevant prospect conversations through thoughtful personalization.",

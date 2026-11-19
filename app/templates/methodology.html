@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Evaluation Methodology — Metricore.in{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center text-xs text-slate-400 space-x-2">
+        <a href="/" class="hover:text-white transition-colors">Home</a>
+        <span>/</span>
+        <a href="/eval-board/" class="hover:text-white transition-colors">Eval Board</a>
+        <span>/</span>
+        <span class="text-slate-200 font-semibold">Methodology</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="space-y-3 border-b border-slate-800 pb-6">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-bold">
+            <span>📊</span>
+            <span>Evaluation Criteria</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight">Editorial Evaluation Methodology</h1>
+        <p class="text-sm text-slate-400">
+            How architectural and developer metrics on the AI Tool Eval Board are categorized and reviewed.
+        </p>
+    </div>
+
+    <!-- Prominent Disclaimer Callout -->
+    <div class="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs leading-relaxed space-y-2">
+        <div class="font-bold flex items-center gap-2 text-sm text-amber-300">
+            <span>⚠️</span>
+            <span>Important Editorial Notice</span>
+        </div>
+        <p>
+            All scores, tier classifications, and evaluation notes on Metricore represent <strong>editorial opinion</strong>, not ratings or certifications issued by any tool's maker or any third party. They do not constitute legal, security, architectural, or compliance advice.
+        </p>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="space-y-8 text-sm text-slate-300 leading-relaxed">
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>1. Evaluation Purpose & Philosophy</span>
+            </h2>
+            <p>
+                The AI Tool Eval Board provides a comparative overview of developer platforms, foundation models, and generative engines. Rather than providing subjective star ratings or unverified user review aggregates, Metricore categorizes technical characteristics based on publicly available documentation, developer portals, and practical test workflows.
+            </p>
+        </section>
+
+        <section class="space-y-4 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>2. Evaluation Metrics Explained</span>
+            </h2>
+
+            <div class="space-y-4 divide-y divide-slate-800/80">
+                <!-- Metric 1: API Readiness -->
+                <div class="pt-3 first:pt-0 space-y-1">
+                    <h3 class="font-bold text-purple-300 text-xs uppercase tracking-wider">1. API Readiness & Headless Access</h3>
+                    <p class="text-xs text-slate-300">
+                        Categorizes how software can be accessed programmatically. Options include REST API, SDK, CLI, Webhooks, or Web UI only.
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 font-mono">
+                        Testing Criteria: [INSERT API TESTING ENVIRONMENT AND VERIFICATION PROCESS]
+                    </div>
+                </div>
+
+                <!-- Metric 2: Scalability Limits -->
+                <div class="pt-3 space-y-1">
+                    <h3 class="font-bold text-purple-300 text-xs uppercase tracking-wider">2. Scalability Limits & Quotas</h3>
+                    <p class="text-xs text-slate-300">
+                        Reviews whether tool consumption scales via seat-based licenses, concurrency ceilings, token limits, compute credits, or self-hosted hardware capacity.
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 font-mono">
+                        Review Criteria: [INSERT SCALABILITY QUOTA BENCHMARK PROCEDURE]
+                    </div>
+                </div>
+
+                <!-- Metric 3: Model & Platform Recency -->
+                <div class="pt-3 space-y-1">
+                    <h3 class="font-bold text-purple-300 text-xs uppercase tracking-wider">3. Model Recency & Version Tracking</h3>
+                    <p class="text-xs text-slate-300">
+                        Documents the release period and version milestones of the underlying foundation models or software engines based on public changelogs.
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 font-mono">
+                        Cadence: [INSERT CHANGELOG REVIEW CADENCE / UPDATE CYCLE]
+                    </div>
+                </div>
+
+                <!-- Metric 4: Ecosystem & Integration Breadth -->
+                <div class="pt-3 space-y-1">
+                    <h3 class="font-bold text-purple-300 text-xs uppercase tracking-wider">4. Ecosystem Integration</h3>
+                    <p class="text-xs text-slate-300">
+                        Identifies supported IDE extensions, workflow integration nodes (e.g. Zapier, Make, n8n), and documented software connectors.
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 font-mono">
+                        Ecosystem Standards: [INSERT INTEGRATION CRITERIA AND SUPPORTED PLATFORMS LIST]
+                    </div>
+                </div>
+
+                <!-- Metric 5: Response Latency Profiles -->
+                <div class="pt-3 space-y-1">
+                    <h3 class="font-bold text-purple-300 text-xs uppercase tracking-wider">5. Response Latency Profiles</h3>
+                    <p class="text-xs text-slate-300">
+                        Broadly classifies typical user experience into Real-time (&lt;500ms), Interactive (1s–3s), or Batch Processing (5s+) based on observational testing.
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 font-mono">
+                        Latency Benchmark Specs: [INSERT TEST NETWORK LATENCY AND WORKLOAD SPECIFICATIONS]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>3. Excluded Metrics (Legal Compliance & Licensing)</span>
+            </h2>
+            <p>
+                In accordance with our strict non-commercial reference standards, fields asserting legal compliance risk or third-party regulatory adherence (such as GDPR, HIPAA, or copyright assessments) are not published on the public site, as such determinations require tailored legal counsel.
+            </p>
+        </section>
+
+        <section class="space-y-3 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <span>4. Proposing Updates or Adjustments</span>
+            </h2>
+            <p>
+                Editorial assessments are subject to change as tools release new features, documentation, or developer endpoints. To submit documentation updates or propose corrections to any listed metric, please file an issue:
+            </p>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-purple-300">
+                GitHub Issues: <a href="https://github.com/AkbarDev/metricore.in/issues" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">https://github.com/AkbarDev/metricore.in/issues</a>
+                <br>
+                Corrections Policy: <a href="/corrections" class="underline hover:text-white">https://metricore.in/corrections</a>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

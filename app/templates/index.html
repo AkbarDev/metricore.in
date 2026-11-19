@@ -22,11 +22,11 @@
             </div>
 
             <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
-                Discover & Benchmark the <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-300 bg-clip-text text-transparent">Top AI Tools</span> for Modern Work
+                Discover & Compare <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-300 bg-clip-text text-transparent">AI Tools</span> for Modern Work
             </h1>
 
             <p class="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-                Reach every leading foundation model, creative engine, and open-source tool. Compare paid industry leaders against free alternatives with verified trial limits and production benchmarks.
+                Explore foundation models, creative engines, and open-source tools. Compare paid tools against free alternatives with documented trial limits and reference details.
             </p>
 
             <!-- Hero Mode Switch: "AI Tools | Industry Stacks" Segmented Control -->
@@ -351,12 +351,12 @@
                                 {{ category_pairs|length }} Pairs
                             </span>
                         </div>
-                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Directly compare paid industry benchmarks against top free alternatives with free-tier trial limits.</p>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Compare paid tools against free alternatives with documented trial limits.</p>
                     </div>
 
                     <div class="flex items-center gap-3 self-start sm:self-auto">
                         <span class="hidden md:inline-block text-xs font-bold px-3 py-1.5 rounded-full bg-slate-900 text-slate-400 border border-slate-800 font-mono">
-                            {{ all_tools|length }} Verified Tools
+                            {{ all_tools|length }} Listed Tools
                         </span>
                         
                         <!-- Collapse / Expand Toggle Button -->
@@ -368,7 +368,7 @@
                             aria-expanded="false"
                             aria-controls="benchmarks-collapsible-content"
                         >
-                            <span id="benchmarks-toggle-text">Show Benchmarks</span>
+                            <span id="benchmarks-toggle-text">Show Comparisons</span>
                             <svg id="benchmarks-toggle-icon" class="w-4 h-4 transition-transform duration-300 transform rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
@@ -385,8 +385,8 @@
                     <div class="flex items-center gap-3 text-xs text-slate-400 group-hover:text-slate-200 transition-colors">
                         <span class="p-2 rounded-xl bg-purple-500/10 text-purple-400 text-base">⚖️</span>
                         <div>
-                            <span class="font-bold text-slate-200">Head-to-head category comparisons are currently collapsed.</span>
-                            <span class="block text-[11px] text-slate-500 mt-0.5">Click to view {{ category_pairs|length }} verified Paid vs. Free alternative benchmark matchups with trial limits.</span>
+                            <span class="font-bold text-slate-200">Category comparisons are currently collapsed.</span>
+                            <span class="block text-[11px] text-slate-500 mt-0.5">Click to view {{ category_pairs|length }} Paid vs. Free alternative category pairs with trial limits.</span>
                         </div>
                     </div>
                     <span class="text-xs font-bold text-purple-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">

@@ -288,13 +288,14 @@
                                 </p>
                             </div>
 
-                            <!-- Provenance & Key Metrics (Est / Country / Founders / Stars) -->
+                            <!-- Sourced Provenance (Only when facts_source_url is present) -->
+                            {% if tool.facts_source_url %}
                             <div class="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/80 space-y-1.5">
                                 <div class="flex items-center justify-between text-[11px]">
                                     <!-- Country Logo & Name -->
                                     <span class="flex items-center gap-1 font-semibold text-slate-200 truncate max-w-[130px]">
                                         <span class="text-sm leading-none">{{ tool.country_flag or '🌐' }}</span>
-                                        <span class="truncate">{{ tool.country_name or 'Global' }}</span>
+                                        <span class="truncate">{{ tool.country_name }}</span>
                                     </span>
                                     <!-- Year Founded -->
                                     {% if tool.founded_year %}
@@ -304,32 +305,22 @@
                                     {% endif %}
                                 </div>
 
+                                {% if tool.founders %}
                                 <div class="flex items-center justify-between text-[10px] pt-1.5 border-t border-slate-800/60">
-                                    <!-- Founder Name -->
                                     <span class="truncate max-w-[135px]" title="{{ tool.founders }}">
                                         <span class="text-slate-500 font-medium">By:</span>
-                                        <span class="text-slate-300 font-medium">{{ tool.founders or 'Founding Team' }}</span>
+                                        <span class="text-slate-300 font-medium">{{ tool.founders }}</span>
                                     </span>
-                                    <!-- GitHub Stars or Pricing -->
-                                    {% if tool.github_stars and tool.github_stars != 'N/A' %}
-                                    <span class="inline-flex items-center gap-0.5 text-[9px] font-mono font-bold text-amber-400 bg-amber-400/10 px-1.5 py-0.2 rounded border border-amber-400/20 flex-shrink-0">
-                                        ★ {{ tool.github_stars }}
-                                    </span>
-                                    {% else %}
-                                    <span class="text-[9px] font-mono text-emerald-400 truncate max-w-[100px]">
-                                        {{ tool.pricing_display or 'Standard SaaS' }}
-                                    </span>
-                                    {% endif %}
                                 </div>
+                                {% endif %}
                             </div>
+                            {% endif %}
 
-                            <!-- Compliance / Data Privacy Note -->
-                            <div class="p-2 rounded-xl bg-slate-950/80 border border-slate-800/90 text-[10px] flex items-center justify-between text-slate-300">
-                                <span class="flex items-center gap-1 truncate text-slate-400">
-                                    <span>🛡️</span>
-                                    <span class="truncate">{{ tool.eval_compliance or 'Standard Enterprise Cloud' }}</span>
-                                </span>
-                                <span class="text-[9px] font-mono text-emerald-400 font-semibold flex-shrink-0 ml-1">Verified</span>
+                            <!-- Pricing & Limits Notice -->
+                            <div class="p-2 rounded-xl bg-slate-950/80 border border-slate-800/90 text-[10px] text-slate-400">
+                                <p class="leading-tight">
+                                    Pricing and limits change often. Check the official site.
+                                </p>
                             </div>
 
                             <!-- Footer Outbound Link -->
