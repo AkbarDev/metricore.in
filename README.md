@@ -60,3 +60,16 @@ python run.py
 ```
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.  
 Interactive API docs are live at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
+---
+
+## ⚖️ Legal & Trademarks Disclaimer
+
+All product names, logos, brands, and trademarks referenced on this platform belong to their respective owners. Company, product, and service names used in this repository are for identification and informational purposes only. Use of these names, logos, and brands does not imply endorsement.
+
+Data files and benchmarks provided within this project are assembled for informational and educational purposes only, without warranties of any kind regarding completeness, timeliness, or accuracy.
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+

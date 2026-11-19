@@ -16,14 +16,27 @@ build/
 .next/
 out/
 
-# Environment Variables
-.env
-.env.local
-.env.*.local
+# Environment Variables & Secrets
+.env*
+*.pem
+*.key
+*.p12
+
+# Databases & Bundles
+*.sqlite
+*.sqlite3
+*.db
+*.bundle
+backups/
+backups
+metricore-backup.bundle
+
+# Deleted / Purged Folders & Sensitive Data
+industry_stack/
+app/data/users.json
 
 # Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *.log
-
