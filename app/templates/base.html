@@ -67,8 +67,24 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-900 bg-slate-950/80 py-8 text-center text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 space-y-2">
+    <footer class="border-t border-slate-900 bg-slate-950/80 py-10 text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 text-center">
+            <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold">
+                <a href="/ai-tools/" class="text-slate-400 hover:text-white transition-colors">AI Tools Directory</a>
+                <span class="text-slate-700">•</span>
+                <a 
+                    href="/industry-tool-stacks/"
+                    onclick="trackEvent('stacks_link_clicked', {placement: 'footer'})"
+                    class="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1 font-bold"
+                >
+                    <span>💼</span>
+                    <span>Industry Tool Stacks</span>
+                </a>
+                <span class="text-slate-700">•</span>
+                <a href="/eval-board/" class="text-slate-400 hover:text-white transition-colors">AI Tool Eval Board</a>
+                <span class="text-slate-700">•</span>
+                <a href="/" class="text-slate-400 hover:text-white transition-colors">Home</a>
+            </div>
             <p>© 2026 Metricore.in — AI Tool Finder & Benchmark Platform.</p>
             <p class="text-slate-600">Built with FastAPI, Jinja2 & Tailwind CSS. Continuous integration synced with GitHub.</p>
         </div>

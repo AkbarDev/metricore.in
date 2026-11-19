@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results for "{{ query }}" | Metricore{% endblock %}
+
+{% block extra_head %}
+<!-- Search results pages must not be indexed by search engines per specifications -->
+<meta name="robots" content="noindex, follow">
+{% endblock %}
+
+{% block content %}
+<div class="relative w-full overflow-hidden min-h-[75vh]">
+    <!-- Ambient Aura -->
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-purple-600/10 rounded-full blur-[150px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10">
+
+        <!-- ================= BREADCRUMBS ================= -->
+        <nav class="flex items-center space-x-2 text-xs text-slate-400 font-medium" aria-label="Breadcrumb">
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+            <span>/</span>
+            <span class="text-purple-300 font-bold">Search</span>
+            {% if query %}
+                <span>/</span>
+                <span class="text-white truncate max-w-xs">"{{ query }}"</span>
+            {% endif %}
+        </nav>
+
+        <!-- ================= SEARCH HEADER ================= -->
+        <div class="space-y-4 border-b border-slate-800/80 pb-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-bold">
+                            <span>{% if search_type == 'stacks' %}💼 Industry Stacks{% else %}⚡ AI Tool Finder{% endif %}</span>
+                        </span>
+                        {% if active_category and active_category.slug != 'all' %}
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300 text-xs font-medium">
+                            <span>{{ active_category.icon or '📁' }} Scoped to: <strong class="text-white">{{ active_category.label }}</strong></span>
+                            <a href="/search?q={{ query }}&cat=all&type={{ search_type }}" class="ml-1 text-slate-400 hover:text-rose-400 transition-colors" title="Remove category scope">✕</a>
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight flex items-center gap-3">
+                        {% if query %}
+                            <span>Search results for <span class="bg-gradient-to-r from-purple-400 via-pink-300 to-indigo-300 bg-clip-text text-transparent">"{{ query }}"</span></span>
+                        {% else %}
+                            <span>Browse {{ active_category.label if active_category else 'All AI Tools' }}</span>
+                        {% endif %}
+                        <span class="text-xs sm:text-sm font-mono font-bold px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-purple-300 align-middle">
+                            {{ total_results }} found
+                        </span>
+                    </h1>
+                </div>
+
+                <!-- Scope toggle / Back button -->
+                <div class="flex items-center gap-2 self-start sm:self-auto">
+                    {% if search_type == 'stacks' %}
+                        <a href="/industry-tool-stacks/" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5">
+                            <span>← All Industry Stacks</span>
+                        </a>
+                    {% else %}
+                        <a href="/ai-tools/" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-bold transition-all flex items-center gap-1.5">
+                            <span>← Browse Directory</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= ZERO RESULTS VIEW ================= -->
+        {% if total_results == 0 %}
+        <div class="p-8 sm:p-12 rounded-3xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl text-center space-y-5 max-w-2xl mx-auto shadow-2xl">
+            <div class="w-16 h-16 mx-auto rounded-3xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-3xl">
+                🔍
+            </div>
+
+            <div class="space-y-2">
+                {% if active_category and active_category.slug != 'all' %}
+                    <h2 class="text-xl font-black text-white">No results in {{ active_category.label }}.</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                        We couldn't find any tools matching "<strong class="text-slate-200">{{ query }}</strong>" inside the <strong>{{ active_category.label }}</strong> category.
+                    </p>
+                {% else %}
+                    <h2 class="text-xl font-black text-white">No tools found matching "{{ query }}"</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                        Try searching with more general keywords (e.g. "writing", "code", "analytics") or explore by category.
+                    </p>
+                {% endif %}
+            </div>
+
+            <!-- One-Click Fallback Action -->
+            <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+                {% if active_category and active_category.slug != 'all' %}
+                <a 
+                    href="/search?q={{ query }}&cat=all&type={{ search_type }}"
+                    class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-purple-600/30 transition-all flex items-center gap-2"
+                >
+                    <span>Search all categories for "{{ query }}"</span>
+                    <span>→</span>
+                </a>
+                {% endif %}
+                <a 
+                    href="/ai-tools/" 
+                    class="px-4 py-2.5 rounded-2xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-semibold transition-all"
+                >
+                    View All AI Tools
+                </a>
+                <a 
+                    href="/industry-tool-stacks/"
+                    onclick="trackEvent('stacks_link_clicked', {placement: 'zero_results'})"
+                    class="px-4 py-2.5 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/25 text-xs font-bold transition-all"
+                >
+                    💼 Explore Industry Stacks
+                </a>
+            </div>
+        </div>
+
+        <script>
+            // Analytics event: zero_result_search
+            document.addEventListener('DOMContentLoaded', () => {
+                if (typeof trackEvent === 'function') {
+                    trackEvent('zero_result_search', {
+                        query: "{{ query }}",
+                        category: "{{ active_category.slug if active_category else 'all' }}",
+                        mode: "{{ search_type }}"
+                    });
+                }
+            });
+        </script>
+        {% endif %}
+
+        <!-- ================= RESULTS GRID (AI TOOLS) ================= -->
+        {% if search_type == 'tools' and total_results > 0 %}
+        <div class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {% for tool in tools %}
+                    {% include "components/tool_card.html" %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- ================= RESULTS GRID (INDUSTRY STACKS) ================= -->
+        {% if search_type == 'stacks' and total_results > 0 %}
+        <div class="space-y-8">
+            <!-- Stacks Grid -->
+            {% if stacks and stacks|length > 0 %}
+            <div class="space-y-4">
+                <h3 class="text-xs font-black uppercase tracking-wider text-emerald-400">Matching Corporate Stacks ({{ stacks|length }})</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for stack in stacks %}
+                    <div class="group rounded-3xl border border-slate-800/90 bg-slate-900/60 p-6 flex flex-col justify-between space-y-4 hover:border-emerald-500/50 hover:bg-slate-900/90 transition-all shadow-xl hover:-translate-y-1">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                                    {{ stack.function }}
+                                </span>
+                                <span class="text-[11px] font-mono text-slate-400">{{ stack.tool_ids|length }} Tools</span>
+                            </div>
+                            <h4 class="text-lg font-black text-white group-hover:text-emerald-300 transition-colors">
+                                <a href="/industry-tool-stacks/{{ stack.slug }}/">{{ stack.name }}</a>
+                            </h4>
+                            <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed">{{ stack.summary }}</p>
+                        </div>
+                        <a href="/industry-tool-stacks/{{ stack.slug }}/" class="w-full py-2 rounded-xl bg-slate-950 hover:bg-emerald-600 text-slate-200 hover:text-white border border-slate-800 hover:border-emerald-500 text-xs font-bold transition-all text-center">
+                            Explore Stack & Workflows →
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Matching Use Cases -->
+            {% if use_cases and use_cases|length > 0 %}
+            <div class="space-y-4 pt-4 border-t border-slate-800/80">
+                <h3 class="text-xs font-black uppercase tracking-wider text-indigo-400">Matching Real Workflows ({{ use_cases|length }})</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for uc in use_cases %}
+                    <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/40 transition-all space-y-2.5">
+                        <div class="flex items-center justify-between text-[10px]">
+                            <span class="font-bold uppercase tracking-wider text-purple-400">{{ uc.role }}</span>
+                            <span class="font-mono text-slate-500">{{ uc.level }}</span>
+                        </div>
+                        <h4 class="text-base font-bold text-white hover:text-purple-300 transition-colors">
+                            <a href="/industry-tool-stacks/{{ uc.stack_slug }}/{{ uc.slug }}/">{{ uc.title }}</a>
+                        </h4>
+                        <p class="text-xs text-slate-400 line-clamp-2">{{ uc.situation }}</p>
+                        <div class="pt-2 flex items-center justify-between text-xs">
+                            <span class="text-[11px] text-slate-500 font-mono">{{ uc.tool_ids|length }} tools combined</span>
+                            <a href="/industry-tool-stacks/{{ uc.stack_slug }}/{{ uc.slug }}/" class="text-emerald-400 font-bold hover:underline">
+                                View Workflow →
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
