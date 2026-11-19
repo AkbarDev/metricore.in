@@ -571,14 +571,22 @@ async def industry_tool_stacks_overview(
         use_cases = get_use_cases_for_stack(s["slug"], include_unreviewed=is_preview)
         stacks_with_counts.append({
             **s,
-            "use_case_count": len(use_cases)
+            "use_case_count": len(use_cases),
+            "tool_count": len(s.get("tool_ids", []))
         })
+
+    total_tools_count = len(get_all_stack_tools())
+    total_departments_count = len(all_stacks)
+    total_workflows_count = sum(s["use_case_count"] for s in stacks_with_counts)
 
     return templates.TemplateResponse(
         request=request,
         name="industry_stacks/overview.html",
         context={
             "stacks": stacks_with_counts,
+            "total_tools_count": total_tools_count,
+            "total_departments_count": total_departments_count,
+            "total_workflows_count": total_workflows_count,
             "is_preview": is_preview,
             "show_filters_row": False,
             "active_category_slug": "industry-tool-stacks",

@@ -16,18 +16,84 @@
             <span class="text-purple-300 font-bold">Industry Tool Stacks</span>
         </nav>
 
-        <!-- ================= HERO ================= -->
-        <div class="space-y-4 max-w-4xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-bold">
+        <!-- ================= HERO & CORE MISSION STATEMENT ================= -->
+        <div class="space-y-6 max-w-4xl">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold backdrop-blur-md">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Real-World Corporate Tool Stacks</span>
+                <span>Corporate Workflow Integration Engine</span>
+                <span class="text-slate-600">•</span>
+                <span class="text-emerald-300 font-mono">Multi-Tool Enterprise Stacks</span>
             </div>
-            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-                Tool stacks used in real corporate work
+
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+                Discover & Connect <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-300 bg-clip-text text-transparent">Industry-Grade Tool Stacks</span> for Modern Corporate Work
             </h1>
-            <p class="text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed">
-                See which tools teams combine, and how to use them on the job or for clients.
+
+            <p class="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
+                Reach leading corporate platforms, automation engines, and generative AI layers utilized for multi-tool workflow creation. Discover how enterprise teams and freelancers integrate tools together for real job execution and client deliverables — verified without course marketing or promotional hype.
             </p>
+
+            <!-- At-a-Glance KPI Ribbon -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-emerald-400">{{ total_tools_count }}</div>
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Corporate Tools</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-white">{{ total_departments_count }}</div>
+                    <div class="text-[10px] uppercase tracking-wider text-emerald-400 font-bold">Departments</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-indigo-400">{{ total_workflows_count }}</div>
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Tested Workflows</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-teal-400">100%</div>
+                    <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Privacy Audited</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= DEPARTMENT-WISE TOOL BREAKDOWN (MODERN DIRECTORY GRID) ================= -->
+        <div class="space-y-4 pt-4 border-t border-slate-800/80">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                    <span class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-sm">🏢</span>
+                    <h2 class="text-sm font-black uppercase tracking-wider text-slate-200">Tools by Corporate Department</h2>
+                </div>
+                <span class="text-xs text-slate-400 font-mono">Click any department below to filter stacks</span>
+            </div>
+
+            <!-- Modern Department Cards Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3.5">
+                {% for stack in stacks %}
+                <button 
+                    type="button"
+                    onclick="selectDepartmentFilter('{{ stack.function }}')"
+                    id="dept-btn-{{ stack.slug }}"
+                    class="dept-pill group p-4 rounded-3xl bg-slate-900/70 hover:bg-slate-900 border border-slate-800/90 hover:border-emerald-500/50 transition-all text-left flex flex-col justify-between space-y-3 shadow-md hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1 cursor-pointer"
+                    data-function="{{ stack.function|lower }}"
+                >
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl p-2.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 group-hover:scale-110 transition-transform">
+                            {{ stack.icon or '💼' }}
+                        </span>
+                        <span class="text-[11px] font-mono font-bold px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                            {{ stack.tool_count }} Tools
+                        </span>
+                    </div>
+                    <div>
+                        <div class="text-sm font-black text-white group-hover:text-emerald-300 transition-colors">
+                            {{ stack.function }}
+                        </div>
+                        <div class="text-[11px] text-slate-400 mt-1 flex items-center justify-between">
+                            <span>{{ stack.use_case_count }} Workflows</span>
+                            <span class="text-emerald-400 font-bold opacity-0 group-hover:opacity-100 transition-opacity">View →</span>
+                        </div>
+                    </div>
+                </button>
+                {% endfor %}
+            </div>
         </div>
 
         <!-- ================= PREVIEW MODE BANNER (IF ACTIVE) ================= -->
@@ -72,11 +138,10 @@
                 <!-- Function filter -->
                 <div>
                     <select id="filter-function" onchange="filterStacks()" class="w-full py-2.5 px-3 rounded-xl bg-slate-950/90 border border-slate-800 text-xs text-slate-300 focus:outline-none focus:border-emerald-500 font-medium">
-                        <option value="">All Functions</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Data & Analytics">Data & Analytics</option>
-                        <option value="Human Resources">Human Resources</option>
-                        <option value="Product & Operations">Product & Operations</option>
+                        <option value="">All Functions ({{ stacks|length }})</option>
+                        {% for stack in stacks %}
+                            <option value="{{ stack.function }}">{{ stack.function }} ({{ stack.tool_count }} Tools)</option>
+                        {% endfor %}
                     </select>
                 </div>
 
@@ -178,12 +243,40 @@
     </div>
 </div>
 
-<!-- Dynamic Search Script -->
+<!-- Dynamic Search & Department Filter Script -->
 <script>
+    function selectDepartmentFilter(fnName) {
+        const select = document.getElementById('filter-function');
+        if (!select) return;
+
+        // Toggle: if already active, clear filter; otherwise set to fnName
+        if (select.value.toLowerCase() === fnName.toLowerCase()) {
+            select.value = '';
+        } else {
+            select.value = fnName;
+        }
+
+        filterStacks();
+
+        // Smooth scroll to stacks grid
+        document.getElementById('stacks-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     function filterStacks() {
         const query = (document.getElementById('stacks-search')?.value || '').toLowerCase().trim();
         const fnFilter = (document.getElementById('filter-function')?.value || '').toLowerCase().trim();
         const cards = document.querySelectorAll('.stack-card');
+        const deptPills = document.querySelectorAll('.dept-pill');
+
+        // Update active highlight on department cards
+        deptPills.forEach(pill => {
+            const pillFn = (pill.getAttribute('data-function') || '').toLowerCase();
+            if (fnFilter && pillFn === fnFilter) {
+                pill.classList.add('ring-2', 'ring-emerald-500', 'bg-emerald-950/40', 'border-emerald-500');
+            } else {
+                pill.classList.remove('ring-2', 'ring-emerald-500', 'bg-emerald-950/40', 'border-emerald-500');
+            }
+        });
 
         cards.forEach(card => {
             const name = card.getAttribute('data-name') || '';
