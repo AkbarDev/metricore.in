@@ -186,7 +186,7 @@
                 href="/industry-tool-stacks/"
                 onclick="trackEvent('stacks_link_clicked', {placement: 'sticky'})"
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 hover:text-white border border-emerald-500/25 text-xs font-bold transition-all shadow-sm min-h-[44px]"
-                title="Corporate Tool Stacks & Real-World Workflows"
+                title="Industry Tool Stacks & Real-World Workflows"
             >
                 <span>💼</span>
                 <span>Stacks</span>
@@ -361,7 +361,7 @@
             <span class="text-lg">💼</span>
             <div class="flex-1">
                 <div>Industry Tool Stacks</div>
-                <div class="text-[10px] text-emerald-400/80 font-normal">Real corporate tool combinations & workflows</div>
+                <div class="text-[10px] text-emerald-400/80 font-normal">Real workplace tool combinations & workflows</div>
             </div>
             <span>→</span>
         </a>
@@ -575,7 +575,7 @@
         // Placeholder changes based on selection & mode
         const placeholder = slug && slug !== 'all'
             ? (currentMode === 'stacks' ? `Search ${label} stacks & workflows...` : `Search ${label} tools...`)
-            : (currentMode === 'stacks' ? `Search corporate stacks, tools, workflows...` : `Search 500+ AI tools, categories, use cases...`);
+            : (currentMode === 'stacks' ? `Search industry stacks, tools, workflows...` : `Search 500+ AI tools, categories, use cases...`);
 
         if (searchInput) searchInput.placeholder = placeholder;
         if (mSearchInput) mSearchInput.placeholder = placeholder;
@@ -830,7 +830,7 @@
             g.className = 'p-2';
             const gTitle = document.createElement('div');
             gTitle.className = 'text-[10px] uppercase font-bold tracking-wider text-purple-400 px-3 py-1';
-            gTitle.textContent = currentMode === 'stacks' ? 'Corporate Stacks' : 'AI Tools';
+            gTitle.textContent = currentMode === 'stacks' ? 'Industry Stacks' : 'AI Tools';
             g.appendChild(gTitle);
 
             tools.slice(0, 5).forEach(t => {

@@ -985,7 +985,7 @@ async def industry_use_case_detail(
         raise HTTPException(status_code=404, detail="Use case not found")
 
     tools_used = get_tools_for_stack(use_case.get("tool_ids", []))
-    main_tool_name = tools_used[0]["name"] if tools_used else "Corporate Tools"
+    main_tool_name = tools_used[0]["name"] if tools_used else "Industry Tools"
 
     return templates.TemplateResponse(
         request=request,
