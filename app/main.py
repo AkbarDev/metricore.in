@@ -252,7 +252,10 @@ def get_client_ip(request: Request) -> str:
 async def head_request_middleware(request: Request, call_next):
     if request.method == "HEAD":
         request.scope["method"] = "GET"
-        response = await call_next(request)
+        try:
+            response = await call_next(request)
+        finally:
+            request.scope["method"] = "HEAD"
         return Response(status_code=response.status_code, headers=dict(response.headers))
     return await call_next(request)
 
