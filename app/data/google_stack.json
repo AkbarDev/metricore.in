@@ -24,17 +24,10 @@
         "alt": "Google Antigravity coding agent interface preview",
         "caption": "Google Antigravity IDE and autonomous coding agent (Source: google_stack/Antigravity.png)"
       },
-      "secondary_media": {
-        "type": "video",
-        "url": "/google_stack/google_stack.webm",
-        "alt": "Google AI Stack video walkthrough featuring Antigravity",
-        "caption": "Featured at 00:31 in Google AI Stack video review"
-      },
       "official_url": "https://labs.google",
       "source_assets": [
         "Antigravity.png",
-        "grouped1.png",
-        "google_stack.webm"
+        "grouped1.png"
       ],
       "competitors": [
         {
@@ -98,8 +91,7 @@
       "official_url": "https://labs.google",
       "source_assets": [
         "google_stitch.png",
-        "grouped1.png",
-        "google_stack.webm"
+        "grouped1.png"
       ],
       "competitors": [
         {
@@ -163,8 +155,7 @@
       "official_url": "https://labs.google",
       "source_assets": [
         "google_opal.png",
-        "grouped1.png",
-        "google_stack.webm"
+        "grouped1.png"
       ],
       "competitors": [
         {
@@ -468,16 +459,15 @@
         "caption": "Google Flow audiovisual creative studio (Source: google_stack/google_flow_video_generatoe.png)"
       },
       "secondary_media": {
-        "type": "video",
-        "url": "/google_stack/google_stack.webm",
-        "alt": "Google AI Stack video review",
-        "caption": "Featured in Google AI tools video overview"
+        "type": "image",
+        "url": "/google_stack/googleflow_music.png",
+        "alt": "Google Flow MusicFX interface",
+        "caption": "Flow audio and music generation studio interface"
       },
       "official_url": "https://labs.google",
       "source_assets": [
         "google_flow_video_generatoe.png",
-        "googleflow_music.png",
-        "google_stack.webm"
+        "googleflow_music.png"
       ],
       "competitors": [
         {
@@ -607,8 +597,7 @@
         "Pomeli.png",
         "pomelli1.png",
         "grouped4.png",
-        "gs1.png",
-        "google_stack.webm"
+        "gs1.png"
       ],
       "competitors": [
         {
@@ -674,8 +663,7 @@
         "google mixboard.png",
         "mixboard.png",
         "grouped4.png",
-        "gs1.png",
-        "google_stack.webm"
+        "gs1.png"
       ],
       "competitors": [
         {

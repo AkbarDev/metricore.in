@@ -56,36 +56,52 @@
                 </div>
             </div>
 
-            <!-- Video Showcase Card (google_stack.webm) -->
-            <div class="lg:col-span-5 rounded-3xl bg-slate-900/80 border border-purple-500/25 p-5 shadow-2xl backdrop-blur-xl space-y-4">
+            <!-- Ecosystem Overview Card (Replaces video walkthrough) -->
+            <div class="lg:col-span-5 rounded-3xl bg-slate-900/80 border border-purple-500/25 p-5 sm:p-6 shadow-2xl backdrop-blur-xl space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                     <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                        <h2 class="text-xs font-bold uppercase tracking-wider text-white">Video Walkthrough</h2>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        <h2 class="text-xs font-bold uppercase tracking-wider text-white">Ecosystem Highlights</h2>
                     </div>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">google_stack.webm</span>
+                    <span class="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20">Google Labs & DeepMind</span>
                 </div>
 
-                <div class="relative rounded-2xl overflow-hidden bg-black border border-slate-800 aspect-video flex items-center justify-center">
-                    <video 
-                        controls 
-                        preload="metadata"
-                        class="w-full h-full object-cover"
-                        poster="/google_stack/Antigravity.png"
-                    >
-                        <source src="/google_stack/google_stack.webm" type="video/webm">
-                        Your browser does not support the video tag.
-                    </video>
+                <div class="space-y-2.5">
+                    <div class="p-3 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex items-start gap-3">
+                        <span class="text-xl">💻</span>
+                        <div class="space-y-0.5 text-xs">
+                            <span class="font-bold text-white">Autonomous Coding & IDE Agents</span>
+                            <p class="text-[11px] text-slate-400">Antigravity, AI Studio, CodeWiki, Jules, Gemini CLI, Code Assist</p>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex items-start gap-3">
+                        <span class="text-xl">🎨</span>
+                        <div class="space-y-0.5 text-xs">
+                            <span class="font-bold text-white">UI Design & App Prototyping</span>
+                            <p class="text-[11px] text-slate-400">Stitch (Prompt-to-UI), Opal (No-Code Workflows), Disco (Web-to-App)</p>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex items-start gap-3">
+                        <span class="text-xl">📚</span>
+                        <div class="space-y-0.5 text-xs">
+                            <span class="font-bold text-white">Research & Document Intelligence</span>
+                            <p class="text-[11px] text-slate-400">NotebookLM (Audio Overviews), Pinpoint, Illuminate, Stax, Learn Your Way</p>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-2xl bg-slate-950/70 border border-slate-800/80 flex items-start gap-3">
+                        <span class="text-xl">🎬</span>
+                        <div class="space-y-0.5 text-xs">
+                            <span class="font-bold text-white">Audiovisual & Campaign Creation</span>
+                            <p class="text-[11px] text-slate-400">Google Flow (Veo & MusicFX), Pomelli (Brand DNA), Mixboard (Moodboards)</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="text-xs text-slate-400 space-y-1.5 leading-relaxed">
-                    <div class="font-bold text-slate-200 flex items-center gap-1.5">
-                        <span>🎬</span>
-                        <span>"Google Just Released 15 Free AI Tools"</span>
-                    </div>
-                    <p class="text-[11px] text-slate-400">
-                        Highlights Pomelli (marketing), Stitch (UI design), Opal (workflows), Antigravity (coding agent), and Mixboard (moodboards). All reviewed tools are cataloged below.
-                    </p>
+                <div class="pt-1 text-[11px] text-slate-500 flex items-center justify-between">
+                    <span>Non-commercial open reference</span>
+                    <a href="#google-tools-grid" class="text-purple-400 hover:text-purple-300 font-semibold flex items-center gap-1">
+                        Explore All Tools ↓
+                    </a>
                 </div>
             </div>
         </div>
