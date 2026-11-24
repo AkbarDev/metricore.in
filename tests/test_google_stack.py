@@ -68,3 +68,27 @@ def test_google_stack_head_request():
     assert response.status_code == 200
     assert response.content == b""
     assert "x-content-type-options" in response.headers
+
+
+def test_google_stack_no_duplicates():
+    tools = get_all_google_tools()
+    assert len(tools) == 18
+    slugs = [t["slug"] for t in tools]
+    names = [t["name"] for t in tools]
+    assert len(slugs) == len(set(slugs)), f"Duplicate slugs found: {slugs}"
+    assert len(names) == len(set(names)), f"Duplicate names found: {names}"
+
+    # Confirm flow is unified and no duplicate flows or generic assistant
+    assert "google-flow" in slugs
+    assert "flow-music" not in slugs
+    assert "google-flow-video" not in slugs
+    assert "gemini-assistant" not in slugs
+
+    # Confirm all media files exist
+    base_dir = Path(__file__).resolve().parent.parent
+    for t in tools:
+        media_path = t.get("media", {}).get("url", "")
+        assert media_path.startswith("/google_stack/"), f"Invalid media url: {media_path}"
+        actual_file = base_dir / media_path.lstrip("/")
+        assert actual_file.exists(), f"Media file does not exist: {actual_file}"
+

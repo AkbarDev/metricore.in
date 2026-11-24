@@ -64,12 +64,13 @@ def get_google_categories() -> List[Dict[str, Any]]:
     result = []
     for slug, meta in sorted(category_meta.items(), key=lambda x: x[1]["order"]):
         count = counts.get(slug, 0)
-        result.append({
-            "slug": slug,
-            "label": meta["label"],
-            "icon": meta["icon"],
-            "count": count
-        })
+        if count > 0:
+            result.append({
+                "slug": slug,
+                "label": meta["label"],
+                "icon": meta["icon"],
+                "count": count
+            })
     return result
 
 
@@ -85,3 +86,4 @@ def get_google_status_counts() -> Dict[str, int]:
         else:
             counts["free"] += 1
     return counts
+

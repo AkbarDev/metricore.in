@@ -87,19 +87,35 @@
                 </span>
             </div>
 
-            <div class="relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 max-h-[500px] flex items-center justify-center">
+            <div class="relative rounded-2xl overflow-hidden bg-slate-950/90 border border-slate-800 min-h-[300px] max-h-[550px] p-4 flex items-center justify-center">
                 {% if tool.media and tool.media.url %}
+                <!-- Ambient Blur Glow Backdrop matching asset colors -->
+                <div class="absolute inset-0 bg-cover bg-center opacity-25 blur-2xl scale-110 pointer-events-none" style="background-image: url('{{ tool.media.url }}');"></div>
+
+                <!-- Full Uncropped Authentic Asset -->
                 <img 
                     src="{{ tool.media.url }}" 
                     alt="{{ tool.media.alt }}"
                     loading="lazy"
-                    class="w-full h-auto max-h-[500px] object-contain mx-auto"
+                    class="relative z-10 w-auto h-auto max-h-[500px] max-w-full object-contain rounded-xl drop-shadow-xl mx-auto cursor-pointer"
+                    onclick="openImageLightbox('{{ tool.media.url }}', '{{ tool.name|escape }}', '{{ tool.source_assets[0] }}')"
                     onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
                 >
-                <div class="hidden p-12 text-center text-slate-400">
+                <div class="hidden p-12 text-center text-slate-400 relative z-10">
                     <span class="text-4xl">🤖</span>
                     <p class="text-xs mt-2">{{ tool.name }} Asset Preview</p>
                 </div>
+
+                <!-- Zoom Trigger Button -->
+                <button 
+                    type="button" 
+                    class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-lg bg-black/80 hover:bg-purple-900/80 text-slate-300 hover:text-white border border-slate-700/60 backdrop-blur-sm text-xs font-semibold flex items-center gap-1.5 transition-colors"
+                    title="Expand high-res preview"
+                    onclick="openImageLightbox('{{ tool.media.url }}', '{{ tool.name|escape }}', '{{ tool.source_assets[0] }}')"
+                >
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
+                    <span>Zoom Preview</span>
+                </button>
                 {% endif %}
             </div>
 
@@ -239,6 +255,51 @@
     </div>
 </div>
 
+<!-- ================= IMAGE LIGHTBOX MODAL ================= -->
+<div id="image-lightbox-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeImageLightbox()">
+    <div class="relative max-w-5xl max-h-[92vh] w-full flex flex-col items-center bg-slate-900/95 border border-slate-700/80 rounded-3xl p-4 overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+        <div class="w-full flex items-center justify-between pb-3 border-b border-slate-800 text-xs">
+            <div class="flex items-center gap-2.5">
+                <span id="lightbox-title" class="font-bold text-white text-sm sm:text-base"></span>
+                <span id="lightbox-source" class="font-mono text-purple-400 bg-purple-500/10 px-2.5 py-0.5 rounded-full border border-purple-500/20 text-[10px]"></span>
+            </div>
+            <button type="button" onclick="closeImageLightbox()" class="text-slate-400 hover:text-white p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="w-full p-4 flex items-center justify-center overflow-auto max-h-[80vh]">
+            <img id="lightbox-img" src="" alt="" class="max-h-[76vh] max-w-full object-contain rounded-xl drop-shadow-2xl">
+        </div>
+    </div>
+</div>
+
+<script>
+    function openImageLightbox(url, name, source) {
+        const modal = document.getElementById('image-lightbox-modal');
+        const img = document.getElementById('lightbox-img');
+        const title = document.getElementById('lightbox-title');
+        const srcTag = document.getElementById('lightbox-source');
+        if (!modal || !img) return;
+        img.src = url;
+        img.alt = name || 'Asset Preview';
+        if (title) title.textContent = name || '';
+        if (srcTag) srcTag.textContent = source || '';
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageLightbox() {
+        const modal = document.getElementById('image-lightbox-modal');
+        if (!modal) return;
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeImageLightbox();
+    });
+</script>
+
 <!-- Structured Data -->
 <script type="application/ld+json">
 {
@@ -256,3 +317,4 @@
 }
 </script>
 {% endblock %}
+
