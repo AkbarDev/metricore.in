@@ -1,0 +1,1256 @@
+{
+    "tools": [
+        {
+            "id": "google-antigravity",
+            "name": "Google Antigravity",
+            "slug": "google-antigravity",
+            "category": "coding",
+            "tagline": "Agentic coding environment for building full-stack applications, databases, authentication, and Firebase integrations from text prompts.",
+            "pricing_badge": "Free Preview",
+            "is_free": true,
+            "pricing_type": "Free Preview",
+            "free_tier_limits": "Full access to coding agents, scaffolding tools, and project workspaces during public preview without subscription fees.",
+            "the_catch": "Currently in developer preview on Google Labs / AI Studio; high-throughput background cloud executions may require linking a Gemini API key.",
+            "what_it_does": "Google Antigravity is an agentic software development environment designed to build complete web applications, backend architectures, authentication flows, and database schemas directly from natural language prompts. It automates package installation, architectural design, framework configuration, and Firebase deployment.",
+            "use_cases": [
+                "Prototyping full-stack web applications from descriptive prompts",
+                "Scaffolding user authentication and Firestore database schemas",
+                "Automated dependency resolution and framework configuration",
+                "Pair-programming with autonomous agents for debugging and refactoring"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/Antigravity.png",
+                "alt": "Google Antigravity coding agent interface preview",
+                "caption": "Google Antigravity IDE and autonomous coding agent (Source: google_stack/Antigravity.png)"
+            },
+            "secondary_media": {
+                "type": "video",
+                "url": "/google_stack/google_stack.webm",
+                "alt": "Google AI Stack video walkthrough featuring Antigravity",
+                "caption": "Featured at 00:31 in Google AI Stack video review"
+            },
+            "official_url": "https://labs.google",
+            "source_assets": [
+                "Antigravity.png",
+                "grouped1.png",
+                "google_stack.webm"
+            ],
+            "competitors": [
+                {
+                    "provider": "Anthropic",
+                    "equivalent_tool": "Claude Code",
+                    "what_is_free": "CLI terminal preview (uses user's Anthropic API credits)",
+                    "key_limits": "Requires Anthropic console billing card; pay-per-token after trial credits",
+                    "stronger_than_google": "Excels at deeply nuanced multi-file refactoring on local repositories",
+                    "weaker_than_google": "No built-in cloud visual sandbox, zero-cost free tier, or native Firebase integration"
+                },
+                {
+                    "provider": "Microsoft / GitHub",
+                    "equivalent_tool": "GitHub Copilot Workspace",
+                    "what_is_free": "Limited technical preview for select GitHub users",
+                    "key_limits": "Requires active GitHub Copilot paid license ($10\u2013$19/mo)",
+                    "stronger_than_google": "Tightly integrated into GitHub Issues, PR workflows, and git repo histories",
+                    "weaker_than_google": "Requires paid monthly seat; slower full-stack runtime environment spin-up"
+                },
+                {
+                    "provider": "Anysphere",
+                    "equivalent_tool": "Cursor (Composer)",
+                    "what_is_free": "14-day Pro trial followed by 50 slow agent requests/month",
+                    "key_limits": "Strict 50 request/month cap on free tier; Pro is $20/month",
+                    "stronger_than_google": "Mature VS Code fork with thousands of community extensions and keybindings",
+                    "weaker_than_google": "Limited free requests; no native zero-config backend cloud hosting"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs / Google DeepMind"
+        },
+        {
+            "id": "google-stitch",
+            "name": "Google Stitch",
+            "slug": "google-stitch",
+            "category": "app and UI building",
+            "tagline": "Design agent that transforms prompts, sketches, and wireframes into polished, modern UI layouts and exportable code.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Unlimited interface generations and prototype exports during Google Labs public beta.",
+            "the_catch": "Experimental Labs status; export formats currently target standard modern web frameworks and Google AI Studio prototypes.",
+            "what_it_does": "Google Stitch turns natural language design descriptions, napkin sketches, or wireframe images into clean, production-ready user interface screens. It allows non-technical creators and product managers to generate complete multi-screen app flows, tweak color schemes, and export clean HTML/CSS/React components or send them straight to AI Studio.",
+            "use_cases": [
+                "Converting wireframe sketches into high-fidelity UI screens",
+                "Generating mobile app layouts and web dashboard components",
+                "Rapid mockup creation for client pitches and user testing",
+                "Exporting visual UI layouts directly to clean frontend code"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/google_stitch.png",
+                "alt": "Google Stitch UI design agent interface preview",
+                "caption": "Google Stitch prompt-to-UI design agent (Source: google_stack/google_stitch.png)"
+            },
+            "secondary_media": {
+                "type": "image",
+                "url": "/google_stack/grouped1.png",
+                "alt": "Google Stitch overview card",
+                "caption": "Stitch design overview in grouped carousel"
+            },
+            "official_url": "https://labs.google",
+            "source_assets": [
+                "google_stitch.png",
+                "grouped1.png",
+                "google_stack.webm"
+            ],
+            "competitors": [
+                {
+                    "provider": "Vercel",
+                    "equivalent_tool": "v0 by Vercel",
+                    "what_is_free": "Free tier with 200 monthly generation credits",
+                    "key_limits": "200 credits/month; premium AI models require $20/month Pro tier",
+                    "stronger_than_google": "Superior copy-paste React, Tailwind CSS, and shadcn/ui component integration",
+                    "weaker_than_google": "Hard credit cap on free usage; Stitch offers free exploratory multi-screen generation"
+                },
+                {
+                    "provider": "Figma",
+                    "equivalent_tool": "Figma AI",
+                    "what_is_free": "Free starter tier with basic drafts and view access",
+                    "key_limits": "AI generation tools gated behind paid team plans ($12\u2013$75/editor/mo)",
+                    "stronger_than_google": "World-standard collaborative vector design and design-system tokens",
+                    "weaker_than_google": "Heavy subscription barrier for generative layout creation"
+                },
+                {
+                    "provider": "Uizard",
+                    "equivalent_tool": "Uizard Autodesigner",
+                    "what_is_free": "Free plan with 2 active projects and limited generation tokens",
+                    "key_limits": "Watermarked exports; paid plans start at $12/month",
+                    "stronger_than_google": "Pre-made mobile device mockups and heatmaps",
+                    "weaker_than_google": "Strict 2-project limitation; Stitch generates freely without watermarks"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs"
+        },
+        {
+            "id": "google-opal",
+            "name": "Google Opal",
+            "slug": "google-opal",
+            "category": "app and UI building",
+            "tagline": "No-code AI workflow and mini-app builder that turns natural language instructions into functional multi-step web applications.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free creation and public link sharing of AI workflows and mini-apps during Labs beta.",
+            "the_catch": "Fewer third-party enterprise API connectors than dedicated enterprise automation engines (e.g. Zapier/Make); optimized for Google models and web search.",
+            "what_it_does": "Google Opal acts like a free, prompt-driven equivalent of n8n or Make. Users describe an interactive workflow (such as an automated quiz generator from lecture videos, a competitor comparison synthesizer, or a lead intake enricher), and Opal automatically wires up input fields, Gemini inference nodes, web lookups, and formatted outputs into a shareable web app.",
+            "use_cases": [
+                "Building custom quiz and study tools from uploaded content",
+                "Creating multi-step document summarization and extraction pipelines",
+                "Deploying shareable internal team tools without writing JavaScript or hosting servers",
+                "Chaining Gemini AI models with live Google search queries"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/google_opal.png",
+                "alt": "Google Opal visual workflow interface preview",
+                "caption": "Google Opal no-code AI workflow builder (Source: google_stack/google_opal.png)"
+            },
+            "secondary_media": {
+                "type": "image",
+                "url": "/google_stack/grouped1.png",
+                "alt": "Google Opal card in grouped stack",
+                "caption": "Opal visual workflow overview in carousel"
+            },
+            "official_url": "https://labs.google",
+            "source_assets": [
+                "google_opal.png",
+                "grouped1.png",
+                "google_stack.webm"
+            ],
+            "competitors": [
+                {
+                    "provider": "n8n",
+                    "equivalent_tool": "n8n Community Edition",
+                    "what_is_free": "100% free open-source self-hosted software (unlimited executions)",
+                    "key_limits": "Requires self-hosting, server maintenance, and technical Docker knowledge",
+                    "stronger_than_google": "Hundreds of enterprise integrations, webhooks, and raw code nodes",
+                    "weaker_than_google": "Steep technical barrier; Opal requires zero infrastructure and builds from English"
+                },
+                {
+                    "provider": "Make.com",
+                    "equivalent_tool": "Make Free Plan",
+                    "what_is_free": "1,000 operations/month, 2 active scenarios",
+                    "key_limits": "Strict 1,000 operation ceiling; paid plans start at $9/month",
+                    "stronger_than_google": "Extensive third-party SaaS ecosystem and branching logic",
+                    "weaker_than_google": "Easy to burn through 1,000 free operations in hours; Opal is unlimited in beta"
+                },
+                {
+                    "provider": "Zapier",
+                    "equivalent_tool": "Zapier Central",
+                    "what_is_free": "Free tier with basic bots and 100 actions/month",
+                    "key_limits": "100 actions/month cap; paid plans start at $20/month",
+                    "stronger_than_google": "Connects to over 6,000 commercial applications",
+                    "weaker_than_google": "Expensive per-task pricing; Opal natively embeds Gemini reasoning at no cost"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs"
+        },
+        {
+            "id": "notebooklm",
+            "name": "NotebookLM (Gemini Notebook)",
+            "slug": "notebooklm",
+            "category": "research",
+            "tagline": "Personalized AI research assistant that strictly cites your uploaded documents and generates studio-quality audio podcast overviews.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free with a standard Google account. Up to 50 source documents per notebook (500,000 words per source).",
+            "the_catch": "Audio Overview generation can experience processing delays during peak load; limited to source-grounded answers (does not browse the open web during notebook queries).",
+            "what_it_does": "NotebookLM (formerly Project Tailwind) acts as a collaborative research partner. Users upload PDFs, Google Docs, copied text, web URLs, or YouTube links. The tool creates a dedicated knowledge graph that only answers questions based on the uploaded material, providing inline clickable citations. Its breakthrough feature, Audio Overview, turns complex notes into a natural two-host podcast debate.",
+            "use_cases": [
+                "Synthesizing multiple research papers, textbooks, and lecture transcripts",
+                "Generating Audio Overview podcasts for auditory learning during commutes",
+                "Creating study guides, FAQs, briefing documents, and chronologies",
+                "Verifying claims with strict source grounding and citation jumps"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/Gemini_notebook.png",
+                "alt": "NotebookLM Gemini Notebook research interface preview",
+                "caption": "NotebookLM grounded research and Audio Overview studio (Source: google_stack/Gemini_notebook.png)"
+            },
+            "secondary_media": {
+                "type": "image",
+                "url": "/google_stack/gs1.png",
+                "alt": "Gemini Notebook in Google AI Tools infographic",
+                "caption": "Tool #02 in Google AI Stack infographic"
+            },
+            "official_url": "https://notebooklm.google.com",
+            "source_assets": [
+                "Gemini_notebook.png",
+                "grouped2.png",
+                "gs1.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "Anthropic",
+                    "equivalent_tool": "Claude Projects",
+                    "what_is_free": "Free tier has basic document upload, but strict message volume caps",
+                    "key_limits": "Claude Projects requires Claude Pro subscription ($20/month)",
+                    "stronger_than_google": "Nuanced creative writing and complex code generation capabilities",
+                    "weaker_than_google": "Paid-only for persistent project libraries; no audio overview or podcast generator"
+                },
+                {
+                    "provider": "OpenAI",
+                    "equivalent_tool": "Custom GPTs (with Knowledge)",
+                    "what_is_free": "Free users can search and query existing Custom GPTs",
+                    "key_limits": "Creating custom GPTs and high file limits requires ChatGPT Plus ($20/month)",
+                    "stronger_than_google": "Broad action integration with third-party web APIs",
+                    "weaker_than_google": "More prone to hallucinating beyond uploaded files; lacks native two-host audio debate synthesis"
+                },
+                {
+                    "provider": "ChatPDF",
+                    "equivalent_tool": "ChatPDF",
+                    "what_is_free": "2 PDFs/day up to 120 pages each",
+                    "key_limits": "Paid tier costs $19.99/month for higher limits",
+                    "stronger_than_google": "Simple single-file drop interface with no account required",
+                    "weaker_than_google": "Strict 2-PDF daily wall; cannot correlate 50 diverse multi-format sources simultaneously"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs"
+        },
+        {
+            "id": "google-ai-studio",
+            "name": "Google AI Studio",
+            "slug": "google-ai-studio",
+            "category": "coding",
+            "tagline": "Fastest prototyping hub for developers to experiment with Gemini models, manage free API keys, and build multimodal applications.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Generous free tier with up to 15 RPM for Gemini 1.5 Pro and up to 15-60 RPM for Gemini 1.5 Flash at zero subscription cost.",
+            "the_catch": "On the free tier, input and output data may be reviewed by human annotators to train models. Commercial apps needing strict zero-data-logging must use Vertex AI pay-as-you-go.",
+            "what_it_does": "Google AI Studio is the web-based command center for building with Gemini. It allows developers to test system instructions, adjust temperature, test massive 2-million-token context windows (processing full codebases, hour-long videos, or entire audio files), structure JSON outputs, and immediately export working code snippets in Python, Node.js, and cURL.",
+            "use_cases": [
+                "Prototyping multimodal prompts combining video, audio, and large document sets",
+                "Generating instant API keys for web, mobile, and backend integrations",
+                "Fine-tuning system prompts and structured JSON response schemas",
+                "Evaluating model responses across Gemini Flash, Pro, and experimental checkpoints"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/google_AI_studio.png",
+                "alt": "Google AI Studio developer platform preview",
+                "caption": "Google AI Studio multimodal development console (Source: google_stack/google_AI_studio.png)"
+            },
+            "secondary_media": {
+                "type": "image",
+                "url": "/google_stack/grouped2.png",
+                "alt": "Google AI Studio card in carousel",
+                "caption": "AI Studio MVP prototyping overview in carousel"
+            },
+            "official_url": "https://aistudio.google.com",
+            "source_assets": [
+                "google_AI_studio.png",
+                "grouped2.png",
+                "gs1.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "OpenAI",
+                    "equivalent_tool": "OpenAI Playground",
+                    "what_is_free": "No permanent free tier (trial credits expire quickly)",
+                    "key_limits": "Requires credit card billing setup; pay-per-token for all API calls",
+                    "stronger_than_google": "Industry-standard JSON mode and widespread third-party library support",
+                    "weaker_than_google": "Zero permanent free API tier; cannot test massive 2M-token inputs without high dollar cost"
+                },
+                {
+                    "provider": "Anthropic",
+                    "equivalent_tool": "Anthropic Console",
+                    "what_is_free": "$5 initial sign-up credit",
+                    "key_limits": "Paid top-up required once $5 credit is consumed",
+                    "stronger_than_google": "Claude 3.5 Sonnet offers exceptional coding and nuanced reasoning benchmarks",
+                    "weaker_than_google": "No continuous free daily tier; context window capped at 200k tokens vs Google's 2M"
+                },
+                {
+                    "provider": "Microsoft",
+                    "equivalent_tool": "Azure AI Studio",
+                    "what_is_free": "Azure free account trial credits only",
+                    "key_limits": "Complex enterprise subscription and credit card registration required",
+                    "stronger_than_google": "Deep enterprise governance, RBAC, and HIPAA compliance controls",
+                    "weaker_than_google": "High barrier to entry; Google AI Studio requires only a standard Google login"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google DeepMind / Google Cloud"
+        },
+        {
+            "id": "codewiki",
+            "name": "CodeWiki",
+            "slug": "codewiki",
+            "category": "coding",
+            "tagline": "Self-updating documentation engine that connects to GitHub repositories and explains codebases using Gemini.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free for public and personal GitHub repositories during experimental release.",
+            "the_catch": "Monolithic repositories exceeding multi-gigabyte source footprints may hit token ingestion ceilings; requires GitHub account linking.",
+            "what_it_does": "CodeWiki analyzes repository structures, syntax trees, and commit histories to build an interactive, living documentation site. It explains architecture diagrams, highlights module dependencies, and writes onboarding walkthroughs for new developers, updating documentation automatically whenever new pull requests merge.",
+            "use_cases": [
+                "Onboarding engineers to unfamiliar legacy codebases",
+                "Auto-generating architecture diagrams and component relationship maps",
+                "Creating developer documentation directly from source files",
+                "Keeping project READMEs and wikis synchronized with recent git merges"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/grouped2.png",
+                "alt": "CodeWiki featured in Google AI Stack carousel",
+                "caption": "CodeWiki self-updating GitHub wiki (Source: google_stack/grouped2.png)"
+            },
+            "secondary_media": null,
+            "official_url": "https://labs.google",
+            "source_assets": [
+                "grouped2.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "Mintlify",
+                    "equivalent_tool": "Mintlify",
+                    "what_is_free": "Free community tier for single open-source project",
+                    "key_limits": "Team collaboration starts at $150/month",
+                    "stronger_than_google": "Beautiful custom web documentation UI with interactive API playgrounds",
+                    "weaker_than_google": "Requires manual MDX maintenance; CodeWiki generates and updates wikis autonomously"
+                },
+                {
+                    "provider": "Swimm",
+                    "equivalent_tool": "Swimm",
+                    "what_is_free": "Free community plan for up to 5 developers",
+                    "key_limits": "Advanced CI/CD verification requires paid team seats",
+                    "stronger_than_google": "In-IDE code-coupled documentation plugins for VS Code and JetBrains",
+                    "weaker_than_google": "Requires plugin installations; CodeWiki provides web-accessible repository wikis instantly"
+                },
+                {
+                    "provider": "DeepSource",
+                    "equivalent_tool": "DeepSource Docs",
+                    "what_is_free": "Free for open-source repositories",
+                    "key_limits": "Paid plans start at $12/user/month for private code",
+                    "stronger_than_google": "Static analysis and automated security vulnerability fixing",
+                    "weaker_than_google": "Focuses on linting/security rather than comprehensive explanatory documentation"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs"
+        },
+        {
+            "id": "disco",
+            "name": "Project Disco",
+            "slug": "disco",
+            "category": "app and UI building",
+            "tagline": "Browser agent experiment that transforms active browser tabs into interactive, lightweight AI applications and dashboards.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free experimental feature for Chrome desktop users.",
+            "the_catch": "Experimental Labs status; requires Chrome desktop environment; features may evolve or migrate into core Chrome browser updates.",
+            "what_it_does": "Project Disco analyzes the open browser tabs in your current research session (such as product reviews, comparison articles, or real estate listings) and dynamically generates custom interactive tools\u2014such as comparison tables, budget calculators, or structured dashboards\u2014without requiring code.",
+            "use_cases": [
+                "Synthesizing multiple open tabs into interactive comparison matrices",
+                "Generating custom calculators from product pricing and spec pages",
+                "Transforming messy travel research tabs into a unified itinerary dashboard",
+                "Creating personalized data extractors from dynamic web pages"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/grouped3.png",
+                "alt": "Project Disco featured in Google AI Stack carousel",
+                "caption": "Project Disco browser-to-app generator (Source: google_stack/grouped3.png)"
+            },
+            "secondary_media": null,
+            "official_url": "https://labs.google",
+            "source_assets": [
+                "grouped3.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "The Browser Company",
+                    "equivalent_tool": "Arc Max / Dia",
+                    "what_is_free": "Free built-in features for Arc browser users",
+                    "key_limits": "Requires switching default browser to Arc; macOS/Windows only",
+                    "stronger_than_google": "Slick native browser integration, instant page previews, and tab organization",
+                    "weaker_than_google": "Generates textual summaries rather than interactive standalone mini-apps"
+                },
+                {
+                    "provider": "MultiOn",
+                    "equivalent_tool": "MultiOn AI",
+                    "what_is_free": "Free tier with 20 agent executions/month",
+                    "key_limits": "20 runs/month; paid subscriptions start at $29/month",
+                    "stronger_than_google": "Capable of executing multi-step form fills and automated checkouts",
+                    "weaker_than_google": "Expensive per-action costs; Disco provides free exploratory tab synthesis"
+                },
+                {
+                    "provider": "Microsoft",
+                    "equivalent_tool": "Copilot in Edge",
+                    "what_is_free": "Free inside Microsoft Edge browser",
+                    "key_limits": "Limited to single-tab chat and sidecar summaries",
+                    "stronger_than_google": "Native PDF reading and Windows OS integration",
+                    "weaker_than_google": "Cannot synthesize 10+ tabs into custom interactive widgets on the fly"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs"
+        },
+        {
+            "id": "flow-music",
+            "name": "Google Flow Music (MusicFX)",
+            "slug": "flow-music",
+            "category": "video",
+            "tagline": "Conversational music generation studio to create looping soundtracks, ambient scores, and campaign themes in real time.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free creation of looping tracks, instrumental tracks, and audio stems via Google Labs.",
+            "the_catch": "Primarily focused on instrumental and ambient tracks; commercial release rights are restricted under Google Labs experimental terms of service.",
+            "what_it_does": "Powered by Google DeepMind's Lyria model, Flow Music allows musicians, video creators, and campaign managers to describe musical concepts in plain language. Users can manipulate DJ controls, alter tempo, mix genres, and generate infinite audio loops with zero generation lag.",
+            "use_cases": [
+                "Generating custom background music for YouTube and video productions",
+                "Creating continuous ambient study and focus soundscapes",
+                "Prototyping audio branding and campaign jingles",
+                "Live interactive music manipulation for events and presentations"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/googleflow_music.png",
+                "alt": "Google Flow Music interface preview",
+                "caption": "Google Flow Music generative audio studio (Source: google_stack/googleflow_music.png)"
+            },
+            "secondary_media": {
+                "type": "image",
+                "url": "/google_stack/grouped3.png",
+                "alt": "Flow Music in carousel",
+                "caption": "Flow Music overview card in grouped carousel"
+            },
+            "official_url": "https://labs.google/musicfx",
+            "source_assets": [
+                "googleflow_music.png",
+                "grouped3.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "Suno",
+                    "equivalent_tool": "Suno AI",
+                    "what_is_free": "50 free daily credits (generates up to 5 songs/day)",
+                    "key_limits": "Free tier grants non-commercial personal license only; Pro costs $10/month",
+                    "stronger_than_google": "Incredible full-vocal pop and rock track generation with realistic singing",
+                    "weaker_than_google": "Daily credit burn; Flow Music allows continuous infinite looping without token anxiety"
+                },
+                {
+                    "provider": "Udio",
+                    "equivalent_tool": "Udio",
+                    "what_is_free": "10 free daily credits and 100 monthly bonus credits",
+                    "key_limits": "Advanced stem downloads and fast generation require $10/month subscription",
+                    "stronger_than_google": "High acoustic fidelity and complex chord progression control",
+                    "weaker_than_google": "Slow render queues; Flow Music updates loop stems in real time"
+                },
+                {
+                    "provider": "Stability AI",
+                    "equivalent_tool": "Stable Audio",
+                    "what_is_free": "20 free tracks/month up to 45 seconds each",
+                    "key_limits": "Strict 20-track monthly limit; commercial use requires $9/month Pro plan",
+                    "stronger_than_google": "High-fidelity audio stem downloads",
+                    "weaker_than_google": "Extremely restrictive 20-generation free wall compared to Flow Music"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google DeepMind / Google Labs"
+        },
+        {
+            "id": "jules",
+            "name": "Google Jules",
+            "slug": "jules",
+            "category": "coding",
+            "tagline": "Autonomous GitHub AI coding agent that plans, writes tests, updates dependencies, fixes bugs, and submits PRs with 15 free daily tasks.",
+            "pricing_badge": "Freemium",
+            "is_free": true,
+            "pricing_type": "Freemium",
+            "free_tier_limits": "Free plan includes 15 autonomous tasks per day directly on connected GitHub repositories.",
+            "the_catch": "Currently in public preview for GitHub users; tasks that require multi-hour cloud execution or complex local hardware access may hit sandbox timeouts.",
+            "what_it_does": "Jules operates as an asynchronous background software engineer. When assigned an issue or task on GitHub, Jules spins up a secure cloud sandbox, clones the repo, replicates the bug, drafts a step-by-step implementation plan, writes automated test cases, and opens a fully documented pull request for human sign-off.",
+            "use_cases": [
+                "Fixing reproducible bug tickets and updating deprecated npm/pip packages",
+                "Generating comprehensive unit and integration test suites for existing code",
+                "Handling routine refactoring while engineers focus on core architecture",
+                "Triaging GitHub issue backlogs with automated proof-of-concept PRs"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/jules.png",
+                "alt": "Google Jules autonomous coding agent preview",
+                "caption": "Google Jules autonomous GitHub coding agent (Source: google_stack/jules.png)"
+            },
+            "secondary_media": {
+                "type": "image",
+                "url": "/google_stack/grouped3.png",
+                "alt": "Jules in grouped carousel",
+                "caption": "Jules GitHub agent card in carousel"
+            },
+            "official_url": "https://jules.google",
+            "source_assets": [
+                "jules.png",
+                "grouped3.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "Cognition",
+                    "equivalent_tool": "Devin",
+                    "what_is_free": "No permanent free tier; invite-only commercial subscriptions",
+                    "key_limits": "Enterprise pricing starting at $500+/month",
+                    "stronger_than_google": "Full browser automation and complete autonomous virtual machine shell access",
+                    "weaker_than_google": "Extremely high price barrier; Jules offers 15 completely free tasks every single day"
+                },
+                {
+                    "provider": "GitHub",
+                    "equivalent_tool": "GitHub Copilot Workspace",
+                    "what_is_free": "Limited preview access",
+                    "key_limits": "Requires paid Copilot subscription ($10\u2013$19/month)",
+                    "stronger_than_google": "Native first-party UI inside GitHub's web interface",
+                    "weaker_than_google": "Requires paid license; Jules provides dedicated free cloud sandbox verification"
+                },
+                {
+                    "provider": "OpenHands",
+                    "equivalent_tool": "OpenHands (All-Hands AI)",
+                    "what_is_free": "Free open-source software",
+                    "key_limits": "Requires self-hosting and bringing your own paid LLM API keys",
+                    "stronger_than_google": "Full control over underlying Docker containers and model selection",
+                    "weaker_than_google": "Requires cloud setup and API credit monitoring; Jules runs turnkey on Google infrastructure"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs"
+        },
+        {
+            "id": "pomelli",
+            "name": "Google Pomelli",
+            "slug": "pomelli",
+            "category": "marketing",
+            "tagline": "AI marketing engine for small businesses that crawls your website, extracts brand DNA, and generates on-brand social campaigns.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free public beta on labs.google/pomelli. Unlimited brand profile analysis and content generation.",
+            "the_catch": "Currently optimized for English-language websites; direct automated posting to Instagram/LinkedIn requires manual export or third-party schedulers.",
+            "what_it_does": "Pomelli eliminates the blank-page problem for small businesses, agencies, and solo founders. Enter any website URL, and Pomelli scans page imagery, color palettes, fonts, product offerings, and brand tone to construct a unique 'Business DNA'. It then automatically generates ready-to-publish social media graphics, ad copies, promotion ideas, and carousel visual layouts that strictly adhere to the brand guidelines.",
+            "use_cases": [
+                "Generating cohesive monthly social media content calendars from a website URL",
+                "Producing on-brand promotional ad copy and visual assets without graphic design skills",
+                "Extracting brand guidelines, color codes, and tone definitions automatically",
+                "Creating multi-slide carousel concepts for product launches and sales campaigns"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/Pomeli.png",
+                "alt": "Google Pomelli AI marketing tool interface preview",
+                "caption": "Google Pomelli brand DNA scanner and campaign studio (Source: google_stack/Pomeli.png)"
+            },
+            "secondary_media": {
+                "type": "image",
+                "url": "/google_stack/pomelli1.png",
+                "alt": "Pomelli feature card detail",
+                "caption": "Pomelli marketing team capabilities (Source: google_stack/pomelli1.png)"
+            },
+            "official_url": "https://labs.google/pomelli",
+            "source_assets": [
+                "Pomeli.png",
+                "pomelli1.png",
+                "grouped4.png",
+                "gs1.png",
+                "google_stack.webm"
+            ],
+            "competitors": [
+                {
+                    "provider": "Jasper",
+                    "equivalent_tool": "Jasper Brand Voice",
+                    "what_is_free": "7-day free trial only",
+                    "key_limits": "Paid subscription starts at $49/month per seat",
+                    "stronger_than_google": "Enterprise SEO integration and multi-channel campaign project management",
+                    "weaker_than_google": "Expensive monthly subscription; Pomelli extracts visual brand DNA for free with zero setup"
+                },
+                {
+                    "provider": "Copy.ai",
+                    "equivalent_tool": "Copy.ai Brand OS",
+                    "what_is_free": "Free tier with 2,000 words/month limit",
+                    "key_limits": "2,000 words/month; paid plans start at $36/month",
+                    "stronger_than_google": "Deep sales outreach automations and CRM pipeline workflows",
+                    "weaker_than_google": "Strict word caps on free tier; lacks automatic visual image/layout generation"
+                },
+                {
+                    "provider": "Canva",
+                    "equivalent_tool": "Canva Magic Studio",
+                    "what_is_free": "Free basic design canvas with limited AI credits",
+                    "key_limits": "Brand Kit and full Magic Studio features require Canva Pro ($13/month)",
+                    "stronger_than_google": "Industry-leading drag-and-drop graphic editing and print-ready templates",
+                    "weaker_than_google": "Requires manual brand kit configuration; Pomelli scans and styles automatically from your URL"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs"
+        },
+        {
+            "id": "mixboard",
+            "name": "Google Mixboard",
+            "slug": "mixboard",
+            "category": "image",
+            "tagline": "AI-powered creative concept canvas blending Canva and Pinterest to generate, combine, and iterate on visual moodboards.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free exploration, image generation, and concept canvas sharing during Google Labs beta.",
+            "the_catch": "Exports are image-based; does not export layered vector design files (e.g. SVG/Figma layers).",
+            "what_it_does": "Mixboard provides an infinite spatial canvas for visual ideation. Users drop in text prompts, product photos, texture references, and color samples. Mixboard's AI model blends disparate styles, swaps objects, generates variations, and maintains stylistic consistency across a visual board, making it ideal for interior design, fashion, branding, and creative brainstorming.",
+            "use_cases": [
+                "Creating cohesive visual moodboards for campaigns, branding, and photoshoots",
+                "Blending product photos into new creative backgrounds and lighting setups",
+                "Generating iterative variations of design objects with unified aesthetics",
+                "Collaborative visual brainstorming between creative directors and clients"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/google mixboard.png",
+                "alt": "Google Mixboard visual concept board preview",
+                "caption": "Google Mixboard AI concept board (Source: google_stack/google mixboard.png)"
+            },
+            "secondary_media": {
+                "type": "image",
+                "url": "/google_stack/mixboard.png",
+                "alt": "Mixboard feature card detail",
+                "caption": "Mixboard visual iteration capabilities (Source: google_stack/mixboard.png)"
+            },
+            "official_url": "https://labs.google",
+            "source_assets": [
+                "google mixboard.png",
+                "mixboard.png",
+                "grouped4.png",
+                "gs1.png",
+                "google_stack.webm"
+            ],
+            "competitors": [
+                {
+                    "provider": "Pinterest",
+                    "equivalent_tool": "Shuffles by Pinterest",
+                    "what_is_free": "Free mobile collage and cutout app",
+                    "key_limits": "Primarily limited to existing images on Pinterest with minimal generative capabilities",
+                    "stronger_than_google": "Direct social integration into Pinterest's viral visual shopping graph",
+                    "weaker_than_google": "Cannot generate net-new photorealistic imagery or style transfers on demand"
+                },
+                {
+                    "provider": "Canva",
+                    "equivalent_tool": "Canva Whiteboards",
+                    "what_is_free": "Free collaborative whiteboard canvas",
+                    "key_limits": "Generative AI image features require Canva Pro credits ($13/month)",
+                    "stronger_than_google": "Extensive library of shapes, sticky notes, and presentation transitions",
+                    "weaker_than_google": "Generative image blending requires a paid subscription; Mixboard is 100% free"
+                },
+                {
+                    "provider": "Milanote",
+                    "equivalent_tool": "Milanote",
+                    "what_is_free": "Free plan capped at 100 notes, images, or links",
+                    "key_limits": "Strict 100-item hard limit; paid plans start at $10/month",
+                    "stronger_than_google": "Structured organizational hierarchy for film and design production pipelines",
+                    "weaker_than_google": "No native generative image synthesis; strict 100-item storage cap"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs"
+        },
+        {
+            "id": "learn-your-way",
+            "name": "Learn Your Way",
+            "slug": "learn-your-way",
+            "category": "research",
+            "tagline": "Interactive learning tutor powered by LearnLM that turns study materials into personalized lessons, mind maps, audio, and quizzes.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free with a Google account on Google Labs.",
+            "the_catch": "Optimized for self-directed personal study and student research; does not integrate with enterprise SCORM/LMS gradebooks.",
+            "what_it_does": "Learn Your Way transforms dense educational content into engaging, bite-sized learning journeys. Upload textbooks, lecture slides, or complex topic outlines; Learn Your Way dynamically tailors explanations to the student's grade level and interests, creating interactive quizzes, audio summaries, knowledge-check flashcards, and concept mind maps.",
+            "use_cases": [
+                "Simplifying difficult academic concepts to specific reading and skill levels",
+                "Generating interactive knowledge quizzes and practice tests with answer explanations",
+                "Creating conceptual mind maps to visualize relationships between ideas",
+                "Turning study notes into auditory review sessions"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/Learn_your_way.png",
+                "alt": "Learn Your Way educational tutor preview",
+                "caption": "Learn Your Way personalized AI course builder (Source: google_stack/Learn_your_way.png)"
+            },
+            "secondary_media": {
+                "type": "image",
+                "url": "/google_stack/grouped4.png",
+                "alt": "Learn Your Way card in carousel",
+                "caption": "Learn Your Way overview in grouped carousel"
+            },
+            "official_url": "https://labs.google",
+            "source_assets": [
+                "Learn_your_way.png",
+                "grouped4.png",
+                "gs1.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "Khan Academy",
+                    "equivalent_tool": "Khanmigo",
+                    "what_is_free": "Free for teachers; $4/month or donation model for individual learners",
+                    "key_limits": "Primarily constrained to Khan Academy's curated curriculum courses",
+                    "stronger_than_google": "Deep integration with standardized curriculum and mastery tracking",
+                    "weaker_than_google": "Cannot upload arbitrary custom corporate or university PDF documents for free"
+                },
+                {
+                    "provider": "Quizlet",
+                    "equivalent_tool": "Quizlet Q-Chat",
+                    "what_is_free": "Free tier includes limited study rounds",
+                    "key_limits": "Unlimited AI tutoring and practice tests require Quizlet Plus ($36/year)",
+                    "stronger_than_google": "Massive community-contributed database of flashcard sets",
+                    "weaker_than_google": "Restricts AI interactions behind a paywall; Learn Your Way is completely free"
+                },
+                {
+                    "provider": "Duolingo",
+                    "equivalent_tool": "Duolingo Max",
+                    "what_is_free": "No free tier (subscription only)",
+                    "key_limits": "$30/month subscription required for Explain My Answer and Roleplay",
+                    "stronger_than_google": "Exceptional gamified language acquisition mechanics",
+                    "weaker_than_google": "High monthly subscription; limited strictly to language learning"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs / LearnLM"
+        },
+        {
+            "id": "gemini-cli",
+            "name": "Gemini CLI",
+            "slug": "gemini-cli",
+            "category": "coding",
+            "tagline": "Open-source terminal copilot to run commands, debug error logs, execute automated tests, and manage Git source control.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free open-source CLI utility; connects to the Gemini 1.5 Flash/Pro free API tiers.",
+            "the_catch": "Requires user to generate a free Gemini API key in Google AI Studio and configure it in terminal environment variables.",
+            "what_it_does": "Gemini CLI brings Google's multimodal AI directly into the developer's shell. It translates natural language instructions into validated zsh/bash commands, explains stack traces, reviews staged git diffs before commits, generates shell scripts, and helps manage cloud infrastructure without leaving the command line.",
+            "use_cases": [
+                "Generating and explaining complex shell, sed, and awk commands",
+                "Debugging terminal stack traces and package installation errors",
+                "Automating git commit messages and reviewing staged diffs",
+                "Executing automated test suites and summarizing failures"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/grouped5.png",
+                "alt": "Gemini CLI featured in developer tools carousel",
+                "caption": "Gemini CLI terminal developer copilot (Source: google_stack/grouped5.png)"
+            },
+            "secondary_media": null,
+            "official_url": "https://github.com/google-gemini",
+            "source_assets": [
+                "grouped5.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "Anthropic",
+                    "equivalent_tool": "Claude Code CLI",
+                    "what_is_free": "Closed beta preview (consumes Anthropic API credits)",
+                    "key_limits": "Consumes pay-per-token API credits with no permanent free tier",
+                    "stronger_than_google": "Deep architectural understanding across large enterprise codebases",
+                    "weaker_than_google": "Can incur substantial API costs; Gemini CLI runs on zero-cost Gemini Flash free tier"
+                },
+                {
+                    "provider": "Paul Gauthier",
+                    "equivalent_tool": "Aider.chat",
+                    "what_is_free": "Free open-source command-line tool",
+                    "key_limits": "Requires bringing your own paid LLM API key",
+                    "stronger_than_google": "Industry-leading git-integrated pair programming and benchmark scores",
+                    "weaker_than_google": "Higher setup complexity; Gemini CLI is optimized for turnkey Gemini integration"
+                },
+                {
+                    "provider": "GitHub",
+                    "equivalent_tool": "GitHub Copilot CLI",
+                    "what_is_free": "Bundled with paid Copilot subscription ($10/month)",
+                    "key_limits": "No standalone free plan for non-students",
+                    "stronger_than_google": "Tight integration with GitHub CLI (gh) extensions",
+                    "weaker_than_google": "Paywalled behind Copilot monthly fee; Gemini CLI is completely open source"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Open Source / Gemini API"
+        },
+        {
+            "id": "firebase-studio",
+            "name": "Firebase Studio",
+            "slug": "firebase-studio",
+            "category": "app and UI building",
+            "tagline": "AI-boosted cloud cockpit for designing backend schemas, security rules, serverless functions, and database logic visually.",
+            "pricing_badge": "Freemium",
+            "is_free": true,
+            "pricing_type": "Freemium",
+            "free_tier_limits": "Generous permanent free 'Spark Plan': 1GB Firestore database storage, 50k daily reads, 20k daily writes, 10GB/mo hosting.",
+            "the_catch": "High-volume production traffic exceeding daily quotas requires upgrading to the pay-as-you-go Blaze plan.",
+            "what_it_does": "Firebase Studio combines Google's managed backend suite (Firestore, Authentication, Cloud Functions, and App Hosting) with generative AI assistance. Developers can describe data schemas, generate complex Firestore security rules in natural language, test database indexing, and deploy production APIs with visual feedback.",
+            "use_cases": [
+                "Generating Firestore database schemas and relationship structures",
+                "Authoring and testing bulletproof Firebase security rules using AI",
+                "Prototyping serverless backend functions for web and mobile applications",
+                "Deploying full-stack web applications with automatic SSL on global CDNs"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/grouped5.png",
+                "alt": "Firebase Studio in developer tools carousel",
+                "caption": "Firebase Studio AI backend development cockpit (Source: google_stack/grouped5.png)"
+            },
+            "secondary_media": null,
+            "official_url": "https://firebase.google.com",
+            "source_assets": [
+                "grouped5.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "Supabase",
+                    "equivalent_tool": "Supabase Studio AI",
+                    "what_is_free": "Free plan includes 500MB database, 50k monthly active users, 5GB bandwidth",
+                    "key_limits": "Free tier projects pause automatically after 7 days of inactivity",
+                    "stronger_than_google": "Native relational PostgreSQL with full SQL flexibility and pgvector support",
+                    "weaker_than_google": "Inactivity pausing on free projects; Firebase Spark projects remain active indefinitely"
+                },
+                {
+                    "provider": "Amazon Web Services",
+                    "equivalent_tool": "AWS Amplify Studio",
+                    "what_is_free": "Included in AWS 12-month Free Tier",
+                    "key_limits": "Complex AWS billing risk; requires understanding IAM roles and VPCs",
+                    "stronger_than_google": "Seamless escalation into hundreds of AWS enterprise cloud services",
+                    "weaker_than_google": "Higher setup friction and steep learning curve for solo developers"
+                },
+                {
+                    "provider": "Backendless",
+                    "equivalent_tool": "Backendless",
+                    "what_is_free": "Free trial tier with limited API calls",
+                    "key_limits": "Strict API rate throttling; paid plans start at $15/month",
+                    "stronger_than_google": "Visual codeless business logic builder",
+                    "weaker_than_google": "Proprietary lock-in; Firebase has widespread open-source client libraries"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Cloud / Firebase"
+        },
+        {
+            "id": "gemini-code-assist",
+            "name": "Gemini Code Assist",
+            "slug": "gemini-code-assist",
+            "category": "coding",
+            "tagline": "AI coding companion integrated into VS Code, JetBrains, and Cloud Workstations featuring massive context code analysis.",
+            "pricing_badge": "Freemium",
+            "is_free": true,
+            "pricing_type": "Freemium",
+            "free_tier_limits": "Free tier available for individual developers with full code completion and chat assistance.",
+            "the_catch": "Enterprise-grade private codebase repository grounding and advanced compliance certifications require Google Cloud enterprise licenses.",
+            "what_it_does": "Gemini Code Assist provides inline code autocompletion, multi-line logic suggestions, test generation, and in-IDE chat directly within Visual Studio Code, Android Studio, and IntelliJ. Powered by Gemini models, it can ingest large context windows across your project to understand complex dependencies and suggest context-aware bug fixes.",
+            "use_cases": [
+                "Inline code autocompletion across 20+ programming languages",
+                "Generating comprehensive unit test suites from function signatures",
+                "Translating legacy code (e.g. Java to Kotlin or Python 2 to 3)",
+                "Auditing code for security vulnerabilities and performance bottlenecks"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/grouped5.png",
+                "alt": "Gemini Code Assist in developer tools carousel",
+                "caption": "Gemini Code Assist IDE programming assistant (Source: google_stack/grouped5.png)"
+            },
+            "secondary_media": null,
+            "official_url": "https://cloud.google.com/code-assist",
+            "source_assets": [
+                "grouped5.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "GitHub / Microsoft",
+                    "equivalent_tool": "GitHub Copilot",
+                    "what_is_free": "Free only for verified open-source maintainers and students",
+                    "key_limits": "Paid subscription of $10/month (Individual) or $19/user/month (Business)",
+                    "stronger_than_google": "Vast developer adoption and millions of public training examples",
+                    "weaker_than_google": "No permanent free tier for individual professionals; Gemini Code Assist offers free access"
+                },
+                {
+                    "provider": "Amazon Web Services",
+                    "equivalent_tool": "Amazon Q Developer",
+                    "what_is_free": "Free individual tier with unlimited completions and chat",
+                    "key_limits": "Advanced security scanning capped at 50 scans/month on free tier",
+                    "stronger_than_google": "Unrivaled expertise in AWS SDKs, CloudFormation, and IAM policies",
+                    "weaker_than_google": "Weaker outside AWS cloud workflows; Gemini Code Assist excels in general web/mobile frameworks"
+                },
+                {
+                    "provider": "Codeium",
+                    "equivalent_tool": "Codeium / Windsurf",
+                    "what_is_free": "Free individual plan with unlimited autocomplete",
+                    "key_limits": "Team management and fine-tuned models require paid enterprise plan",
+                    "stronger_than_google": "Extremely fast sub-millisecond local autocomplete latency",
+                    "weaker_than_google": "Smaller context window compared to Gemini's massive project-wide ingestion"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Cloud"
+        },
+        {
+            "id": "google-flow-video",
+            "name": "Google Flow (Video Generator)",
+            "slug": "google-flow-video",
+            "category": "video",
+            "tagline": "Audiovisual creative studio powered by Veo offering 150 free credits for cinematic video generation and free image synthesis.",
+            "pricing_badge": "Freemium",
+            "is_free": true,
+            "pricing_type": "Freemium",
+            "free_tier_limits": "150 free video generation credits upon signup; image generation with Nano Banana uses zero credits.",
+            "the_catch": "Creating long-form video sequences beyond the 150 initial credits requires a paid Google AI subscription.",
+            "what_it_does": "Google Flow combines the capabilities of Google's Veo video model and Nano Banana image generator into a unified audiovisual studio. Storytellers, filmmakers, and marketing creators can describe scenes, specify cinematic camera movements (pan, zoom, orbit), extend clips seamlessly, and generate consistent character visuals across multiple video shots.",
+            "use_cases": [
+                "Generating cinematic B-roll and promotional clips from text prompts",
+                "Extending video clips with continuous physical and environmental coherence",
+                "Generating photorealistic concept images with zero credit consumption",
+                "Stitching generated scenes into multi-shot storyboards"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/google_flow_video_generatoe.png",
+                "alt": "Google Flow video generator interface preview",
+                "caption": "Google Flow audiovisual production studio (Source: google_stack/google_flow_video_generatoe.png)"
+            },
+            "secondary_media": {
+                "type": "video",
+                "url": "/google_stack/google_stack.webm",
+                "alt": "Google AI Stack video review",
+                "caption": "Featured in Google AI tools video overview"
+            },
+            "official_url": "https://labs.google",
+            "source_assets": [
+                "google_flow_video_generatoe.png",
+                "google_stack.webm"
+            ],
+            "competitors": [
+                {
+                    "provider": "Runway",
+                    "equivalent_tool": "Runway Gen-3 Alpha",
+                    "what_is_free": "125 one-time free credits on account creation",
+                    "key_limits": "No recurring monthly credit replenishment; paid plans start at $12/month",
+                    "stronger_than_google": "Advanced motion brush, multi-camera director mode, and camera control keyframes",
+                    "weaker_than_google": "Strict 125 credit one-off cap; Google Flow includes 150 credits plus free unlimited image generation"
+                },
+                {
+                    "provider": "Luma AI",
+                    "equivalent_tool": "Luma Dream Machine",
+                    "what_is_free": "30 free video generations/month",
+                    "key_limits": "Watermarked exports and slower queue times during peak traffic",
+                    "stronger_than_google": "Impressive camera speed and dynamic 3D camera fly-throughs",
+                    "weaker_than_google": "Watermarks on free tier; Google Flow exports high-fidelity video clips cleanly"
+                },
+                {
+                    "provider": "Pika Labs",
+                    "equivalent_tool": "Pika 2.0",
+                    "what_is_free": "30 initial credits, 30 daily bonus credits",
+                    "key_limits": "Heavy visible watermark and 720p resolution cap on free tier; paid from $8/month",
+                    "stronger_than_google": "Fun special effects (squish, melt, explode, crush) for meme creation",
+                    "weaker_than_google": "Visible watermarks and lower resolution; Google Flow outputs photorealistic quality"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google DeepMind / Google Labs"
+        },
+        {
+            "id": "google-pinpoint",
+            "name": "Google Pinpoint",
+            "slug": "google-pinpoint",
+            "category": "research",
+            "tagline": "Deep document and audio analysis engine that searches across 200,000 PDFs, images, handwritten notes, and recorded interviews.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "100% free with a Google account. Supports up to 200,000 files per collection and up to 100GB of storage.",
+            "the_catch": "Individual file upload limit is 200MB; designed primarily as an investigative research tool rather than a generative copywriter.",
+            "what_it_does": "Created by the Google News Initiative for journalists and researchers, Pinpoint acts as a massive unstructured data investigator. Users upload thousands of documents (PDFs, handwritten memos, emails, scanned tables, audio interviews). Pinpoint transcribes audio files, extracts text via OCR, converts scanned receipts into spreadsheets, and allows instant search across entities, dates, and names.",
+            "use_cases": [
+                "Searching across investigative archives and multi-gigabyte document dumps",
+                "Automatically transcribing recorded audio interviews with clickable timestamp playback",
+                "Converting scanned PDF data tables directly into structured spreadsheets",
+                "Entity extraction to identify repeated names, locations, and organizations across thousands of files"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/google_pinpoint.png",
+                "alt": "Google Pinpoint research tool preview",
+                "caption": "Google Pinpoint investigative document and audio search tool (Source: google_stack/google_pinpoint.png)"
+            },
+            "secondary_media": null,
+            "official_url": "https://journaliststudio.google.com/pinpoint",
+            "source_assets": [
+                "google_pinpoint.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "Adobe",
+                    "equivalent_tool": "Adobe Acrobat AI Assistant",
+                    "what_is_free": "Free trial only",
+                    "key_limits": "Paid add-on starting at $4.99/month per user",
+                    "stronger_than_google": "Native PDF form editing, signing, and local Adobe Acrobat ecosystem integration",
+                    "weaker_than_google": "Operates on single documents at a time; Pinpoint is free for up to 200,000 documents"
+                },
+                {
+                    "provider": "DocumentCloud",
+                    "equivalent_tool": "DocumentCloud",
+                    "what_is_free": "Free tier with 100MB storage limit",
+                    "key_limits": "Storage upgrades require paid subscriptions",
+                    "stronger_than_google": "Public document sharing and embedded document viewers for news sites",
+                    "weaker_than_google": "Strict 100MB cap on free storage; Pinpoint offers 100GB of free analysis storage"
+                },
+                {
+                    "provider": "Heptabase",
+                    "equivalent_tool": "Heptabase",
+                    "what_is_free": "7-day free trial only",
+                    "key_limits": "Requires $11.99/month subscription; no permanent free tier",
+                    "stronger_than_google": "Visual whiteboard synthesis of cards and PDF highlights",
+                    "weaker_than_google": "Paywalled software; Pinpoint is completely free with automated multilingual transcription"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google News Initiative"
+        },
+        {
+            "id": "google-stax",
+            "name": "Google Stax",
+            "slug": "google-stax",
+            "category": "research",
+            "tagline": "Model evaluation and benchmarking suite to test different AI models using your own custom data, test cases, and graders.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Free to test models, configure custom evaluation rules, and measure performance on Google Labs.",
+            "the_catch": "Evaluating non-Google commercial APIs requires bringing your own API keys for those respective third-party providers.",
+            "what_it_does": "Google Stax replaces generic industry benchmarks (e.g. MMLU, GSM8K) with custom real-world evaluation. Teams upload their exact business prompts, test cases, and grading criteria. Stax compares model outputs side-by-side, scoring them on factual accuracy, tone, compliance, latency, and cost efficiency.",
+            "use_cases": [
+                "Benchmarking LLM performance on proprietary enterprise domain questions",
+                "Creating custom automated graders to test tone adherence and hallucination rates",
+                "Comparing cost versus quality trade-offs between Flash and Pro model tiers",
+                "Continuous regression testing of prompt templates prior to production deployments"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/google_stax.png",
+                "alt": "Google Stax AI model evaluation suite preview",
+                "caption": "Google Stax custom model evaluation platform (Source: google_stack/google_stax.png)"
+            },
+            "secondary_media": null,
+            "official_url": "https://labs.google",
+            "source_assets": [
+                "google_stax.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "Arize AI",
+                    "equivalent_tool": "Arize Phoenix",
+                    "what_is_free": "Free open-source self-hosted evaluation library",
+                    "key_limits": "Requires Python development environment and local hosting",
+                    "stronger_than_google": "Deep OpenTelemetry trace capture and LangChain/LlamaIndex integration",
+                    "weaker_than_google": "Requires coding setup; Stax provides a clean web UI for non-technical teams"
+                },
+                {
+                    "provider": "Braintrust",
+                    "equivalent_tool": "Braintrust",
+                    "what_is_free": "Free tier with up to 5,000 evaluation rows/month",
+                    "key_limits": "Paid plans start at $249/month for enterprise teams",
+                    "stronger_than_google": "Comprehensive end-to-end CI/CD evaluation pipelines and dataset versioning",
+                    "weaker_than_google": "Steep price jump after free tier; Stax has no monthly row limit in Labs beta"
+                },
+                {
+                    "provider": "Promptfoo",
+                    "equivalent_tool": "Promptfoo",
+                    "what_is_free": "Free open-source CLI testing tool",
+                    "key_limits": "Operates primarily via terminal and YAML configuration files",
+                    "stronger_than_google": "Fast local execution directly inside GitHub Actions CI workflows",
+                    "weaker_than_google": "Lacks an out-of-the-box hosted collaborative web UI for non-developers"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs / Research"
+        },
+        {
+            "id": "google-illuminate",
+            "name": "Google Illuminate",
+            "slug": "google-illuminate",
+            "category": "research",
+            "tagline": "Academic research tool that converts dense scientific papers and arXiv preprints into engaging conversational audio discussions.",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "100% free on Google Labs. Convert published scientific papers and academic PDFs into audio dialogues.",
+            "the_catch": "Currently focused on published computer science, biology, and STEM papers; custom private PDF processing can experience wait times during high demand.",
+            "what_it_does": "Google Illuminate makes complex academic breakthroughs accessible to everyone. Users provide a paper link or upload a PDF; Illuminate breaks down the methodology, key findings, and scientific debates, synthesizing them into a natural two-speaker audio conversation that unpacks the paper in straightforward language.",
+            "use_cases": [
+                "Listening to scientific papers and arXiv machine learning preprints on the go",
+                "Translating impenetrable mathematical and academic jargon into plain English",
+                "Quickly screening high volumes of research papers to determine relevance",
+                "Sharing audio summaries with non-technical stakeholders and executive teams"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/iluminate.png",
+                "alt": "Google Illuminate academic paper audio tool preview",
+                "caption": "Google Illuminate academic paper to audio synthesizer (Source: google_stack/iluminate.png)"
+            },
+            "secondary_media": null,
+            "official_url": "https://illuminate.withgoogle.com",
+            "source_assets": [
+                "iluminate.png"
+            ],
+            "competitors": [
+                {
+                    "provider": "SciSpace",
+                    "equivalent_tool": "SciSpace Copilot",
+                    "what_is_free": "Free tier with 5 AI questions/day and basic paper reading",
+                    "key_limits": "Full synthesis and multi-paper chat requires $12/month subscription",
+                    "stronger_than_google": "Inline mathematical equation explanations and literature review tables",
+                    "weaker_than_google": "No native conversational audio podcast generator; paywalled after 5 daily queries"
+                },
+                {
+                    "provider": "Consensus",
+                    "equivalent_tool": "Consensus",
+                    "what_is_free": "Free tier with basic search and limited synthesis credits",
+                    "key_limits": "Premium research consensus meters require $8.99/month",
+                    "stronger_than_google": "Synthesizes consensus percentages across hundreds of medical studies",
+                    "weaker_than_google": "Outputs text summaries only; Illuminate provides full studio audio explanations"
+                },
+                {
+                    "provider": "Audemic",
+                    "equivalent_tool": "Audemic",
+                    "what_is_free": "15-minute free audio trial",
+                    "key_limits": "Paid subscription of $9/month required for ongoing paper listening",
+                    "stronger_than_google": "Mobile app with structured section skipping",
+                    "weaker_than_google": "Paywalled audio playback; Google Illuminate is completely free"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google Labs"
+        },
+        {
+            "id": "gemini-assistant",
+            "name": "Gemini (Everyday Assistant & Live)",
+            "slug": "gemini-assistant",
+            "category": "assistant",
+            "tagline": "Flagship multimodal AI assistant featuring real-time natural voice conversations (Gemini Live) and custom task assistants (Gems).",
+            "pricing_badge": "Free",
+            "is_free": true,
+            "pricing_type": "Free",
+            "free_tier_limits": "Completely free across web, Android, and iOS. Includes free Gemini Live voice interactions and custom Gems creation.",
+            "the_catch": "Advanced capabilities (Gemini Ultra models, 2M context window, Deep Research agent) require a Google One AI Premium subscription ($19.99/month).",
+            "what_it_does": "Gemini serves as Google's primary entry point for AI. It writes, summarizes, brainstorms, codes, and analyzes images and documents. On mobile, Gemini Live provides natural, fluid, hands-free spoken conversations where users can interrupt, think out loud, or point their smartphone camera at real-world objects. Users can also build custom Gems to automate repetitive tasks.",
+            "use_cases": [
+                "Everyday writing, drafting emails, summarizing web content, and brainstorming",
+                "Hands-free conversational voice reasoning and visual problem solving via Gemini Live",
+                "Creating custom task-specific AI helpers (Gems) for repeated workflows",
+                "Deep integration with Google Workspace (Gmail, Docs, Sheets, Drive)"
+            ],
+            "media": {
+                "type": "image",
+                "url": "/google_stack/gs1.png",
+                "alt": "Gemini in Google AI Tools infographic",
+                "caption": "Gemini and Gemini Live in Google AI Tools ecosystem (Source: google_stack/gs1.png)"
+            },
+            "secondary_media": {
+                "type": "video",
+                "url": "/google_stack/google_stack.webm",
+                "alt": "Google AI Stack video walkthrough",
+                "caption": "Featured in Google AI tools video overview"
+            },
+            "official_url": "https://gemini.google.com",
+            "source_assets": [
+                "gs1.png",
+                "google_stack.webm"
+            ],
+            "competitors": [
+                {
+                    "provider": "OpenAI",
+                    "equivalent_tool": "ChatGPT (GPT-4o)",
+                    "what_is_free": "Free access to GPT-4o with rate limits, falling back to GPT-4o mini",
+                    "key_limits": "Advanced Voice Mode and high GPT-4o usage capped on free tier; Plus costs $20/month",
+                    "stronger_than_google": "Superior creative persona adaptability and widespread plugin ecosystem",
+                    "weaker_than_google": "Lower free file and multimodal context limits; Gemini includes 1M token free context window"
+                },
+                {
+                    "provider": "Anthropic",
+                    "equivalent_tool": "Claude 3.5 Sonnet",
+                    "what_is_free": "Free tier with dynamic message limits (resets every 5 hours)",
+                    "key_limits": "Strict message volume cap; Claude Pro costs $20/month",
+                    "stronger_than_google": "Industry-leading nuanced prose, natural tone, and coding precision",
+                    "weaker_than_google": "No native real-time voice mode like Gemini Live; strict free message throttles"
+                },
+                {
+                    "provider": "Microsoft",
+                    "equivalent_tool": "Microsoft Copilot",
+                    "what_is_free": "Free access powered by GPT-4o with web search grounding",
+                    "key_limits": "Office 365 deep integration requires Copilot Pro ($20/month)",
+                    "stronger_than_google": "Seamless native integration with Word, Excel, PowerPoint, and Windows 11",
+                    "weaker_than_google": "Less fluid mobile voice interaction compared to Gemini Live"
+                }
+            ],
+            "last_verified": "November 2026",
+            "attribution": "Google DeepMind"
+        }
+    ],
+    "metadata": {
+        "title": "Google AI Stack",
+        "subtitle": "Curated directory of free and freemium Google AI tools, developer agents, and multimodal workspaces.",
+        "total_tools": 20,
+        "source_folder": "google_stack",
+        "last_verified": "November 2026",
+        "disclaimer": "Metricore is an open-source, non-commercial reference site. It is not affiliated with, sponsored by, or endorsed by Google, Alphabet, or any tool provider listed. All product names, logos, and trademarks belong to their respective owners."
+    }
+}

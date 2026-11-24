@@ -1,0 +1,541 @@
+{% extends "base.html" %}
+
+{% block title %}Google AI Stack — 15+ Free Google AI Tools, Coding Agents & Workspaces | Metricore{% endblock %}
+
+{% block content %}
+<div class="relative w-full overflow-hidden">
+    <!-- Ambient Aura Gradients -->
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[550px] bg-gradient-to-b from-purple-600/15 via-indigo-600/10 to-transparent rounded-full blur-[160px] pointer-events-none"></div>
+    <div class="absolute top-96 -right-40 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 relative z-10">
+
+        <!-- ================= 1. BREADCRUMBS ================= -->
+        <nav class="flex items-center space-x-2 text-xs text-slate-400 font-medium" aria-label="Breadcrumb">
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+            <span>/</span>
+            <span class="text-purple-300 font-bold">Google AI Stack</span>
+        </nav>
+
+        <!-- ================= 2. HERO SECTION ================= -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-7 space-y-6">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-purple-500/15 to-indigo-500/15 border border-purple-500/30 text-purple-300 text-xs font-semibold backdrop-blur-md">
+                    <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+                    <span>Google AI Stack • 2026 Directory</span>
+                    <span class="text-slate-600">•</span>
+                    <span class="text-indigo-300 font-mono">15+ Curated Free Tools</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+                    Discover & Benchmark the <span class="bg-gradient-to-r from-purple-400 via-indigo-300 to-emerald-300 bg-clip-text text-transparent">Google AI Stack</span>
+                </h1>
+
+                <p class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+                    Beyond the main Gemini chatbox lies a full ecosystem of purpose-built Google AI tools and agents—spanning autonomous coding, UI design, visual moodboards, research podcasts, and no-code workflows. Nearly all feature generous free tiers or experimental Labs access.
+                </p>
+
+                <!-- KPI Ribbon -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                    <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                        <div class="text-2xl font-black text-purple-400">{{ tools|length }}</div>
+                        <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Curated Tools</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                        <div class="text-2xl font-black text-emerald-400">{{ categories|length }}</div>
+                        <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Categories</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                        <div class="text-2xl font-black text-teal-300">{{ status_counts.free }}</div>
+                        <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">100% Free Tiers</div>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-slate-800/80 backdrop-blur-md">
+                        <div class="text-2xl font-black text-indigo-400">100%</div>
+                        <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Competitor Benchmarked</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Showcase Card (google_stack.webm) -->
+            <div class="lg:col-span-5 rounded-3xl bg-slate-900/80 border border-purple-500/25 p-5 shadow-2xl backdrop-blur-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        <h2 class="text-xs font-bold uppercase tracking-wider text-white">Video Walkthrough</h2>
+                    </div>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">google_stack.webm</span>
+                </div>
+
+                <div class="relative rounded-2xl overflow-hidden bg-black border border-slate-800 aspect-video flex items-center justify-center">
+                    <video 
+                        controls 
+                        preload="metadata"
+                        class="w-full h-full object-cover"
+                        poster="/google_stack/Antigravity.png"
+                    >
+                        <source src="/google_stack/google_stack.webm" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <div class="text-xs text-slate-400 space-y-1.5 leading-relaxed">
+                    <div class="font-bold text-slate-200 flex items-center gap-1.5">
+                        <span>🎬</span>
+                        <span>"Google Just Released 15 Free AI Tools"</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400">
+                        Highlights Pomelli (marketing), Stitch (UI design), Opal (workflows), Antigravity (coding agent), and Mixboard (moodboards). All reviewed tools are cataloged below.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 3. SEARCH & FILTER CONTROLS ================= -->
+        <div class="space-y-4 p-5 sm:p-6 rounded-3xl bg-slate-900/85 border border-slate-800/90 backdrop-blur-xl shadow-xl">
+            <!-- Search Input -->
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <input 
+                    type="text" 
+                    id="stack-search-input"
+                    placeholder="Search Google AI tools, use cases, or competitor equivalents (e.g., Claude Code, Figma, n8n)..."
+                    value="{{ search_query }}"
+                    class="w-full pl-10 pr-4 py-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 transition-colors shadow-inner"
+                    oninput="filterGoogleTools()"
+                >
+            </div>
+
+            <!-- Filter Controls Row -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-2">
+                <!-- Category Filter Tabs -->
+                <div class="flex flex-wrap items-center gap-1.5">
+                    <button 
+                        type="button" 
+                        class="cat-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all border bg-purple-600 text-white border-purple-500 shadow-md"
+                        data-category="all"
+                        onclick="setCategoryFilter('all', this)"
+                    >
+                        <span>All Categories</span>
+                        <span class="ml-1 text-[10px] font-mono opacity-80">({{ tools|length }})</span>
+                    </button>
+                    {% for cat in categories %}
+                    <button 
+                        type="button" 
+                        class="cat-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border bg-slate-950/80 text-slate-300 hover:text-white border-slate-800 hover:border-slate-700"
+                        data-category="{{ cat.slug }}"
+                        onclick="setCategoryFilter('{{ cat.slug }}', this)"
+                    >
+                        <span>{{ cat.icon }}</span>
+                        <span>{{ cat.label }}</span>
+                        <span class="ml-1 text-[10px] font-mono text-slate-400">({{ cat.count }})</span>
+                    </button>
+                    {% endfor %}
+                </div>
+
+                <!-- Free Status Filter Pills -->
+                <div class="flex items-center gap-1.5 flex-shrink-0 self-start md:self-auto">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-1">Status:</span>
+                    <button 
+                        type="button" 
+                        class="status-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 transition-all"
+                        data-status="all"
+                        onclick="setStatusFilter('all', this)"
+                    >
+                        All
+                    </button>
+                    <button 
+                        type="button" 
+                        class="status-filter-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-950 text-slate-400 border border-slate-800 hover:text-white transition-all"
+                        data-status="free"
+                        onclick="setStatusFilter('free', this)"
+                    >
+                        100% Free ({{ status_counts.free }})
+                    </button>
+                    <button 
+                        type="button" 
+                        class="status-filter-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-950 text-slate-400 border border-slate-800 hover:text-white transition-all"
+                        data-status="freemium"
+                        onclick="setStatusFilter('freemium', this)"
+                    >
+                        Freemium ({{ status_counts.freemium }})
+                    </button>
+                    <button 
+                        type="button" 
+                        class="status-filter-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-950 text-slate-400 border border-slate-800 hover:text-white transition-all"
+                        data-status="preview"
+                        onclick="setStatusFilter('preview', this)"
+                    >
+                        Preview ({{ status_counts.preview }})
+                    </button>
+                </div>
+            </div>
+
+            <!-- Active Filter Counter -->
+            <div class="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800/60 font-mono">
+                <span id="results-count-text">Showing {{ tools|length }} Google AI tools</span>
+                <button type="button" onclick="resetAllFilters()" class="text-purple-400 hover:text-purple-300 underline font-sans text-xs">
+                    Reset filters
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= 4. TOOLS GRID ================= -->
+        <div id="google-tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for tool in tools %}
+            <div 
+                class="google-tool-card group rounded-3xl border border-slate-800/90 bg-slate-900/60 flex flex-col justify-between overflow-hidden hover:border-purple-500/50 hover:bg-slate-900/90 transition-all hover:shadow-2xl hover:-translate-y-1"
+                data-name="{{ tool.name|lower }}"
+                data-category="{{ tool.category|lower }}"
+                data-status="{% if 'freemium' in tool.pricing_badge|lower %}freemium{% elif 'preview' in tool.pricing_badge|lower %}preview{% else %}free{% endif %}"
+                data-tagline="{{ tool.tagline|lower }}"
+                data-competitors="{% for comp in tool.competitors %}{{ comp.provider|lower }} {{ comp.equivalent_tool|lower }} {% endfor %}"
+                id="card-{{ tool.slug }}"
+            >
+                <div class="p-6 space-y-4">
+                    <!-- Top Row: Category + Free Badge -->
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-950 text-slate-300 border border-slate-800">
+                            {% if tool.category == 'coding' %}💻 Coding
+                            {% elif tool.category == 'app and UI building' %}🎨 App & UI Building
+                            {% elif tool.category == 'research' %}📚 Research
+                            {% elif tool.category == 'marketing' %}📢 Marketing
+                            {% elif tool.category == 'image' %}🖼️ Image
+                            {% elif tool.category == 'video' %}🎬 Video
+                            {% else %}✨ Assistant
+                            {% endif %}
+                        </span>
+
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full 
+                            {% if 'free preview' in tool.pricing_badge|lower %}bg-purple-500/10 text-purple-300 border border-purple-500/25
+                            {% elif 'freemium' in tool.pricing_badge|lower %}bg-indigo-500/10 text-indigo-300 border border-indigo-500/25
+                            {% else %}bg-emerald-500/10 text-emerald-300 border border-emerald-500/25
+                            {% endif %}">
+                            {{ tool.pricing_badge }}
+                        </span>
+                    </div>
+
+                    <!-- Media Asset Container -->
+                    <div class="relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-800/80 aspect-[16/10] flex items-center justify-center group-hover:border-slate-700 transition-colors">
+                        {% if tool.media and tool.media.url %}
+                        <img 
+                            src="{{ tool.media.url }}" 
+                            alt="{{ tool.media.alt }}"
+                            loading="lazy"
+                            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                            onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                        >
+                        <div class="hidden flex flex-col items-center justify-center p-4 text-center space-y-2">
+                            <span class="text-3xl">✨</span>
+                            <span class="text-xs font-bold text-slate-300">{{ tool.name }}</span>
+                            <span class="text-[10px] text-slate-500">{{ tool.category }}</span>
+                        </div>
+                        {% else %}
+                        <div class="flex flex-col items-center justify-center p-4 text-center space-y-2">
+                            <span class="text-3xl">✨</span>
+                            <span class="text-xs font-bold text-slate-300">{{ tool.name }}</span>
+                            <span class="text-[10px] text-slate-500">{{ tool.category }}</span>
+                        </div>
+                        {% endif %}
+
+                        <!-- Asset Source Badge -->
+                        <span class="absolute bottom-2 right-2 text-[9px] font-mono px-2 py-0.5 rounded bg-black/75 text-slate-400 border border-slate-800 backdrop-blur-sm">
+                            {{ tool.source_assets[0] }}
+                        </span>
+                    </div>
+
+                    <!-- Tool Name & One-line Description -->
+                    <div class="space-y-1.5">
+                        <h3 class="text-lg font-black text-white group-hover:text-purple-300 transition-colors flex items-center justify-between">
+                            <a href="/google-ai-stack/{{ tool.slug }}/">
+                                {{ tool.name }}
+                            </a>
+                            <a 
+                                href="{{ tool.official_url }}" 
+                                target="_blank" 
+                                rel="noopener"
+                                class="text-slate-500 hover:text-white transition-colors"
+                                title="Open official {{ tool.name }} site"
+                                aria-label="Open official {{ tool.name }} site in new tab"
+                            >
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </a>
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            {{ tool.tagline }}
+                        </p>
+                    </div>
+
+                    <!-- Free Tier Limit Callout -->
+                    <div class="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/80 text-[11px] text-slate-300 space-y-1">
+                        <div class="flex items-center gap-1.5 text-emerald-400 font-bold uppercase tracking-wider text-[10px]">
+                            <span>✓</span>
+                            <span>Free Tier Limits</span>
+                        </div>
+                        <p class="text-slate-400 leading-snug">
+                            {{ tool.free_tier_limits }}
+                        </p>
+                    </div>
+
+                    <!-- Competitor Summary Chips -->
+                    <div class="space-y-1.5 pt-1">
+                        <div class="text-[10px] uppercase font-bold tracking-wider text-slate-500">Free Competitor Equivalents</div>
+                        <div class="flex flex-wrap gap-1.5">
+                            {% for comp in tool.competitors %}
+                            <span class="text-[10px] px-2 py-0.5 rounded-lg bg-slate-950 text-slate-400 border border-slate-800/80 font-medium">
+                                {{ comp.provider }} {{ comp.equivalent_tool }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer & Expand Controls -->
+                <div class="p-4 bg-slate-950/70 border-t border-slate-800/80 flex items-center justify-between gap-2">
+                    <button 
+                        type="button" 
+                        onclick="toggleDetailPanel('{{ tool.slug }}')" 
+                        class="flex-1 py-2 px-3 rounded-xl bg-purple-600/10 hover:bg-purple-600/20 text-purple-300 hover:text-white border border-purple-500/20 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
+                        id="btn-toggle-{{ tool.slug }}"
+                    >
+                        <span>Compare Competitors</span>
+                        <span id="arrow-{{ tool.slug }}" class="text-xs transition-transform duration-200">▾</span>
+                    </button>
+
+                    <a 
+                        href="/google-ai-stack/{{ tool.slug }}/"
+                        class="py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs font-bold transition-colors"
+                        title="View complete tool details and benchmarks"
+                    >
+                        Details →
+                    </a>
+                </div>
+
+                <!-- EXPANDABLE PANEL (IN-PLACE ACCORDION DETAIL) -->
+                <div id="panel-{{ tool.slug }}" class="hidden border-t border-slate-800 bg-slate-950/95 p-5 space-y-5 text-xs text-slate-300 animate-fadeIn">
+                    <!-- What It Does & Main Use Cases -->
+                    <div class="space-y-2">
+                        <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                            <span class="text-purple-400">01.</span>
+                            <span>What It Does & Use Cases</span>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed text-xs">
+                            {{ tool.what_it_does }}
+                        </p>
+                        <ul class="space-y-1 pt-1 text-slate-400">
+                            {% for uc in tool.use_cases %}
+                            <li class="flex items-start gap-1.5">
+                                <span class="text-purple-400 font-bold">•</span>
+                                <span>{{ uc }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Free Tier Limits & The Catch -->
+                    <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-1.5 text-xs">
+                        <div class="font-bold text-amber-300 flex items-center gap-1.5 text-[11px] uppercase tracking-wider">
+                            <span>⚠️</span>
+                            <span>The Catch & Usage Restrictions</span>
+                        </div>
+                        <p class="text-amber-200/90 leading-relaxed">
+                            {{ tool.the_catch }}
+                        </p>
+                    </div>
+
+                    <!-- Competitor Comparison Table -->
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                                <span class="text-emerald-400">02.</span>
+                                <span>Competitor Comparison Table</span>
+                            </div>
+                            <span class="text-[10px] font-mono text-slate-500">Verified: {{ tool.last_verified }}</span>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl border border-slate-800">
+                            <table class="w-full text-left text-[11px] divide-y divide-slate-800">
+                                <thead class="bg-slate-900 text-slate-400 font-bold uppercase tracking-wider text-[10px]">
+                                    <tr>
+                                        <th class="p-2.5">Provider</th>
+                                        <th class="p-2.5">Equivalent Tool</th>
+                                        <th class="p-2.5">What is Free</th>
+                                        <th class="p-2.5">Key Limits</th>
+                                        <th class="p-2.5">Google vs Competitor</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-800/80 bg-slate-950/60 font-sans">
+                                    {% for comp in tool.competitors %}
+                                    <tr class="hover:bg-slate-900/60 transition-colors">
+                                        <td class="p-2.5 font-bold text-white whitespace-nowrap">{{ comp.provider }}</td>
+                                        <td class="p-2.5 text-purple-300 whitespace-nowrap font-medium">{{ comp.equivalent_tool }}</td>
+                                        <td class="p-2.5 text-slate-300">{{ comp.what_is_free }}</td>
+                                        <td class="p-2.5 text-amber-300/80">{{ comp.key_limits }}</td>
+                                        <td class="p-2.5 text-slate-300">
+                                            <div class="space-y-1">
+                                                <div><strong class="text-emerald-400">Google +:</strong> {{ comp.weaker_than_google }}</div>
+                                                <div><strong class="text-rose-400">Google -:</strong> {{ comp.stronger_than_google }}</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Direct Action Buttons -->
+                    <div class="pt-2 flex items-center justify-between gap-3 border-t border-slate-800/80">
+                        <a 
+                            href="{{ tool.official_url }}" 
+                            target="_blank" 
+                            rel="noopener"
+                            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-colors shadow-md"
+                        >
+                            <span>Launch {{ tool.name }}</span>
+                            <span>↗</span>
+                        </a>
+
+                        <a 
+                            href="/google-ai-stack/{{ tool.slug }}/"
+                            class="text-xs text-slate-400 hover:text-white underline font-medium"
+                        >
+                            Permanent Link & Full Benchmark →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Empty Results Placeholder -->
+        <div id="no-tools-found" class="hidden p-12 text-center rounded-3xl bg-slate-900/60 border border-slate-800 space-y-4">
+            <span class="text-4xl">🔍</span>
+            <div class="space-y-1">
+                <h3 class="text-base font-bold text-white">No Google AI tools matched your filters</h3>
+                <p class="text-xs text-slate-400">Try adjusting your search keywords or switching category filters.</p>
+            </div>
+            <button type="button" onclick="resetAllFilters()" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs">
+                Reset All Filters
+            </button>
+        </div>
+
+        <!-- ================= 5. EDITORIAL SOURCES & DISCLAIMER ================= -->
+        <div class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400 space-y-3 leading-relaxed">
+            <div class="font-bold uppercase tracking-wider text-slate-300 text-[11px] flex items-center gap-2">
+                <span>🛡️</span>
+                <span>Sources, Verification & Trademark Notice</span>
+            </div>
+            <p>
+                All tools cataloged above are sourced directly from the <code class="px-1.5 py-0.5 rounded bg-slate-950 text-slate-300 border border-slate-800 font-mono">google_stack/</code> reference assets (videos, carousels, infographics, and official Google Labs documentation). Metricore verifies free-tier limits as of <strong>November 2026</strong>. Free-tier allocations, beta access programs, and credit limits are subject to change by Google and third-party providers.
+            </p>
+            <p class="text-[11px] text-slate-500">
+                Metricore is an independent open-source directory. Google, Gemini, Firebase, Android, and respective third-party provider names (Adobe, Microsoft, OpenAI, Anthropic, Canva, etc.) are trademarks of their respective owners. Listing does not imply sponsorship or affiliation.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Dynamic Search & Filter Script -->
+<script>
+    let activeCategory = 'all';
+    let activeStatus = 'all';
+
+    function setCategoryFilter(category, btn) {
+        activeCategory = category;
+        document.querySelectorAll('.cat-filter-btn').forEach(b => {
+            b.classList.remove('bg-purple-600', 'text-white', 'border-purple-500', 'shadow-md');
+            b.classList.add('bg-slate-950/80', 'text-slate-300', 'border-slate-800');
+        });
+        btn.classList.add('bg-purple-600', 'text-white', 'border-purple-500', 'shadow-md');
+        btn.classList.remove('bg-slate-950/80', 'text-slate-300', 'border-slate-800');
+        filterGoogleTools();
+    }
+
+    function setStatusFilter(status, btn) {
+        activeStatus = status;
+        document.querySelectorAll('.status-filter-btn').forEach(b => {
+            b.classList.remove('bg-emerald-500/20', 'text-emerald-300', 'border-emerald-500/30');
+            b.classList.add('bg-slate-950', 'text-slate-400', 'border-slate-800');
+        });
+        btn.classList.add('bg-emerald-500/20', 'text-emerald-300', 'border-emerald-500/30');
+        btn.classList.remove('bg-slate-950', 'text-slate-400', 'border-slate-800');
+        filterGoogleTools();
+    }
+
+    function filterGoogleTools() {
+        const query = (document.getElementById('stack-search-input')?.value || '').trim().toLowerCase();
+        const cards = document.querySelectorAll('.google-tool-card');
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            const name = card.getAttribute('data-name') || '';
+            const category = card.getAttribute('data-category') || '';
+            const status = card.getAttribute('data-status') || '';
+            const tagline = card.getAttribute('data-tagline') || '';
+            const competitors = card.getAttribute('data-competitors') || '';
+
+            const matchesQuery = !query || 
+                name.includes(query) || 
+                category.includes(query) || 
+                tagline.includes(query) || 
+                competitors.includes(query);
+
+            const matchesCategory = (activeCategory === 'all') || (category === activeCategory);
+            const matchesStatus = (activeStatus === 'all') || (status === activeStatus);
+
+            if (matchesQuery && matchesCategory && matchesStatus) {
+                card.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        const countText = document.getElementById('results-count-text');
+        if (countText) {
+            countText.textContent = `Showing ${visibleCount} Google AI tool${visibleCount === 1 ? '' : 's'}`;
+        }
+
+        const noFound = document.getElementById('no-tools-found');
+        if (noFound) {
+            if (visibleCount === 0) {
+                noFound.classList.remove('hidden');
+            } else {
+                noFound.classList.add('hidden');
+            }
+        }
+    }
+
+    function toggleDetailPanel(slug) {
+        const panel = document.getElementById('panel-' + slug);
+        const arrow = document.getElementById('arrow-' + slug);
+        const btn = document.getElementById('btn-toggle-' + slug);
+
+        if (!panel) return;
+
+        if (panel.classList.contains('hidden')) {
+            panel.classList.remove('hidden');
+            if (arrow) arrow.style.transform = 'rotate(180deg)';
+            if (btn) btn.classList.add('bg-purple-600', 'text-white');
+        } else {
+            panel.classList.add('hidden');
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+            if (btn) btn.classList.remove('bg-purple-600', 'text-white');
+        }
+    }
+
+    function resetAllFilters() {
+        const searchInput = document.getElementById('stack-search-input');
+        if (searchInput) searchInput.value = '';
+        
+        const firstCatBtn = document.querySelector('.cat-filter-btn[data-category="all"]');
+        if (firstCatBtn) setCategoryFilter('all', firstCatBtn);
+
+        const firstStatusBtn = document.querySelector('.status-filter-btn[data-status="all"]');
+        if (firstStatusBtn) setStatusFilter('all', firstStatusBtn);
+    }
+</script>
+{% endblock %}

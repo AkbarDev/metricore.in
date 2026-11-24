@@ -30,6 +30,13 @@ from app.industry_stacks import (
     get_use_cases_for_stack,
     get_use_case_by_slug,
 )
+from app.google_stack import (
+    get_all_google_tools,
+    get_google_tool_by_slug,
+    get_google_categories,
+    get_google_status_counts,
+    get_google_stack_metadata,
+)
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -41,8 +48,9 @@ app = FastAPI(
     debug=False,
 )
 
-# Static files (Mounted strictly to app/static)
+# Static files (Mounted strictly to app/static and google_stack)
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+app.mount("/google_stack", StaticFiles(directory=BASE_DIR.parent / "google_stack"), name="google_stack")
 
 # Templates with autoescaping
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
@@ -1001,6 +1009,58 @@ async def industry_use_case_detail(
             "is_preview": is_preview,
             "show_filters_row": False,
             "active_category_slug": "industry-tool-stacks",
+        },
+    )
+
+# ================= GOOGLE AI STACK ROUTES =================
+@app.get("/google-ai-stack/", response_class=HTMLResponse)
+async def google_ai_stack_overview(
+    request: Request,
+    category: Optional[str] = None,
+    pricing: Optional[str] = None,
+    q: Optional[str] = None,
+):
+    tools = get_all_google_tools()
+    categories = get_google_categories()
+    status_counts = get_google_status_counts()
+    metadata = get_google_stack_metadata()
+
+    return templates.TemplateResponse(
+        request=request,
+        name="google_stack/index.html",
+        context={
+            "tools": tools,
+            "categories": categories,
+            "status_counts": status_counts,
+            "metadata": metadata,
+            "selected_category": category,
+            "selected_pricing": pricing,
+            "search_query": q or "",
+        },
+    )
+
+@app.get("/google-ai-stack/{tool_slug}/", response_class=HTMLResponse)
+async def google_ai_tool_detail(request: Request, tool_slug: str):
+    tool = get_google_tool_by_slug(tool_slug)
+    if not tool:
+        raise HTTPException(status_code=404, detail="Google AI Tool not found")
+
+    all_tools = get_all_google_tools()
+    related_tools = [t for t in all_tools if t.get("id") != tool.get("id") and t.get("category") == tool.get("category")][:3]
+    if len(related_tools) < 3:
+        for t in all_tools:
+            if t.get("id") != tool.get("id") and t not in related_tools:
+                related_tools.append(t)
+            if len(related_tools) == 3:
+                break
+
+    return templates.TemplateResponse(
+        request=request,
+        name="google_stack/detail.html",
+        context={
+            "tool": tool,
+            "related_tools": related_tools,
+            "metadata": get_google_stack_metadata(),
         },
     )
 

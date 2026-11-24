@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tool.name }} — Free Tier Limits & Competitor Comparison | Google AI Stack | Metricore{% endblock %}
+
+{% block content %}
+<div class="relative w-full overflow-hidden">
+    <!-- Ambient Aura -->
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-purple-600/15 via-indigo-600/10 to-transparent rounded-full blur-[160px] pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 relative z-10">
+
+        <!-- ================= 1. BREADCRUMBS ================= -->
+        <nav class="flex items-center space-x-2 text-xs text-slate-400 font-medium" aria-label="Breadcrumb">
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+            <span>/</span>
+            <a href="/google-ai-stack/" class="hover:text-white transition-colors">Google AI Stack</a>
+            <span>/</span>
+            <span class="text-purple-300 font-bold">{{ tool.name }}</span>
+        </nav>
+
+        <!-- ================= 2. HERO HEADER ================= -->
+        <div class="space-y-6">
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300">
+                    {% if tool.category == 'coding' %}💻 Coding
+                    {% elif tool.category == 'app and UI building' %}🎨 App & UI Building
+                    {% elif tool.category == 'research' %}📚 Research
+                    {% elif tool.category == 'marketing' %}📢 Marketing
+                    {% elif tool.category == 'image' %}🖼️ Image
+                    {% elif tool.category == 'video' %}🎬 Video
+                    {% else %}✨ Assistant
+                    {% endif %}
+                </span>
+
+                <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full 
+                    {% if 'free preview' in tool.pricing_badge|lower %}bg-purple-500/10 text-purple-300 border border-purple-500/25
+                    {% elif 'freemium' in tool.pricing_badge|lower %}bg-indigo-500/10 text-indigo-300 border border-indigo-500/25
+                    {% else %}bg-emerald-500/10 text-emerald-300 border border-emerald-500/25
+                    {% endif %}">
+                    {{ tool.pricing_badge }}
+                </span>
+
+                <span class="text-xs font-mono text-slate-500 ml-auto">
+                    Verified: {{ tool.last_verified }}
+                </span>
+            </div>
+
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-slate-800">
+                <div class="space-y-2 max-w-3xl">
+                    <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+                        {{ tool.name }}
+                    </h1>
+                    <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                        {{ tool.tagline }}
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <a 
+                        href="{{ tool.official_url }}"
+                        target="_blank" 
+                        rel="noopener"
+                        class="px-5 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-purple-500/25 flex items-center gap-2"
+                    >
+                        <span>Launch Official Site</span>
+                        <span>↗</span>
+                    </a>
+                    <a 
+                        href="/google-ai-stack/"
+                        class="px-4 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 text-xs sm:text-sm font-semibold transition-colors"
+                    >
+                        ← All Google Tools
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 3. MEDIA SHOWCASE ================= -->
+        <div class="rounded-3xl bg-slate-900/70 border border-slate-800 p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                    <span>🖼️</span>
+                    <span>Media Asset Preview from google_stack/</span>
+                </div>
+                <span class="text-[11px] font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">
+                    {{ tool.source_assets[0] }}
+                </span>
+            </div>
+
+            <div class="relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 max-h-[500px] flex items-center justify-center">
+                {% if tool.media and tool.media.url %}
+                <img 
+                    src="{{ tool.media.url }}" 
+                    alt="{{ tool.media.alt }}"
+                    loading="lazy"
+                    class="w-full h-auto max-h-[500px] object-contain mx-auto"
+                    onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                >
+                <div class="hidden p-12 text-center text-slate-400">
+                    <span class="text-4xl">🤖</span>
+                    <p class="text-xs mt-2">{{ tool.name }} Asset Preview</p>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if tool.media and tool.media.caption %}
+            <p class="text-[11px] text-slate-400 italic text-center">
+                {{ tool.media.caption }}
+            </p>
+            {% endif %}
+        </div>
+
+        <!-- ================= 4. WHAT IT DOES & USE CASES ================= -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800 space-y-5">
+            <div class="space-y-1">
+                <div class="text-xs font-bold uppercase tracking-wider text-purple-400">Overview</div>
+                <h2 class="text-xl font-black text-white tracking-tight">What It Does & Main Use Cases</h2>
+            </div>
+
+            <p class="text-sm text-slate-300 leading-relaxed">
+                {{ tool.what_it_does }}
+            </p>
+
+            <div class="pt-4 border-t border-slate-800/80 space-y-3">
+                <div class="text-xs font-bold uppercase tracking-wider text-slate-300">Key Capabilities:</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {% for uc in tool.use_cases %}
+                    <div class="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800/80 flex items-start gap-2.5 text-xs text-slate-300">
+                        <span class="text-emerald-400 font-bold">✓</span>
+                        <span class="leading-relaxed">{{ uc }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 5. FREE TIER LIMITS & THE CATCH ================= -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Free Tier Limits -->
+            <div class="p-6 rounded-3xl bg-emerald-950/20 border border-emerald-500/30 space-y-3">
+                <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm uppercase tracking-wider">
+                    <span>✓</span>
+                    <span>Free Tier Limits</span>
+                </div>
+                <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
+                    {{ tool.free_tier_limits }}
+                </p>
+            </div>
+
+            <!-- The Catch / Beta Status -->
+            <div class="p-6 rounded-3xl bg-amber-950/20 border border-amber-500/30 space-y-3">
+                <div class="flex items-center gap-2 text-amber-400 font-bold text-sm uppercase tracking-wider">
+                    <span>⚠️</span>
+                    <span>The Catch & Usage Restrictions</span>
+                </div>
+                <p class="text-xs sm:text-sm text-amber-100/90 leading-relaxed">
+                    {{ tool.the_catch }}
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= 6. COMPETITOR COMPARISON TABLE ================= -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-slate-800 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+                <div>
+                    <div class="text-xs font-bold uppercase tracking-wider text-emerald-400">Benchmark Analysis</div>
+                    <h2 class="text-xl font-black text-white tracking-tight">Free Equivalents & Competitor Comparison</h2>
+                </div>
+                <span class="text-[11px] font-mono text-slate-400">
+                    Last Verified: {{ tool.last_verified }}
+                </span>
+            </div>
+
+            <p class="text-xs text-slate-400 leading-relaxed">
+                How <strong>{{ tool.name }}</strong> compares against rival free equivalents from providers like Adobe, Microsoft, OpenAI, Anthropic, and independent tools:
+            </p>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-800">
+                <table class="w-full text-left text-xs divide-y divide-slate-800">
+                    <thead class="bg-slate-950 text-slate-400 font-bold uppercase tracking-wider text-[11px]">
+                        <tr>
+                            <th class="p-3.5">Provider</th>
+                            <th class="p-3.5">Equivalent Tool</th>
+                            <th class="p-3.5">What is Free</th>
+                            <th class="p-3.5">Key Limits</th>
+                            <th class="p-3.5">Where Google is Stronger / Weaker</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/80 bg-slate-900/50">
+                        {% for comp in tool.competitors %}
+                        <tr class="hover:bg-slate-900 transition-colors">
+                            <td class="p-3.5 font-bold text-white whitespace-nowrap">{{ comp.provider }}</td>
+                            <td class="p-3.5 font-semibold text-purple-300 whitespace-nowrap">{{ comp.equivalent_tool }}</td>
+                            <td class="p-3.5 text-slate-300">{{ comp.what_is_free }}</td>
+                            <td class="p-3.5 text-amber-300/90">{{ comp.key_limits }}</td>
+                            <td class="p-3.5 text-slate-300 space-y-1">
+                                <div><span class="text-emerald-400 font-bold">Google Stronger:</span> {{ comp.weaker_than_google }}</div>
+                                <div><span class="text-rose-400 font-bold">Google Weaker:</span> {{ comp.stronger_than_google }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================= 7. RELATED GOOGLE AI TOOLS ================= -->
+        {% if related_tools and related_tools|length > 0 %}
+        <div class="space-y-4 pt-4 border-t border-slate-800">
+            <h2 class="text-sm font-black uppercase tracking-wider text-slate-400">
+                More in {{ tool.category|title }} & Google AI Stack
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {% for rel in related_tools %}
+                <a 
+                    href="/google-ai-stack/{{ rel.slug }}/"
+                    class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900 transition-all flex items-center justify-between group"
+                >
+                    <div class="space-y-1 truncate pr-2">
+                        <div class="text-xs font-bold text-white group-hover:text-purple-300 transition-colors truncate">
+                            {{ rel.name }}
+                        </div>
+                        <div class="text-[10px] text-slate-400 truncate">
+                            {{ rel.tagline }}
+                        </div>
+                    </div>
+                    <span class="text-xs text-purple-400 font-bold group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Disclaimer -->
+        <div class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 text-[11px] text-slate-500 leading-relaxed text-center">
+            Metricore is an open-source, non-commercial reference directory. Product names and logos are trademarks of their respective owners. Source assets referenced from <code class="text-slate-400 font-mono">google_stack/</code>.
+        </div>
+
+    </div>
+</div>
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{ tool.name }}",
+  "applicationCategory": "DeveloperApplication",
+  "description": "{{ tool.tagline }}",
+  "url": "{{ tool.official_url }}",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+{% endblock %}
