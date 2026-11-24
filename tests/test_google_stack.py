@@ -13,6 +13,7 @@ from app.google_stack import (
     get_google_tool_by_slug,
     get_google_categories,
     get_google_status_counts,
+    get_google_competitor_matrix,
 )
 
 client = TestClient(app)
@@ -20,7 +21,7 @@ client = TestClient(app)
 
 def test_google_stack_data_loader():
     tools = get_all_google_tools()
-    assert len(tools) >= 15, f"Expected at least 15 tools, got {len(tools)}"
+    assert len(tools) == 18, f"Expected 18 tools, got {len(tools)}"
 
     categories = get_google_categories()
     assert len(categories) >= 5
@@ -33,6 +34,10 @@ def test_google_stack_data_loader():
     assert antigravity["name"] == "Google Antigravity"
     assert len(antigravity["competitors"]) >= 3
 
+    matrix = get_google_competitor_matrix()
+    assert len(matrix) >= 8
+    assert any("Claude Code" in row["competitor"] for row in matrix)
+
 
 def test_google_stack_overview_page():
     response = client.get("/google-ai-stack/")
@@ -41,6 +46,9 @@ def test_google_stack_overview_page():
     assert "Google Antigravity" in response.text
     assert "NotebookLM" in response.text
     assert "Pomelli" in response.text
+    assert "Google AI Stack vs. Free Competitor Equivalents" in response.text
+    assert "Quick Compare" in response.text
+    assert "tool-drawer" in response.text
 
 
 def test_google_stack_detail_page():

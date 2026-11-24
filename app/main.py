@@ -36,6 +36,7 @@ from app.google_stack import (
     get_google_categories,
     get_google_status_counts,
     get_google_stack_metadata,
+    get_google_competitor_matrix,
 )
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -1033,6 +1034,7 @@ async def google_ai_stack_overview(
             "categories": categories,
             "status_counts": status_counts,
             "metadata": metadata,
+            "competitor_matrix": get_google_competitor_matrix(),
             "selected_category": category,
             "selected_pricing": pricing,
             "search_query": q or "",

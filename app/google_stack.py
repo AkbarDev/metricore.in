@@ -26,6 +26,11 @@ def get_google_stack_metadata() -> Dict[str, Any]:
     return data.get("metadata", {})
 
 
+def get_google_competitor_matrix() -> List[Dict[str, Any]]:
+    data = _read_data()
+    return data.get("competitor_matrix", [])
+
+
 def get_all_google_tools() -> List[Dict[str, Any]]:
     data = _read_data()
     return data.get("tools", [])

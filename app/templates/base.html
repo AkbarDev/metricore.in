@@ -102,15 +102,9 @@
 
             function updateUI() {
                 const isDay = document.documentElement.classList.contains("day-mode");
-                if (isDay) {
-                    sunIcon.classList.remove("hidden");
-                    moonIcon.classList.add("hidden");
-                    themeLabel.textContent = "Daylight";
-                } else {
-                    sunIcon.classList.add("hidden");
-                    moonIcon.classList.remove("hidden");
-                    themeLabel.textContent = "Nightlight";
-                }
+                if (sunIcon) sunIcon.classList.toggle("hidden", !isDay);
+                if (moonIcon) moonIcon.classList.toggle("hidden", isDay);
+                if (themeLabel) themeLabel.textContent = isDay ? "Daylight" : "Nightlight";
             }
 
             updateUI();

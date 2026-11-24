@@ -1118,5 +1118,97 @@
     "source_folder": "google_stack",
     "last_verified": "November 2026",
     "disclaimer": "Metricore is an open-source, non-commercial reference site. It is not affiliated with, sponsored by, or endorsed by Google, Alphabet, or any tool provider listed. All product names, logos, and trademarks belong to their respective owners."
-  }
+  },
+  "competitor_matrix": [
+    {
+      "category": "Autonomous Coding & IDEs",
+      "google_tool": "Google Antigravity & Jules",
+      "google_slug": "google-antigravity",
+      "free_offer": "Free preview in early access (unmetered agent loops)",
+      "competitor": "Anthropic Claude Code & Cursor",
+      "competitor_provider": "Anthropic / Anysphere",
+      "competitor_free": "Claude Code free research preview; Cursor 14-day trial then rate-limited",
+      "advantage": "Deep local workspace integration & async PR review with zero token billing during preview"
+    },
+    {
+      "category": "UI & Design-to-Code",
+      "google_tool": "Google Stitch",
+      "google_slug": "google-stitch",
+      "free_offer": "Free prompt-to-UI generation with component export",
+      "competitor": "v0 by Vercel & Figma AI",
+      "competitor_provider": "Vercel / Figma",
+      "competitor_free": "v0 grants 200 free monthly credits; Figma Starter includes 3 design files",
+      "advantage": "Generates production design systems and clean Tailwind UI code without monthly credit caps"
+    },
+    {
+      "category": "Visual AI Workflows",
+      "google_tool": "Google Opal",
+      "google_slug": "google-opal",
+      "free_offer": "Prompt-to-pipeline no-code workflow generator",
+      "competitor": "n8n & Make",
+      "competitor_provider": "n8n / Celonis",
+      "competitor_free": "n8n is self-hosted open-source; Make includes 1,000 free operations/mo",
+      "advantage": "Zero technical configuration: plain-English prompts wire up multimodal nodes and deployable web apps"
+    },
+    {
+      "category": "Grounded Research & Audio",
+      "google_tool": "NotebookLM",
+      "google_slug": "notebooklm",
+      "free_offer": "Free for personal Google accounts (up to 50 sources/notebook)",
+      "competitor": "Microsoft Copilot & Perplexity",
+      "competitor_provider": "Microsoft / Perplexity",
+      "competitor_free": "Perplexity offers 5 Pro searches/day; Copilot Studio requires paid Microsoft 365 license",
+      "advantage": "Zero-hallucination source citation grounding plus dual-host Audio Overview podcast synthesis"
+    },
+    {
+      "category": "Developer API Playground",
+      "google_tool": "Google AI Studio",
+      "google_slug": "google-ai-studio",
+      "free_offer": "Free rate-limited API tier (15 RPM, 1M context window)",
+      "competitor": "OpenAI Playground & Anthropic Console",
+      "competitor_provider": "OpenAI / Anthropic",
+      "competitor_free": "OpenAI requires paid billing per token; Anthropic grants one-time  initial credit",
+      "advantage": "Industry-leading 1M-2M token context window with recurring daily free API quotas"
+    },
+    {
+      "category": "Audiovisual Creation",
+      "google_tool": "Google Flow",
+      "google_slug": "google-flow",
+      "free_offer": "150 free video credits + free real-time looping audio generation",
+      "competitor": "Runway Gen-3 & Suno AI",
+      "competitor_provider": "Runway / Suno",
+      "competitor_free": "Runway offers 125 one-time credits; Suno provides 50 free credits daily",
+      "advantage": "Unifies cinematic video generation (Veo) with live generative music synthesis (MusicFX/Lyria)"
+    },
+    {
+      "category": "Brand Identity & Marketing",
+      "google_tool": "Google Pomelli",
+      "google_slug": "pomelli",
+      "free_offer": "Free brand DNA extraction & multi-channel campaign generation",
+      "competitor": "Canva Magic Studio & Adobe Express",
+      "competitor_provider": "Canva / Adobe",
+      "competitor_free": "Canva Free includes 50 lifetime Magic credits; Adobe Express provides 25 monthly credits",
+      "advantage": "Scans existing website or assets to extract colors, tone, and brand style without manual setup"
+    },
+    {
+      "category": "Visual Concept Moodboards",
+      "google_tool": "Google Mixboard",
+      "google_slug": "mixboard",
+      "free_offer": "Free spatial collage canvas with generative style mixing",
+      "competitor": "Milanote & Miro AI",
+      "competitor_provider": "Milanote / Miro",
+      "competitor_free": "Milanote is capped at 100 notes/images; Miro free includes 3 editable boards",
+      "advantage": "Combines infinite spatial board organization with in-canvas generative image synthesis"
+    },
+    {
+      "category": "Investigative Document Analysis",
+      "google_tool": "Google Pinpoint",
+      "google_slug": "google-pinpoint",
+      "free_offer": "Free for researchers & journalists (up to 200,000 files/collection)",
+      "competitor": "Adobe Acrobat AI & ChatPDF",
+      "competitor_provider": "Adobe / ChatPDF",
+      "competitor_free": "ChatPDF is limited to 2 PDFs/day up to 120 pages; Adobe Acrobat AI is a paid .99/mo add-on",
+      "advantage": "Vast archive search across scanned documents, handwritten notes, and audio transcripts at zero cost"
+    }
+  ]
 }
