@@ -1,0 +1,731 @@
+{% extends "base.html" %}
+
+{% block title %}GitHub Repos — Curated Open-Source AI & Workflow Repositories | Metricore{% endblock %}
+
+{% block content %}
+<div class="relative w-full overflow-hidden bg-slate-950 text-slate-100 min-h-screen">
+    <!-- Ambient Aura Gradients -->
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-b from-purple-600/15 via-indigo-600/10 to-transparent rounded-full blur-[160px] pointer-events-none"></div>
+    <div class="absolute top-[600px] -right-40 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[150px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 relative z-10">
+
+        <!-- ================= 1. BREADCRUMBS ================= -->
+        <nav class="flex items-center space-x-2 text-xs text-slate-400 font-medium" aria-label="Breadcrumb">
+            <a href="/" class="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded">Home</a>
+            <span class="text-slate-600">/</span>
+            <span class="text-purple-300 font-bold" aria-current="page">GitHub Repos</span>
+        </nav>
+
+        <!-- ================= 2. HERO SECTION ================= -->
+        <header class="space-y-6 pt-2 pb-2">
+            <div class="flex flex-wrap items-center gap-2.5">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-semibold backdrop-blur-md">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>GitHub Repos</span>
+                </span>
+                <span class="text-slate-500 text-xs">•</span>
+                <span class="text-xs text-slate-300 font-medium">Open-Source Reference Directory</span>
+                <span class="text-slate-500 text-xs">•</span>
+                <span class="text-xs text-emerald-400 font-mono font-semibold">{{ repos|length }} Curated Repositories</span>
+            </div>
+
+            <div class="space-y-3 max-w-4xl">
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+                    Curated Open-Source <span class="bg-gradient-to-r from-purple-400 via-indigo-300 to-emerald-300 bg-clip-text text-transparent">GitHub Repos</span>
+                </h1>
+                <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
+                    Curated open-source repositories for analytics, AI and website measurement.
+                </p>
+            </div>
+
+            <!-- KPI Metric Ribbon -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1 max-w-4xl">
+                <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-purple-400">{{ repos|length }}</div>
+                    <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Curated Repos</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-emerald-400">{{ categories|length }}</div>
+                    <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Topic Categories</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-teal-300">{{ active_count }}</div>
+                    <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Active Repos</div>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-slate-800/80 backdrop-blur-md">
+                    <div class="text-2xl font-black text-indigo-400">{{ metadata.last_verified or 'Nov 2026' }}</div>
+                    <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Last Verified</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ================= 3. FEATURED STANDOUT REPOS STRIP ================= -->
+        <section aria-labelledby="featured-repos-heading" class="space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                <div>
+                    <h2 id="featured-repos-heading" class="text-lg sm:text-xl font-black text-white tracking-tight flex items-center gap-2">
+                        <span>⭐</span>
+                        <span>Featured Standout Repositories</span>
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-0.5">High-adoption open-source projects for agent workflows, web search, supervision, and local voice AI.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {% for repo in featured_repos %}
+                <button 
+                    type="button"
+                    onclick="openRepoDrawer('{{ repo.slug }}')"
+                    class="text-left group p-4 rounded-2xl bg-slate-900/75 hover:bg-slate-900 border border-slate-800/90 hover:border-purple-500/50 transition-all hover:-translate-y-0.5 shadow-lg flex flex-col justify-between space-y-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 cursor-pointer"
+                >
+                    <div class="space-y-1.5 w-full">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30 truncate">
+                                {{ repo.category }}
+                            </span>
+                            <span class="text-[11px] font-mono font-bold text-amber-300 flex items-center gap-1 flex-shrink-0">
+                                <span>★</span>
+                                <span>{{ repo.stars_display }}</span>
+                            </span>
+                        </div>
+                        <div class="text-sm font-extrabold text-white group-hover:text-purple-300 transition-colors truncate">
+                            {{ repo.name }}
+                        </div>
+                        <p class="text-[11px] text-slate-400 line-clamp-2 leading-snug">
+                            {{ repo.why_useful }}
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800/70 w-full flex items-center justify-between text-[10px] text-slate-400 font-mono">
+                        <span class="truncate">{{ repo.owner }}</span>
+                        <span class="text-purple-400 font-sans font-bold group-hover:translate-x-0.5 transition-transform">Inspect →</span>
+                    </div>
+                </button>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- ================= 4. STICKY FILTER & SEARCH BAR ================= -->
+        <div id="sticky-filter-wrapper" class="sticky top-4 z-30 transition-all">
+            <div class="space-y-3 p-4 sm:p-5 rounded-3xl bg-slate-900/90 border border-slate-800/90 shadow-2xl backdrop-blur-xl">
+                <!-- Search, Language, License & Sort Row -->
+                <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+                    <!-- Search Input -->
+                    <div class="relative flex-1">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                        <input 
+                            type="search" 
+                            id="repo-search-input"
+                            placeholder="Filter repositories by name, owner, topic, or description..."
+                            value="{{ search_query }}"
+                            oninput="handleRepoSearchInput()"
+                            class="w-full pl-10 pr-9 py-2.5 rounded-2xl bg-slate-950/90 border border-slate-800 text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 transition-all"
+                            aria-label="Search GitHub repositories"
+                        >
+                        <button 
+                            type="button" 
+                            id="clear-repo-search-btn"
+                            onclick="clearRepoSearchInput()"
+                            class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white"
+                            aria-label="Clear search"
+                        >
+                            ✕
+                        </button>
+                    </div>
+
+                    <!-- Language, License & Sort Controls -->
+                    <div class="flex flex-wrap items-center gap-2 flex-shrink-0">
+                        <select 
+                            id="lang-filter-select" 
+                            onchange="handleRepoFilterChange()"
+                            class="px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 font-semibold focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 cursor-pointer"
+                            aria-label="Filter by language"
+                        >
+                            <option value="all">All Languages</option>
+                            {% for lang in languages %}
+                            <option value="{{ lang|lower }}">{{ lang }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select 
+                            id="license-filter-select" 
+                            onchange="handleRepoFilterChange()"
+                            class="px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 font-semibold focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 cursor-pointer"
+                            aria-label="Filter by license"
+                        >
+                            <option value="all">All Licenses</option>
+                            {% for lic in licenses %}
+                            <option value="{{ lic|lower }}">{{ lic }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select 
+                            id="repo-sort-select" 
+                            onchange="handleRepoFilterChange()"
+                            class="px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 font-semibold focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/30 cursor-pointer"
+                            aria-label="Sort repositories"
+                        >
+                            <option value="stars-desc">Stars (High → Low)</option>
+                            <option value="updated">Recently Updated</option>
+                            <option value="name-asc">Name (A → Z)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Category Chips Row -->
+                <div class="flex items-center gap-1.5 flex-wrap pt-1 border-t border-slate-800/60" role="tablist" aria-label="Filter by category">
+                    <button 
+                        type="button" 
+                        class="repo-cat-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all border bg-purple-600 text-white border-purple-500 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 cursor-pointer"
+                        data-category="all"
+                        onclick="setRepoCategory('all', this)"
+                        role="tab"
+                        aria-selected="true"
+                    >
+                        <span>All Categories</span>
+                        <span class="ml-1 text-[10px] font-mono opacity-80">({{ repos|length }})</span>
+                    </button>
+                    {% for cat in categories %}
+                    <button 
+                        type="button" 
+                        class="repo-cat-btn px-3 py-1.5 rounded-xl text-xs font-semibold transition-all border bg-slate-950 text-slate-300 hover:text-white border-slate-800 hover:border-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 cursor-pointer"
+                        data-category="{{ cat.slug|lower }}"
+                        onclick="setRepoCategory('{{ cat.slug|lower }}', this)"
+                        role="tab"
+                        aria-selected="false"
+                    >
+                        <span>{{ cat.icon }}</span>
+                        <span>{{ cat.label }}</span>
+                        <span class="ml-1 text-[10px] font-mono text-slate-400">({{ cat.count }})</span>
+                    </button>
+                    {% endfor %}
+                </div>
+
+                <!-- Count & Reset Row -->
+                <div class="flex items-center justify-between text-xs text-slate-400 pt-1 border-t border-slate-800/60 font-mono">
+                    <span id="repo-results-count">Showing {{ repos|length }} repositories</span>
+                    <button type="button" onclick="resetRepoFilters()" class="text-purple-400 hover:text-purple-300 underline font-sans text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded cursor-pointer">
+                        Reset all filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 5. UNIFORM REPO CARD GRID (NO SCREENSHOTS INSIDE CARDS) ================= -->
+        <main id="github-repos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" aria-label="GitHub Repositories Catalog">
+            {% for repo in repos %}
+            <article 
+                class="github-repo-card group relative rounded-3xl border border-slate-800/90 bg-slate-900/60 overflow-hidden hover:border-purple-500/60 hover:bg-slate-900/90 transition-all duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1 h-full p-4 space-y-3"
+                data-name="{{ repo.name|lower }}"
+                data-owner="{{ repo.owner|lower }}"
+                data-category="{{ repo.category|lower }}"
+                data-language="{{ repo.language|lower }}"
+                data-license="{{ repo.license|lower }}"
+                data-stars="{{ repo.stars if repo.stars is not none else -1 }}"
+                data-updated="{{ repo.updated_rank }}"
+                data-search="{{ (repo.name ~ ' ' ~ repo.owner ~ ' ' ~ repo.description ~ ' ' ~ repo.category ~ ' ' ~ (repo.topics|join(' ')))|lower }}"
+                data-slug="{{ repo.slug }}"
+                id="repo-card-{{ repo.slug }}"
+            >
+                <!-- Top: Repo Name, Owner & Maintenance Status Badge -->
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-950/90 text-purple-300 border border-purple-500/30 truncate max-w-[140px]">
+                            {{ repo.category }}
+                        </span>
+                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full flex-shrink-0
+                            {% if repo.status == 'Active' %}bg-emerald-500/15 text-emerald-300 border border-emerald-500/30
+                            {% elif repo.status == 'Slow' %}bg-amber-500/15 text-amber-300 border border-amber-500/30
+                            {% else %}bg-slate-700/40 text-slate-300 border border-slate-600/40
+                            {% endif %}">
+                            {{ repo.status }}
+                        </span>
+                    </div>
+
+                    <div class="space-y-0.5">
+                        <h3 class="text-base font-extrabold text-white group-hover:text-purple-300 transition-colors tracking-tight truncate">
+                            {% if repo.url %}
+                            <a href="{{ repo.url }}" target="_blank" rel="noopener noreferrer" class="hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded">
+                                {{ repo.name }}
+                            </a>
+                            {% else %}
+                            <button type="button" onclick="openRepoDrawer('{{ repo.slug }}')" class="hover:underline text-left truncate max-w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded cursor-pointer">
+                                {{ repo.name }}
+                            </button>
+                            {% endif %}
+                        </h3>
+                        <div class="flex items-center gap-1.5 text-[11px] text-slate-400 truncate">
+                            <span class="w-4 h-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[9px] font-bold text-purple-300 flex-shrink-0">
+                                {{ repo.owner[0]|upper if repo.owner != 'Needs verification' else '?' }}
+                            </span>
+                            <span class="truncate font-mono">{{ repo.owner }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description (Clamped to 2 lines) -->
+                <p class="text-xs text-slate-300 line-clamp-2 leading-relaxed min-h-[2rem]" title="{{ repo.description }}">
+                    {{ repo.description }}
+                </p>
+
+                <!-- Primary Language + Up to 3 Topic Tags (Single fixed-height row) -->
+                <div class="flex items-center gap-1.5 overflow-hidden h-6">
+                    <span class="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-200 px-2 py-0.5 rounded-md bg-slate-950 border border-slate-800 flex-shrink-0">
+                        <span class="w-2 h-2 rounded-full flex-shrink-0" style="background-color: {{ repo.language_color or '#94a3b8' }};"></span>
+                        <span class="truncate max-w-[85px]">{{ repo.language }}</span>
+                    </span>
+                    {% for topic in repo.topics[:2] %}
+                    <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-slate-950/70 text-slate-400 border border-slate-800/80 truncate">
+                        {{ topic }}
+                    </span>
+                    {% endfor %}
+                </div>
+
+                <!-- Stats Row: Stars, Forks, License, Updated -->
+                <div class="grid grid-cols-2 gap-1.5 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800/90 text-[10px] font-mono">
+                    <div class="flex items-center gap-1 text-amber-300 truncate" title="Stars: {{ repo.stars_display }}">
+                        <span>★</span>
+                        <span class="font-bold truncate">{{ repo.stars_display }}</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-slate-300 truncate" title="Forks: {{ repo.forks_display }}">
+                        <span class="text-slate-500">⑂</span>
+                        <span class="truncate">{{ repo.forks_display }}</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-slate-300 truncate" title="License: {{ repo.license }}">
+                        <span class="text-slate-500">⚖</span>
+                        <span class="truncate">{{ repo.license }}</span>
+                    </div>
+                    <div class="flex items-center gap-1 text-slate-400 truncate" title="Updated: {{ repo.last_updated }}">
+                        <span class="text-slate-500">🕒</span>
+                        <span class="truncate">{{ repo.last_updated }}</span>
+                    </div>
+                </div>
+
+                <!-- Why It's Useful Box (Clamped 2 lines) -->
+                <div class="p-2.5 rounded-xl bg-slate-950/80 border border-slate-800/90 space-y-1">
+                    <div class="text-[9px] uppercase font-bold tracking-wider text-purple-400">Why it's useful</div>
+                    <p class="text-[11px] text-slate-300 line-clamp-2 leading-snug min-h-[1.85rem]" title="{{ repo.why_useful }}">
+                        {{ repo.why_useful }}
+                    </p>
+                </div>
+
+                <!-- Bottom Actions Row (Pinned to bottom) -->
+                <div class="pt-2.5 border-t border-slate-800/60 flex items-center justify-between gap-2 text-xs mt-auto">
+                    <button 
+                        type="button" 
+                        onclick="openRepoDrawer('{{ repo.slug }}')"
+                        class="text-purple-400 hover:text-purple-300 font-bold flex items-center gap-1 transition-colors text-[11px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-400 rounded cursor-pointer"
+                    >
+                        <span>Details</span>
+                        <svg class="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+
+                    {% if repo.url %}
+                    <a 
+                        href="{{ repo.url }}" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="px-3 py-1 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold transition-all shadow-md shadow-purple-600/30 flex items-center gap-1 text-[11px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
+                    >
+                        <span>View on GitHub</span>
+                        <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    </a>
+                    {% else %}
+                    <span class="px-2.5 py-1 rounded-xl bg-slate-800/80 text-slate-400 border border-slate-700/60 font-semibold text-[10px]" title="GitHub URL needs verification">
+                        URL needs verification
+                    </span>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </main>
+
+        <!-- Empty Results State -->
+        <div id="no-repos-found" class="hidden p-12 text-center rounded-3xl bg-slate-900/60 border border-slate-800 space-y-4">
+            <span class="text-4xl" role="img" aria-label="Magnifying glass">🔍</span>
+            <div class="space-y-1">
+                <h3 class="text-base font-bold text-white">No GitHub repositories matched your filters</h3>
+                <p class="text-xs text-slate-400">Try clearing your search query or selecting a different category, language, or license.</p>
+            </div>
+            <button type="button" onclick="resetRepoFilters()" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs hover:bg-purple-500 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 cursor-pointer">
+                Reset All Filters
+            </button>
+        </div>
+
+        <!-- ================= 6. HOW WE CURATE & ATTRIBUTION FOOTER ================= -->
+        <footer class="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400 space-y-3 leading-relaxed">
+            <div class="font-bold uppercase tracking-wider text-slate-300 text-[11px] flex items-center gap-2">
+                <span>🧭</span>
+                <span>How We Curate & Owner Attribution</span>
+            </div>
+            <p>
+                Repositories in this directory are selected based on active maintenance, clear documentation, relevance to analytics, AI, and workflow engineering, and community adoption. All data is extracted directly from <code class="px-1.5 py-0.5 rounded bg-slate-950 text-slate-300 border border-slate-800 font-mono">github_repo/</code> reference assets, with unverified fields explicitly marked <strong>Needs verification</strong>.
+            </p>
+            <p class="text-[11px] text-slate-500">
+                Metricore credits each repository's respective owners and maintainers (msitarzewski, Panniantong, shepherd-agents, cloudflare, sunnychase, and open-source contributors). Listing does not imply partnership, sponsorship, or endorsement.
+            </p>
+        </footer>
+
+    </div>
+</div>
+
+<!-- ================= 7. DETAIL SLIDE-OVER DRAWER ================= -->
+<div 
+    id="repo-drawer-backdrop" 
+    class="fixed inset-0 z-50 hidden bg-black/70 backdrop-blur-sm transition-opacity duration-300 opacity-0"
+    onclick="closeRepoDrawer()"
+    aria-hidden="true"
+></div>
+
+<aside 
+    id="repo-drawer" 
+    class="fixed inset-y-0 right-0 z-50 w-full max-w-2xl bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out hidden"
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="repo-drawer-title"
+>
+    <!-- Drawer Header -->
+    <div class="p-5 border-b border-slate-800 flex items-center justify-between gap-3 bg-slate-950/90 flex-shrink-0">
+        <div class="flex items-center gap-2.5 min-w-0">
+            <span id="repo-drawer-category" class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-900 text-purple-300 border border-purple-500/30"></span>
+            <span id="repo-drawer-status" class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-300 border border-emerald-500/25"></span>
+            <h2 id="repo-drawer-title" class="text-base sm:text-lg font-black text-white truncate"></h2>
+        </div>
+        <button 
+            type="button" 
+            onclick="closeRepoDrawer()" 
+            class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 cursor-pointer"
+            aria-label="Close repository details drawer"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+
+    <!-- Drawer Scrollable Body -->
+    <div class="p-6 overflow-y-auto space-y-5 flex-1 text-xs text-slate-300">
+        <!-- Stats Ribbon -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <div class="text-[10px] text-slate-500 uppercase font-bold">Owner</div>
+                <div id="repo-drawer-owner" class="text-xs font-mono font-bold text-white truncate mt-0.5"></div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <div class="text-[10px] text-slate-500 uppercase font-bold">Stars / Forks</div>
+                <div id="repo-drawer-stars" class="text-xs font-mono font-bold text-amber-300 truncate mt-0.5"></div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <div class="text-[10px] text-slate-500 uppercase font-bold">License</div>
+                <div id="repo-drawer-license" class="text-xs font-mono font-bold text-slate-200 truncate mt-0.5"></div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                <div class="text-[10px] text-slate-500 uppercase font-bold">Updated</div>
+                <div id="repo-drawer-updated" class="text-xs font-mono font-bold text-slate-200 truncate mt-0.5"></div>
+            </div>
+        </div>
+
+        <!-- Description & Why It's Useful -->
+        <div class="space-y-2">
+            <p id="repo-drawer-desc" class="text-sm text-slate-200 leading-relaxed"></p>
+            <div class="p-3.5 rounded-2xl bg-purple-950/20 border border-purple-500/25 space-y-1">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-purple-300">Why It's Useful</div>
+                <p id="repo-drawer-why" class="text-xs text-slate-300 leading-relaxed"></p>
+            </div>
+        </div>
+
+        <!-- Key Features & Use Cases -->
+        <div class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-3">
+            <div class="font-bold text-purple-400 text-xs uppercase tracking-wider">Key Features</div>
+            <ul id="repo-drawer-features" class="space-y-1.5 text-slate-300"></ul>
+
+            <div class="font-bold text-emerald-400 text-xs uppercase tracking-wider pt-2 border-t border-slate-800/80">Typical Use Cases & Workflow Fit</div>
+            <ul id="repo-drawer-use-cases" class="space-y-1.5 text-slate-300"></ul>
+            <p id="repo-drawer-workflow" class="text-[11px] text-slate-400 italic pt-1"></p>
+        </div>
+
+        <!-- Quick Start -->
+        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-300">Quick Start (Clone)</span>
+                <a id="repo-drawer-readme" href="#" target="_blank" rel="noopener noreferrer" class="text-[11px] font-bold text-purple-400 hover:text-purple-300 underline hidden">
+                    Open README →
+                </a>
+            </div>
+            <code id="repo-drawer-clone" class="block p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-emerald-300 font-mono text-[11px] overflow-x-auto"></code>
+        </div>
+
+        <!-- Related Repositories -->
+        <div class="space-y-2">
+            <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Related Repositories</div>
+            <div id="repo-drawer-related" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- Attribution Footer -->
+        <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+            <span>Attribution: <strong id="repo-drawer-attribution" class="text-slate-200"></strong></span>
+            <span>Verified: <strong id="repo-drawer-verified" class="text-emerald-400"></strong></span>
+        </div>
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-4 border-t border-slate-800 bg-slate-950/95 flex items-center justify-between gap-3 flex-shrink-0">
+        <a id="repo-drawer-github-link" href="#" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs text-center transition-all shadow-lg flex items-center justify-center gap-1.5">
+            <span>View on GitHub</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+        <span id="repo-drawer-url-missing" class="hidden flex-1 py-2.5 px-4 rounded-xl bg-slate-800 text-slate-400 font-semibold text-xs text-center border border-slate-700">
+            GitHub URL: Needs verification
+        </span>
+    </div>
+</aside>
+
+<script>
+    const REPOS_DATA = {{ repos | tojson | safe }};
+    const REPOS_MAP = new Map(REPOS_DATA.map(r => [r.slug, r]));
+
+    let activeRepoCategory = 'all';
+    let activeRepoLang = 'all';
+    let activeRepoLicense = 'all';
+    let activeRepoSort = 'stars-desc';
+    let activeRepoSearch = '';
+
+    function initRepoFiltersFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        const q = params.get('q') || '';
+        const cat = params.get('category') || 'all';
+        const lang = params.get('lang') || 'all';
+        const lic = params.get('license') || 'all';
+        const sort = params.get('sort') || 'stars-desc';
+
+        const searchInput = document.getElementById('repo-search-input');
+        if (searchInput && q) {
+            searchInput.value = q;
+            activeRepoSearch = q.toLowerCase();
+            document.getElementById('clear-repo-search-btn')?.classList.remove('hidden');
+        }
+
+        const langSel = document.getElementById('lang-filter-select');
+        if (langSel && lang !== 'all') {
+            langSel.value = lang.toLowerCase();
+            activeRepoLang = lang.toLowerCase();
+        }
+
+        const licSel = document.getElementById('license-filter-select');
+        if (licSel && lic !== 'all') {
+            licSel.value = lic.toLowerCase();
+            activeRepoLicense = lic.toLowerCase();
+        }
+
+        const sortSel = document.getElementById('repo-sort-select');
+        if (sortSel) {
+            sortSel.value = sort;
+            activeRepoSort = sort;
+        }
+
+        if (cat !== 'all') {
+            const btn = document.querySelector(`.repo-cat-btn[data-category="${cat.toLowerCase()}"]`);
+            if (btn) setRepoCategory(cat.toLowerCase(), btn, false);
+        }
+
+        applyRepoFiltersAndSort();
+    }
+
+    function syncRepoURLState() {
+        const params = new URLSearchParams();
+        if (activeRepoSearch) params.set('q', activeRepoSearch);
+        if (activeRepoCategory !== 'all') params.set('category', activeRepoCategory);
+        if (activeRepoLang !== 'all') params.set('lang', activeRepoLang);
+        if (activeRepoLicense !== 'all') params.set('license', activeRepoLicense);
+        if (activeRepoSort !== 'stars-desc') params.set('sort', activeRepoSort);
+        const query = params.toString();
+        const newUrl = query ? `${window.location.pathname}?${query}` : window.location.pathname;
+        window.history.replaceState({}, '', newUrl);
+    }
+
+    function setRepoCategory(cat, btn, sync = true) {
+        activeRepoCategory = cat;
+        document.querySelectorAll('.repo-cat-btn').forEach(el => {
+            el.classList.remove('bg-purple-600', 'text-white', 'border-purple-500', 'shadow-md');
+            el.classList.add('bg-slate-950', 'text-slate-300', 'border-slate-800');
+            el.setAttribute('aria-selected', 'false');
+        });
+        if (btn) {
+            btn.classList.remove('bg-slate-950', 'text-slate-300', 'border-slate-800');
+            btn.classList.add('bg-purple-600', 'text-white', 'border-purple-500', 'shadow-md');
+            btn.setAttribute('aria-selected', 'true');
+        }
+        if (sync) syncRepoURLState();
+        applyRepoFiltersAndSort();
+    }
+
+    function handleRepoSearchInput() {
+        const input = document.getElementById('repo-search-input');
+        activeRepoSearch = (input?.value || '').trim().toLowerCase();
+        const clearBtn = document.getElementById('clear-repo-search-btn');
+        if (clearBtn) clearBtn.classList.toggle('hidden', !activeRepoSearch);
+        syncRepoURLState();
+        applyRepoFiltersAndSort();
+    }
+
+    function clearRepoSearchInput() {
+        const input = document.getElementById('repo-search-input');
+        if (input) input.value = '';
+        activeRepoSearch = '';
+        document.getElementById('clear-repo-search-btn')?.classList.add('hidden');
+        syncRepoURLState();
+        applyRepoFiltersAndSort();
+    }
+
+    function handleRepoFilterChange() {
+        activeRepoLang = document.getElementById('lang-filter-select')?.value || 'all';
+        activeRepoLicense = document.getElementById('license-filter-select')?.value || 'all';
+        activeRepoSort = document.getElementById('repo-sort-select')?.value || 'stars-desc';
+        syncRepoURLState();
+        applyRepoFiltersAndSort();
+    }
+
+    function applyRepoFiltersAndSort() {
+        const grid = document.getElementById('github-repos-grid');
+        const cards = Array.from(document.querySelectorAll('.github-repo-card'));
+        let visible = [];
+
+        cards.forEach(card => {
+            const cat = card.getAttribute('data-category') || '';
+            const lang = card.getAttribute('data-language') || '';
+            const lic = card.getAttribute('data-license') || '';
+            const search = card.getAttribute('data-search') || '';
+
+            const okSearch = !activeRepoSearch || search.includes(activeRepoSearch);
+            const okCat = activeRepoCategory === 'all' || cat === activeRepoCategory;
+            const okLang = activeRepoLang === 'all' || lang === activeRepoLang;
+            const okLic = activeRepoLicense === 'all' || lic === activeRepoLicense;
+
+            if (okSearch && okCat && okLang && okLic) {
+                card.classList.remove('hidden');
+                visible.push(card);
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        visible.sort((a, b) => {
+            if (activeRepoSort === 'stars-desc') {
+                return Number(b.getAttribute('data-stars')) - Number(a.getAttribute('data-stars'));
+            }
+            if (activeRepoSort === 'updated') {
+                return Number(a.getAttribute('data-updated')) - Number(b.getAttribute('data-updated'));
+            }
+            return (a.getAttribute('data-name') || '').localeCompare(b.getAttribute('data-name') || '');
+        });
+        visible.forEach(c => grid.appendChild(c));
+
+        const countEl = document.getElementById('repo-results-count');
+        if (countEl) {
+            countEl.textContent = `Showing ${visible.length} repositor${visible.length === 1 ? 'y' : 'ies'}`;
+        }
+        document.getElementById('no-repos-found')?.classList.toggle('hidden', visible.length > 0);
+    }
+
+    function resetRepoFilters() {
+        const searchInput = document.getElementById('repo-search-input');
+        if (searchInput) searchInput.value = '';
+        activeRepoSearch = '';
+        document.getElementById('clear-repo-search-btn')?.classList.add('hidden');
+        document.getElementById('lang-filter-select').value = 'all';
+        document.getElementById('license-filter-select').value = 'all';
+        document.getElementById('repo-sort-select').value = 'stars-desc';
+        activeRepoLang = 'all';
+        activeRepoLicense = 'all';
+        activeRepoSort = 'stars-desc';
+        const firstCat = document.querySelector('.repo-cat-btn[data-category="all"]');
+        if (firstCat) setRepoCategory('all', firstCat, false);
+        syncRepoURLState();
+        applyRepoFiltersAndSort();
+    }
+
+    function openRepoDrawer(slug) {
+        const repo = REPOS_MAP.get(slug);
+        if (!repo) return;
+
+        document.getElementById('repo-drawer-title').textContent = repo.name;
+        document.getElementById('repo-drawer-category').textContent = repo.category;
+        document.getElementById('repo-drawer-status').textContent = repo.status;
+        document.getElementById('repo-drawer-owner').textContent = repo.owner;
+        document.getElementById('repo-drawer-stars').textContent = `★ ${repo.stars_display} / ⑂ ${repo.forks_display}`;
+        document.getElementById('repo-drawer-license').textContent = repo.license;
+        document.getElementById('repo-drawer-updated').textContent = repo.last_updated;
+        document.getElementById('repo-drawer-desc').textContent = repo.description;
+        document.getElementById('repo-drawer-why').textContent = repo.why_useful;
+        document.getElementById('repo-drawer-workflow').textContent = repo.workflow_fit || '';
+        document.getElementById('repo-drawer-clone').textContent = repo.clone_command || 'Needs verification';
+        document.getElementById('repo-drawer-attribution').textContent = repo.attribution || repo.owner;
+        document.getElementById('repo-drawer-verified').textContent = repo.last_verified || 'November 2026';
+
+        document.getElementById('repo-drawer-features').innerHTML = (repo.features || []).map(f =>
+            `<li class="flex items-start gap-2"><span class="text-purple-400 font-bold">•</span><span>${f}</span></li>`
+        ).join('');
+
+        document.getElementById('repo-drawer-use-cases').innerHTML = (repo.use_cases || []).map(u =>
+            `<li class="flex items-start gap-2"><span class="text-emerald-400 font-bold">✓</span><span>${u}</span></li>`
+        ).join('');
+
+        const readmeEl = document.getElementById('repo-drawer-readme');
+        if (repo.readme_url) {
+            readmeEl.href = repo.readme_url;
+            readmeEl.classList.remove('hidden');
+        } else {
+            readmeEl.classList.add('hidden');
+        }
+
+        const relEl = document.getElementById('repo-drawer-related');
+        relEl.innerHTML = (repo.related || []).map(relSlug => {
+            const rel = REPOS_MAP.get(relSlug);
+            if (!rel) return '';
+            return `<button type="button" onclick="openRepoDrawer('${rel.slug}')" class="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-purple-300 hover:text-white transition-colors cursor-pointer">${rel.name} →</button>`;
+        }).join('');
+
+        const ghLink = document.getElementById('repo-drawer-github-link');
+        const ghMissing = document.getElementById('repo-drawer-url-missing');
+        if (repo.url) {
+            ghLink.href = repo.url;
+            ghLink.classList.remove('hidden');
+            ghMissing.classList.add('hidden');
+        } else {
+            ghLink.classList.add('hidden');
+            ghMissing.classList.remove('hidden');
+        }
+
+        const backdrop = document.getElementById('repo-drawer-backdrop');
+        const drawer = document.getElementById('repo-drawer');
+        backdrop.classList.remove('hidden');
+        drawer.classList.remove('hidden');
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            backdrop.classList.add('opacity-100');
+            drawer.classList.remove('translate-x-full');
+            drawer.classList.add('translate-x-0');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeRepoDrawer() {
+        const backdrop = document.getElementById('repo-drawer-backdrop');
+        const drawer = document.getElementById('repo-drawer');
+        backdrop.classList.remove('opacity-100');
+        backdrop.classList.add('opacity-0');
+        drawer.classList.remove('translate-x-0');
+        drawer.classList.add('translate-x-full');
+        setTimeout(() => {
+            backdrop.classList.add('hidden');
+            drawer.classList.add('hidden');
+            document.body.style.overflow = '';
+        }, 300);
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeRepoDrawer();
+    });
+    document.addEventListener('DOMContentLoaded', initRepoFiltersFromURL);
+</script>
+{% endblock %}

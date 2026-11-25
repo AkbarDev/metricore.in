@@ -38,6 +38,14 @@ from app.google_stack import (
     get_google_stack_metadata,
     get_google_competitor_matrix,
 )
+from app.github_repo import (
+    get_all_github_repos,
+    get_featured_github_repos,
+    get_github_categories,
+    get_github_languages,
+    get_github_licenses,
+    get_github_repo_metadata,
+)
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -1010,6 +1018,38 @@ async def industry_use_case_detail(
             "is_preview": is_preview,
             "show_filters_row": False,
             "active_category_slug": "industry-tool-stacks",
+        },
+    )
+
+# ================= GITHUB REPOS ROUTES =================
+@app.get("/github-repo/", response_class=HTMLResponse)
+async def github_repo_overview(
+    request: Request,
+    category: Optional[str] = None,
+    q: Optional[str] = None,
+):
+    repos = get_all_github_repos()
+    featured_repos = get_featured_github_repos()
+    categories = get_github_categories()
+    languages = get_github_languages()
+    licenses = get_github_licenses()
+    metadata = get_github_repo_metadata()
+    active_count = sum(1 for r in repos if r.get("status") == "Active")
+
+    return templates.TemplateResponse(
+        request=request,
+        name="github_repo/index.html",
+        context={
+            "repos": repos,
+            "featured_repos": featured_repos,
+            "categories": categories,
+            "languages": languages,
+            "licenses": licenses,
+            "metadata": metadata,
+            "active_count": active_count,
+            "selected_category": category,
+            "search_query": q or "",
+            "active_category_slug": "github-repo",
         },
     )
 
