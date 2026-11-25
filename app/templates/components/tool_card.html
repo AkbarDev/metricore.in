@@ -1,74 +1,138 @@
-<div class="tool-card-item group relative rounded-3xl border border-slate-800/90 bg-slate-900/60 overflow-hidden hover:border-purple-500/60 hover:bg-slate-900/90 transition-all duration-500 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1"
+<div class="tool-card-item google-tool-card group relative rounded-3xl border border-slate-800/90 bg-slate-900/60 overflow-hidden hover:border-purple-500/60 hover:bg-slate-900/90 transition-all duration-300 flex flex-col justify-between shadow-xl hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1 h-full"
     data-name="{{ tool.name|lower }}"
     data-category="{{ tool.category|lower }}"
+    {% if tool.competitors %}
+    data-status="{% if 'freemium' in tool.pricing_badge|lower %}freemium{% elif 'preview' in tool.pricing_badge|lower %}preview{% else %}free{% endif %}"
+    data-tagline="{{ (tool.tagline or '')|lower }}"
+    data-competitors="{% for comp in tool.competitors %}{{ comp.provider|lower }} {{ comp.equivalent_tool|lower }} {% endfor %}"
+    data-slug="{{ tool.slug or tool.id }}"
+    id="card-{{ tool.slug or tool.id }}"
+    {% else %}
     data-modality="{{ (tool.modality_type or '')|lower }}"
     data-relevancy="{{ (tool.relevancy_2026 or '')|lower }}"
     data-latency="{{ (tool.eval_latency or '')|lower }}"
     data-accuracy="{{ (tool.eval_accuracy_tier or '')|lower }}"
+    id="tool-card-{{ tool.id }}"
+    {% endif %}
 >
 
-    <!-- Card Top Visual Image Banner with Breathing Glow -->
-    <div class="relative h-36 sm:h-40 w-full overflow-hidden bg-slate-950">
+    <!-- Card Top Visual Image Banner with Ambient Glow & Badges -->
+    <div class="relative h-36 sm:h-40 w-full overflow-hidden bg-slate-950 flex-shrink-0">
+        {% set img_src = tool.image_url or (tool.media and tool.media.url) %}
+        {% set img_alt = tool.image_alt or (tool.media and tool.media.alt) or (tool.name ~ ' interface preview') %}
+        {% if img_src %}
         <img 
-            src="{{ tool.image_url }}" 
-            alt="{{ tool.image_alt or (tool.name ~ ' interface preview') }}" 
+            src="{{ img_src }}" 
+            alt="{{ img_alt }}" 
             loading="lazy"
-            class="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-105"
+            class="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-105 cursor-pointer"
+            {% if tool.competitors %}
+            onclick="openImageLightbox('{{ img_src }}', '{{ tool.name|escape }}', '{{ tool.source_assets[0] if tool.source_assets else tool.name }}')"
+            {% endif %}
+            onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
         >
-        <!-- Overlay Gradients -->
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-indigo-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="hidden w-full h-full flex flex-col items-center justify-center p-4 text-center bg-slate-950">
+            <span class="text-2xl">✨</span>
+            <span class="text-xs font-bold text-slate-300 mt-1 truncate max-w-full">{{ tool.name }}</span>
+        </div>
+        {% else %}
+        <div class="w-full h-full flex flex-col items-center justify-center p-4 text-center bg-slate-950">
+            <span class="text-2xl">✨</span>
+            <span class="text-xs font-bold text-slate-300 mt-1 truncate max-w-full">{{ tool.name }}</span>
+        </div>
+        {% endif %}
 
-        <!-- Badges on Image -->
-        <div class="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-1.5">
+        <!-- Overlay Gradients -->
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-900/20 via-transparent to-indigo-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+        <!-- Badges on Image (Top Row) -->
+        <div class="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-1.5 z-10 pointer-events-none">
             <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-950/80 text-purple-300 border border-purple-500/30 backdrop-blur-md shadow-md flex items-center gap-1 truncate max-w-[150px]">
                 <span class="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse flex-shrink-0"></span>
-                <span class="truncate">{{ tool.category }}</span>
+                <span class="truncate">
+                    {% if tool.category == 'coding' %}Coding
+                    {% elif tool.category == 'app and UI building' %}App & UI
+                    {% elif tool.category == 'research' %}Research
+                    {% elif tool.category == 'marketing' %}Marketing
+                    {% elif tool.category == 'image' %}Image
+                    {% elif tool.category == 'video' %}Video
+                    {% elif tool.category == 'assistant' %}Assistant
+                    {% else %}{{ tool.category }}
+                    {% endif %}
+                </span>
             </span>
-            {% if tool.pricing_type == "Paid" %}
-                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 backdrop-blur-md shadow-md flex-shrink-0">
-                    {{ tool.price_display }}
-                </span>
+
+            {% if tool.competitors %}
+                {% if 'preview' in tool.pricing_badge|lower %}
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 backdrop-blur-md shadow-md flex-shrink-0">
+                        {{ tool.pricing_badge }}
+                    </span>
+                {% elif 'freemium' in tool.pricing_badge|lower %}
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 backdrop-blur-md shadow-md flex-shrink-0">
+                        {{ tool.pricing_badge }}
+                    </span>
+                {% else %}
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-md flex-shrink-0">
+                        {{ tool.pricing_badge }}
+                    </span>
+                {% endif %}
             {% else %}
-                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-md flex-shrink-0">
-                    Free / $0
-                </span>
+                {% if tool.pricing_type == "Paid" %}
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 backdrop-blur-md shadow-md flex-shrink-0">
+                        {{ tool.price_display }}
+                    </span>
+                {% else %}
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-md flex-shrink-0">
+                        Free / $0
+                    </span>
+                {% endif %}
             {% endif %}
         </div>
 
         <!-- Tool Title pill on bottom of image -->
-        <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between gap-2">
+        <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between gap-2 z-10 pointer-events-none">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-950/90 backdrop-blur-md border border-slate-800 text-white font-black text-xs shadow-lg truncate max-w-[75%]">
-                <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                <span class="w-2 h-2 rounded-full bg-purple-400 flex-shrink-0"></span>
                 <span class="truncate">{{ tool.name }}</span>
             </span>
             <span class="text-[9px] px-2 py-0.5 rounded-lg bg-slate-900/90 text-slate-300 border border-slate-700/60 font-mono font-bold flex-shrink-0 backdrop-blur-md">
-                {% if tool.pricing_type == "Paid" %}PAID{% else %}FREE ALT{% endif %}
+                {% if tool.competitors %}
+                    {% if 'preview' in tool.pricing_badge|lower %}PREVIEW{% elif 'freemium' in tool.pricing_badge|lower %}FREEMIUM{% else %}100% FREE{% endif %}
+                {% else %}
+                    {% if tool.pricing_type == "Paid" %}PAID{% else %}FREE ALT{% endif %}
+                {% endif %}
             </span>
         </div>
     </div>
 
     <!-- Card Content -->
-    <div class="p-4 flex-grow flex flex-col justify-between space-y-3">
+    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
         <!-- Prominent Tool Name in Card Body -->
         <div class="space-y-1">
             <div class="flex items-start justify-between gap-2">
                 <h3 class="text-base font-extrabold text-white group-hover:text-purple-300 transition-colors tracking-tight truncate flex-1">
-                    <a href="/tool/{{ tool.id }}" class="hover:underline flex items-center gap-1.5">
+                    {% if tool.competitors %}
+                    <a href="/google-ai-stack/{{ tool.slug or tool.id }}/" class="hover:underline flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded">
                         <span class="truncate">{{ tool.name }}</span>
                     </a>
+                    {% else %}
+                    <a href="/tool/{{ tool.id }}" class="hover:underline flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded">
+                        <span class="truncate">{{ tool.name }}</span>
+                    </a>
+                    {% endif %}
                 </h3>
             </div>
             {% if tool.tagline %}
-            <p class="text-[11px] font-medium text-purple-400 truncate">
+            <p class="text-[11px] font-medium text-purple-400 truncate" title="{{ tool.tagline }}">
                 {{ tool.tagline }}
             </p>
             {% endif %}
         </div>
 
-        <!-- Description -->
-        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">
-            {{ tool.description }}
+        <!-- Description (Uniform 2 lines clamped) -->
+        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed min-h-[2rem]" title="{{ tool.description or tool.what_it_does or tool.tagline }}">
+            {{ tool.description or tool.what_it_does or tool.tagline }}
         </p>
 
         <!-- Sourced Provenance (Only displayed when facts_source_url exists) -->
@@ -116,16 +180,61 @@
                 </span>
                 <span class="text-[9px] text-slate-400 font-mono">Reference</span>
             </div>
-            <div class="text-[11px] font-semibold text-slate-100 truncate" title="{{ tool.free_tier_limit }}">
-                {{ tool.free_tier_limit }}
+            <div class="text-[11px] font-semibold text-slate-100 truncate" title="{{ tool.free_tier_limits or tool.free_tier_limit }}">
+                {{ tool.free_tier_limits or tool.free_tier_limit }}
             </div>
-            <p class="text-[9px] text-slate-500 leading-tight pt-1 border-t border-slate-800/60">
-                Pricing and limits change often. Check the official site.{% if tool.price_last_checked %} Last checked: {{ tool.price_last_checked }}{% endif %}
+            {% if tool.competitors %}
+            <div class="text-[9px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/60 font-sans">
+                <span class="truncate max-w-[140px] text-slate-300">
+                    <span class="text-slate-500 font-medium">Free alt:</span>
+                    <span class="font-medium text-slate-200">{{ tool.competitors[0].provider }} {{ tool.competitors[0].equivalent_tool }}</span>
+                </span>
+                <span class="text-emerald-400 font-mono font-bold text-[9px] flex-shrink-0">
+                    Verified Nov '26
+                </span>
+            </div>
+            {% else %}
+            <p class="text-[9px] text-slate-500 leading-tight pt-1 border-t border-slate-800/60 truncate">
+                Pricing and limits change often.{% if tool.price_last_checked %} Checked: {{ tool.price_last_checked }}{% endif %}
             </p>
+            {% endif %}
         </div>
 
-        <!-- Footer Actions -->
-        <div class="pt-2.5 border-t border-slate-800/60 flex items-center justify-between gap-2 text-xs">
+        <!-- Footer Actions (Pinned to Bottom) -->
+        <div class="pt-2.5 border-t border-slate-800/60 flex items-center justify-between gap-2 text-xs mt-auto">
+            {% if tool.competitors %}
+            <button 
+                type="button" 
+                onclick="openToolDrawer('{{ tool.slug or tool.id }}')"
+                class="text-purple-400 hover:text-purple-300 font-bold flex items-center gap-1 transition-colors text-[11px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-400 rounded cursor-pointer"
+                aria-label="Open comparison drawer for {{ tool.name }}"
+            >
+                <span>Quick Compare</span>
+                <svg class="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+            <div class="flex items-center gap-1.5">
+                {% if tool.official_url %}
+                <a 
+                    href="{{ tool.official_url }}" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-400"
+                    title="Open official site"
+                    aria-label="Open official site for {{ tool.name }} in new tab"
+                >
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+                {% endif %}
+                <a 
+                    href="/google-ai-stack/{{ tool.slug or tool.id }}/" 
+                    class="px-3 py-1 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold transition-all shadow-md shadow-purple-600/30 flex items-center gap-1 text-[11px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
+                    title="View full benchmark breakdown for {{ tool.name }}"
+                >
+                    <span>View Details</span>
+                    <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            {% else %}
             <a href="/tool/{{ tool.id }}" class="text-purple-400 hover:text-purple-300 font-bold flex items-center gap-1 transition-colors text-[11px]">
                 Compare
                 <svg class="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -134,6 +243,7 @@
                 <span>Visit</span>
                 <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             </a>
+            {% endif %}
         </div>
     </div>
 </div>
