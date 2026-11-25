@@ -142,9 +142,9 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google_opal.png",
+        "url": "/google_stack/card_opal.png",
         "alt": "Google Opal visual workflow interface preview",
-        "caption": "Google Opal no-code AI workflow builder (Source: google_stack/google_opal.png)"
+        "caption": "Google Opal visual workflow builder (Source: google_stack/card_opal.png)"
       },
       "secondary_media": {
         "type": "image",
@@ -154,7 +154,7 @@
       },
       "official_url": "https://labs.google",
       "source_assets": [
-        "google_opal.png",
+        "card_opal.png",
         "grouped1.png"
       ],
       "competitors": [
@@ -714,9 +714,9 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/Learn_your_way.png",
+        "url": "/google_stack/learn_your_way_wallpaper.png",
         "alt": "Learn Your Way educational tutor preview",
-        "caption": "Learn Your Way personalized AI course builder (Source: google_stack/Learn_your_way.png)"
+        "caption": "Learn Your Way adaptive study studio (Source: google_stack/learn_your_way_wallpaper.png)"
       },
       "secondary_media": {
         "type": "image",
@@ -726,9 +726,9 @@
       },
       "official_url": "https://labs.google",
       "source_assets": [
+        "learn_your_way_wallpaper.png",
         "Learn_your_way.png",
-        "grouped4.png",
-        "gs1.png"
+        "grouped4.png"
       ],
       "competitors": [
         {
@@ -956,13 +956,14 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google_pinpoint.png",
+        "url": "/google_stack/google_pinpoint_wallpaper.png",
         "alt": "Google Pinpoint research tool preview",
-        "caption": "Google Pinpoint investigative document and audio search tool (Source: google_stack/google_pinpoint.png)"
+        "caption": "Google Pinpoint investigative document search (Source: google_stack/google_pinpoint_wallpaper.png)"
       },
       "secondary_media": null,
       "official_url": "https://journaliststudio.google.com/pinpoint",
       "source_assets": [
+        "google_pinpoint_wallpaper.png",
         "google_pinpoint.png"
       ],
       "competitors": [
@@ -1014,13 +1015,14 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google_stax.png",
+        "url": "/google_stack/google_stax_wallpaper.png",
         "alt": "Google Stax AI model evaluation suite preview",
-        "caption": "Google Stax custom model evaluation platform (Source: google_stack/google_stax.png)"
+        "caption": "Google Stax AI model evaluation cockpit (Source: google_stack/google_stax_wallpaper.png)"
       },
       "secondary_media": null,
       "official_url": "https://labs.google",
       "source_assets": [
+        "google_stax_wallpaper.png",
         "google_stax.png"
       ],
       "competitors": [
@@ -1072,13 +1074,14 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/iluminate.png",
+        "url": "/google_stack/google_illuminate_wallpaper.png",
         "alt": "Google Illuminate academic paper audio tool preview",
-        "caption": "Google Illuminate academic paper to audio synthesizer (Source: google_stack/iluminate.png)"
+        "caption": "Google Illuminate research audio discussion studio (Source: google_stack/google_illuminate_wallpaper.png)"
       },
       "secondary_media": null,
       "official_url": "https://illuminate.withgoogle.com",
       "source_assets": [
+        "google_illuminate_wallpaper.png",
         "iluminate.png"
       ],
       "competitors": [
