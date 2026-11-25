@@ -20,7 +20,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/Antigravity.png",
+        "url": "/google_stack/header_antigravity.jpg",
         "alt": "Google Antigravity coding agent interface preview",
         "caption": "Google Antigravity IDE and autonomous coding agent (Source: google_stack/Antigravity.png)"
       },
@@ -42,7 +42,7 @@
           "provider": "Microsoft / GitHub",
           "equivalent_tool": "GitHub Copilot Workspace",
           "what_is_free": "Limited technical preview for select GitHub users",
-          "key_limits": "Requires active GitHub Copilot paid license ($10\u2013$19/mo)",
+          "key_limits": "Requires active GitHub Copilot paid license ($10–$19/mo)",
           "stronger_than_google": "Tightly integrated into GitHub Issues, PR workflows, and git repo histories",
           "weaker_than_google": "Requires paid monthly seat; slower full-stack runtime environment spin-up"
         },
@@ -78,7 +78,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google_stitch.png",
+        "url": "/google_stack/header_stitch.jpg",
         "alt": "Google Stitch UI design agent interface preview",
         "caption": "Google Stitch prompt-to-UI design agent (Source: google_stack/google_stitch.png)"
       },
@@ -106,7 +106,7 @@
           "provider": "Figma",
           "equivalent_tool": "Figma AI",
           "what_is_free": "Free starter tier with basic drafts and view access",
-          "key_limits": "AI generation tools gated behind paid team plans ($12\u2013$75/editor/mo)",
+          "key_limits": "AI generation tools gated behind paid team plans ($12–$75/editor/mo)",
           "stronger_than_google": "World-standard collaborative vector design and design-system tokens",
           "weaker_than_google": "Heavy subscription barrier for generative layout creation"
         },
@@ -142,7 +142,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/card_opal.png",
+        "url": "/google_stack/header_opal.jpg",
         "alt": "Google Opal visual workflow interface preview",
         "caption": "Google Opal visual workflow builder (Source: google_stack/card_opal.png)"
       },
@@ -206,7 +206,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/Gemini_notebook.png",
+        "url": "/google_stack/header_notebooklm.jpg",
         "alt": "NotebookLM Gemini Notebook research interface preview",
         "caption": "NotebookLM grounded research and Audio Overview studio (Source: google_stack/Gemini_notebook.png)"
       },
@@ -271,7 +271,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google_AI_studio.png",
+        "url": "/google_stack/header_ai_studio.jpg",
         "alt": "Google AI Studio developer platform preview",
         "caption": "Google AI Studio multimodal development console (Source: google_stack/google_AI_studio.png)"
       },
@@ -336,7 +336,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/card_codewiki.png",
+        "url": "/google_stack/header_codewiki.jpg",
         "alt": "CodeWiki featured in Google AI Stack carousel",
         "caption": "CodeWiki self-updating GitHub documentation (Source: google_stack/card_codewiki.png)"
       },
@@ -386,7 +386,7 @@
       "pricing_type": "Free",
       "free_tier_limits": "Free experimental feature for Chrome desktop users.",
       "the_catch": "Experimental Labs status; requires Chrome desktop environment; features may evolve or migrate into core Chrome browser updates.",
-      "what_it_does": "Project Disco analyzes the open browser tabs in your current research session (such as product reviews, comparison articles, or real estate listings) and dynamically generates custom interactive tools\u2014such as comparison tables, budget calculators, or structured dashboards\u2014without requiring code.",
+      "what_it_does": "Project Disco analyzes the open browser tabs in your current research session (such as product reviews, comparison articles, or real estate listings) and dynamically generates custom interactive tools—such as comparison tables, budget calculators, or structured dashboards—without requiring code.",
       "use_cases": [
         "Synthesizing multiple open tabs into interactive comparison matrices",
         "Generating custom calculators from product pricing and spec pages",
@@ -395,7 +395,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/card_disco.png",
+        "url": "/google_stack/header_disco.jpg",
         "alt": "Project Disco featured in Google AI Stack carousel",
         "caption": "Project Disco browser-to-app generator (Source: google_stack/card_disco.png)"
       },
@@ -454,7 +454,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google_flow_video_generatoe.png",
+        "url": "/google_stack/header_flow.png",
         "alt": "Google Flow video and audiovisual generation interface preview",
         "caption": "Google Flow audiovisual creative studio (Source: google_stack/google_flow_video_generatoe.png)"
       },
@@ -518,7 +518,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/jules.png",
+        "url": "/google_stack/header_jules.jpg",
         "alt": "Google Jules autonomous coding agent preview",
         "caption": "Google Jules autonomous GitHub coding agent (Source: google_stack/jules.png)"
       },
@@ -546,7 +546,7 @@
           "provider": "GitHub",
           "equivalent_tool": "GitHub Copilot Workspace",
           "what_is_free": "Limited preview access",
-          "key_limits": "Requires paid Copilot subscription ($10\u2013$19/month)",
+          "key_limits": "Requires paid Copilot subscription ($10–$19/month)",
           "stronger_than_google": "Native first-party UI inside GitHub's web interface",
           "weaker_than_google": "Requires paid license; Jules provides dedicated free cloud sandbox verification"
         },
@@ -582,7 +582,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/Pomeli.png",
+        "url": "/google_stack/header_pomelli.png",
         "alt": "Google Pomelli AI marketing tool interface preview",
         "caption": "Google Pomelli brand DNA scanner and campaign studio (Source: google_stack/Pomeli.png)"
       },
@@ -648,7 +648,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google mixboard.png",
+        "url": "/google_stack/header_mixboard.png",
         "alt": "Google Mixboard visual concept board preview",
         "caption": "Google Mixboard AI concept board (Source: google_stack/google mixboard.png)"
       },
@@ -714,7 +714,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/learn_your_way_wallpaper.png",
+        "url": "/google_stack/header_learn_your_way.png",
         "alt": "Learn Your Way educational tutor preview",
         "caption": "Learn Your Way adaptive study studio (Source: google_stack/learn_your_way_wallpaper.png)"
       },
@@ -779,7 +779,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/card_gemini_cli.png",
+        "url": "/google_stack/header_gemini_cli.png",
         "alt": "Gemini CLI featured in developer tools carousel",
         "caption": "Gemini CLI terminal developer copilot (Source: google_stack/card_gemini_cli.png)"
       },
@@ -838,7 +838,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/card_firebase_studio.png",
+        "url": "/google_stack/header_firebase_studio.png",
         "alt": "Firebase Studio in developer tools carousel",
         "caption": "Firebase Studio AI backend development cockpit (Source: google_stack/card_firebase_studio.png)"
       },
@@ -897,7 +897,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/card_gemini_code_assist.png",
+        "url": "/google_stack/header_gemini_code_assist.png",
         "alt": "Gemini Code Assist in developer tools carousel",
         "caption": "Gemini Code Assist IDE programming assistant (Source: google_stack/card_gemini_code_assist.png)"
       },
@@ -956,7 +956,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google_pinpoint_wallpaper.png",
+        "url": "/google_stack/header_pinpoint.png",
         "alt": "Google Pinpoint research tool preview",
         "caption": "Google Pinpoint investigative document search (Source: google_stack/google_pinpoint_wallpaper.png)"
       },
@@ -1015,7 +1015,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google_stax_wallpaper.png",
+        "url": "/google_stack/header_stax.png",
         "alt": "Google Stax AI model evaluation suite preview",
         "caption": "Google Stax AI model evaluation cockpit (Source: google_stack/google_stax_wallpaper.png)"
       },
@@ -1074,7 +1074,7 @@
       ],
       "media": {
         "type": "image",
-        "url": "/google_stack/google_illuminate_wallpaper.png",
+        "url": "/google_stack/header_illuminate.png",
         "alt": "Google Illuminate academic paper audio tool preview",
         "caption": "Google Illuminate research audio discussion studio (Source: google_stack/google_illuminate_wallpaper.png)"
       },

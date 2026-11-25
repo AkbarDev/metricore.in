@@ -90,20 +90,18 @@
             {% endif %}
         </div>
 
-        <!-- Tool Title pill on bottom of image -->
+        {% if not tool.competitors %}
+        <!-- Tool Title pill on bottom of image (Home directory cards) -->
         <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between gap-2 z-10 pointer-events-none">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-950/90 backdrop-blur-md border border-slate-800 text-white font-black text-xs shadow-lg truncate max-w-[75%]">
                 <span class="w-2 h-2 rounded-full bg-purple-400 flex-shrink-0"></span>
                 <span class="truncate">{{ tool.name }}</span>
             </span>
             <span class="text-[9px] px-2 py-0.5 rounded-lg bg-slate-900/90 text-slate-300 border border-slate-700/60 font-mono font-bold flex-shrink-0 backdrop-blur-md">
-                {% if tool.competitors %}
-                    {% if 'preview' in tool.pricing_badge|lower %}PREVIEW{% elif 'freemium' in tool.pricing_badge|lower %}FREEMIUM{% else %}100% FREE{% endif %}
-                {% else %}
-                    {% if tool.pricing_type == "Paid" %}PAID{% else %}FREE ALT{% endif %}
-                {% endif %}
+                {% if tool.pricing_type == "Paid" %}PAID{% else %}FREE ALT{% endif %}
             </span>
         </div>
+        {% endif %}
     </div>
 
     <!-- Card Content -->
@@ -123,16 +121,16 @@
                     {% endif %}
                 </h3>
             </div>
-            {% if tool.tagline %}
+            {% if not tool.competitors and tool.tagline %}
             <p class="text-[11px] font-medium text-purple-400 truncate" title="{{ tool.tagline }}">
                 {{ tool.tagline }}
             </p>
             {% endif %}
         </div>
 
-        <!-- Description (Uniform 2 lines clamped) -->
-        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed min-h-[2rem]" title="{{ tool.description or tool.what_it_does or tool.tagline }}">
-            {{ tool.description or tool.what_it_does or tool.tagline }}
+        <!-- Description (Uniform 2 lines clamped, no duplicate tagline/what_it_does) -->
+        <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed min-h-[2rem]" title="{{ tool.tagline if tool.competitors else (tool.description or tool.tagline) }}">
+            {{ tool.tagline if tool.competitors else (tool.description or tool.tagline) }}
         </p>
 
         <!-- Sourced Provenance (Only displayed when facts_source_url exists) -->
